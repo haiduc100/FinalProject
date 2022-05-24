@@ -18,6 +18,9 @@ router.use("/category", categoryRoute);
 const requestReturningRoute = require("./requestReturningRoute");
 router.use("/requestReturning", requestReturningRoute);
 
+const requestByNewRoute = require("./requestByNewRoute");
+router.use("/requestByNew", requestByNewRoute);
+
 const userRoute = require("./userRoute");
 router.use("/user", userRoute);
 
