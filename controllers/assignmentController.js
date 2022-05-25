@@ -2,8 +2,14 @@ const Assginment = require("../models/assignment.model");
 const Asset = require("../models/asset.model");
 module.exports.getAllAssignments = async (req, res) => {
   try {
-    const assignments = await Assginment.find();
-    res.status(200).json(assignments);
+    const assignments = await Assginment.find()
+      .populate("AssignToId")
+      .populate("AssignById")
+      .populate("AssetId");
+      
+    res.render("components/admin/assignmentManagementPage", {
+      listAssignment: assignments,
+    });
   } catch (error) {
     res.status(500).json({
       status: "Fail",

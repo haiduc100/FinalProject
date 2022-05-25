@@ -14,7 +14,6 @@ const RequestByNewSchema = mongoose.Schema(
       enum: ["accepted", "denied", "waiting"],
       default: "waiting",
     },
-    Category: { type: String, ref: "Category" },
     AssetName: { type: String, require: true },
     RequestBy: { type: String, ref: "User", require: true },
   },

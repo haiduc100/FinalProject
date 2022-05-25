@@ -3,7 +3,9 @@ const Asset = require("../models/asset.model");
 module.exports.getAllAsset = async (req, res) => {
   try {
     const asset = await Asset.find({}).populate("Category");
-    res.status(200).json(asset);
+    res.render("components/admin/assetManagementPage", {
+      listAssets: asset,
+    });
   } catch (error) {
     res.status(500).json({
       status: "Fail",
@@ -40,7 +42,7 @@ module.exports.updateAsset = async (req, res) => {
         message: "Can not find asset",
       });
     }
-    
+
     const AssetDate = new Date().getFullYear() + Number(req.body.AssetDate);
     req.body.AssetDate = AssetDate;
     await Asset.updateOne({ _id: req.params.id }, req.body);
