@@ -11,7 +11,7 @@ const AssignmentSchema = mongoose.Schema(
     AssignById: {
       type: String,
       ref: "User",
-      require: true,
+      // require: true,
     },
     AssetId: {
       type: String,

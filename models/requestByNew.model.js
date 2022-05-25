@@ -8,7 +8,12 @@ const RequestByNewSchema = mongoose.Schema(
       ref: "User",
       require: true,
     },
-    State: { type: String, require: true },
+    State: {
+      type: String,
+      require: true,
+      enum: ["accepted", "denied", "waiting"],
+      default: "waiting",
+    },
     AssetName: { type: String, require: true },
     RequestBy: { type: String, ref: "User", require: true },
   },

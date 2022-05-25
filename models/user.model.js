@@ -11,15 +11,16 @@ const UserSchema = mongoose.Schema(
       default: "Male",
       enum: ["Male", "Female"],
     },
-    Role: Number,
+    Role: Number,//0 is admin, 1 is staff
     UserName: String,
     StaffCode: String,
     Password: String,
+    Email: String,
+    Avatar: String,
   },
   { collection: "User", timestamps: true }
 );
 
 UserSchema.plugin(mongoosePaginate);
 
- module.exports = mongoose.model("User", UserSchema);
-
+module.exports = mongoose.model("User", UserSchema);

@@ -16,7 +16,7 @@ const AssetSchema = mongoose.Schema(
       ref: "Category",
       require: true,
     },
-    AssetDate: String,
+    AssetDate: Number,
     CreatedDate: { type: Date, default: new Date()},
   },
   { collection: "Asset" }
