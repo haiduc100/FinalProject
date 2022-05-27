@@ -1,12 +1,15 @@
 const Asset = require("../models/asset.model");
-
+const Category = require("../models/category.model");
 module.exports.getAllAsset = async (req, res) => {
   try {
     const asset = await Asset.find({}).populate("Category");
+    const category = await Category.find({});
     res.render("components/admin/assetManagementPage", {
       listAssets: asset,
+      listCategory: category,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,
