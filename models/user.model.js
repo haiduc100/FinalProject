@@ -11,7 +11,11 @@ const UserSchema = mongoose.Schema(
       default: "Male",
       enum: ["Male", "Female"],
     },
-    Role: Number,//0 is admin, 1 is staff
+    Role: {
+      type: Number,
+      enum: [0, 1],
+      default: 1,
+    }, //0 is admin, 1 is staff
     UserName: String,
     StaffCode: String,
     Password: String,

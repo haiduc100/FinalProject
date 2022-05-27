@@ -6,7 +6,7 @@ module.exports.getAllAssignments = async (req, res) => {
       .populate("AssignToId")
       .populate("AssignById")
       .populate("AssetId");
-      
+
     res.render("components/admin/assignmentManagementPage", {
       listAssignment: assignments,
     });
