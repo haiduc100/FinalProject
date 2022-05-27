@@ -19,6 +19,7 @@
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#exampleModal"
+            onclick="openAddModal()"
           >
             Add New Asset
           </button>
@@ -47,28 +48,58 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body d-flex flex-column">
-                  <input
-                    type="text"
-                    name="AssetName"
-                    id=""
-                    placeholder="AssetName"
-                    class="AssetName"
-                  />
+                <div class="modal-body">
+                  <div class="createAsset">
+                    <input
+                      type="text"
+                      name="AssetName"
+                      id=""
+                      placeholder="AssetName"
+                      class="AssetName"
+                    />
+                    <br />
+                    <select name="Category" id="" class="Category">
+                      <% listCategory.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.CategoryName %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
 
-                  <select name="Category" id="" class="Category">
-                    <% listCategory.map((value)=>{%>
-                    <option value="<%= value._id %>">
-                      <%= value.CategoryName %>
-                    </option>
-                    <% })%>
-                  </select>
-                  <input
-                    type="number"
-                    name="AssetDate"
-                    placeholder="AssetDate"
-                    class="AssetDate"
-                  />
+                    <input
+                      type="number"
+                      name="AssetDate"
+                      placeholder="AssetDate"
+                      class="AssetDate"
+                    />
+                  </div>
+
+                  <div class="updateAsset">
+                    <input
+                      type="text"
+                      name="AssetName"
+                      id=""
+                      placeholder="AssetName"
+                      class="AssetNameUpdate"
+                    />
+                    <br />
+                    <select name="State" id="" class="State">
+                      <option value="unavailable">Unavailable</option>
+                      <option value="available">Available</option>
+                      <option value="waiting">Waiting</option>
+                      <option value="recycled">Recycled</option>
+                    </select>
+                    <br />
+
+                    <select name="Category" id="" class="CategoryUpdate">
+                      <% listCategory.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.CategoryName %>
+                      </option>
+                      <% })%>
+                    </select>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button
@@ -80,40 +111,71 @@
                   </button>
                   <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
-                    Add New
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary updatebtn"
+                    onclick="handleUpdate()"
+                  >
+                    Update
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Asset Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Asset Date</th>
-                <th scope="col">Created Date</th>
-                <th scope="col">State</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% listAssets.map((value,index)=>{ %>
-              <tr>
-                <td scope="row"><%= index + 1 %></td>
-                <td><%= value.AssetName %></td>
-                <td><%= value.Category.CategoryName %></td>
-                <td><%= value.AssetDate %></td>
-                <td><%= value.CreatedDate.toLocaleDateString() %></td>
-                <td><%= value.State %></td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Asset Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Asset Date</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% listAssets.map((value,index)=>{ %>
+                      <tr>
+                        <td scope="row"><%= index + 1 %></td>
+                        <td><%= value.AssetName %></td>
+                        <td><%= value.Category.CategoryName %></td>
+                        <td><%= value.AssetDate %></td>
+                        <td><%= value.CreatedDate.toLocaleDateString() %></td>
+                        <td><%= value.State %></td>
+                        <td>
+                          <p
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            class="btn btn-warning"
+                            onclick="openUpdate('<%= value._id %>')"
+                          >
+                            Update
+                          </p>
+                          <p
+                            class="btn btn-danger"
+                            onclick="handleDelete('<%= value._id %>')"
+                          >
+                            Delete
+                          </p>
+                        </td>
+                      </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </section>
     </div>

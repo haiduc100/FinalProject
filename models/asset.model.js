@@ -9,7 +9,7 @@ const AssetSchema = mongoose.Schema(
     State: {
       type: String,
       default: "available",
-      enum: ["unavilable", "available", "waiting", "recycled", "assigned"],
+      enum: ["unavailable", "available", "waiting", "recycled", "assigned"],
     },
     Category: {
       type: String,
