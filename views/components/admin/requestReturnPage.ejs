@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asset Management</title>
+    <title>Request Returning</title>
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
@@ -13,17 +13,6 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <!-- Button trigger modal -->
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            onclick="openAddModal()"
-          >
-            Add New Asset
-          </button>
-
           <!-- Modal -->
           <div
             class="modal fade"
@@ -49,56 +38,25 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createAsset">
-                    <input
-                      type="text"
-                      name="AssetName"
-                      id=""
-                      placeholder="AssetName"
-                      class="AssetName"
-                    />
-                    <br />
-                    <select name="Category" id="" class="Category">
-                      <% listCategory.map((value)=>{%>
-                      <option value="<%= value._id %>">
-                        <%= value.CategoryName %>
-                      </option>
-                      <% })%>
-                    </select>
-                    <br />
-
-                    <input
-                      type="number"
-                      name="AssetDate"
-                      placeholder="AssetDate"
-                      class="AssetDate"
-                    />
-                  </div>
-
                   <div class="updateAsset">
-                    <input
-                      type="text"
-                      name="AssetName"
-                      id=""
-                      placeholder="AssetName"
-                      class="AssetNameUpdate"
-                    />
-                    <br />
-                    <select name="State" id="" class="State">
-                      <option value="unavailable">Unavailable</option>
-                      <option value="available">Available</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="recycled">Recycled</option>
+                    <label for="StateUpdate">State</label>
+                    <select name="StateUpdate" id="" class="StateUpdate">
+                      <option value="completed">Completed</option>
+                      <option value="declined">Declined</option>
                     </select>
                     <br />
-
-                    <select name="Category" id="" class="CategoryUpdate">
-                      <% listCategory.map((value)=>{%>
+                    <!-- <label for="AccecptByUpdate">Accecpt By</label>
+                    <select
+                      name="AccecptByUpdate"
+                      id=""
+                      class="AccecptByUpdate"
+                    >
+                      <% listUsers.map((value)=>{%>
                       <option value="<%= value._id %>">
-                        <%= value.CategoryName %>
+                        <%= value.StaffCode %>
                       </option>
                       <% })%>
-                    </select>
+                    </select> -->
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -108,13 +66,6 @@
                     data-dismiss="modal"
                   >
                     Close
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary addbtn"
-                    onclick="handleAddNew()"
-                  >
-                    Add
                   </button>
                   <button
                     type="button"
@@ -135,23 +86,19 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Asset Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Asset Date</th>
-                        <th scope="col">Created Date</th>
+                        <th scope="col">Request By</th>
                         <th scope="col">State</th>
+                        <th scope="col">Accepted By</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listAssets.map((value,index)=>{ %>
+                      <% listRequestReturning.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td><%= value.AssetName %></td>
-                        <td><%= value.Category.CategoryName %></td>
-                        <td><%= value.AssetDate %></td>
-                        <td><%= value.CreatedDate.toLocaleDateString() %></td>
+                        <td><%= value.RequestBy.StaffCode %></td>
                         <td><%= value.State %></td>
+                        <td><%= value.AccecptBy.StaffCode %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -160,12 +107,6 @@
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
-                          </p>
-                          <p
-                            class="btn btn-danger"
-                            onclick="handleDelete('<%= value._id %>')"
-                          >
-                            Delete
                           </p>
                         </td>
                       </tr>
@@ -185,6 +126,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-AssetPage.js"></script>
+    <script src="/public/js/admin-RequestReturnPage.js"></script>
   </body>
 </html>

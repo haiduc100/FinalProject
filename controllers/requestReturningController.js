@@ -1,10 +1,32 @@
 const RequestReturning = require("../models/requestReturn.model");
 const Assignment = require("../models/assignment.model");
+const User = require("../models/user.model");
 module.exports.getAllRequestReturn = async (req, res) => {
   try {
-    const requestReturning = await RequestReturning.find();
+    const requestReturning = await RequestReturning.find()
+      .populate("RequestBy")
+      .populate("AccecptBy");
+    const users = await User.find({});
+    // res.status(200).json(requestReturning);
+    res.render("components/admin/requestReturnPage", {
+      listRequestReturning: requestReturning,
+      listUsers: users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
 
-    res.status(200).json(requestReturning);
+module.exports.getRequestReturnById = async (req, res) => {
+  try {
+    const request = await RequestReturning.findOne({
+      _id: req.params.id,
+    });
+
+    res.status(200).json( request );
   } catch (error) {
     res.status(500).json({
       status: "Fail",
