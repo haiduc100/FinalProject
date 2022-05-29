@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const controller = require("../controllers/requestByNewController");
 
-router.get("/api", controller.getAllRequestByNew);
+router.get("/", controller.getAllRequestByNew);
+router.get("/api/:id", controller.getRequestById);
 router.post("/api", controller.createRequestByNew);
 router.put("/api/:id", controller.updateRequestByNew);
 
