@@ -1,6 +1,9 @@
 const controller = require("../controllers/userController");
 const router = require("express").Router();
 
+const check = require('../controllers/checkController')
+
+
 router.get("/api", controller.getAllUsers);
 
 router.get("/api/:id", controller.getUserById);
@@ -22,8 +25,11 @@ router.post("/LogInAdmin", controller.LogInAdmin);
 router.get('/loginAdmin', controller.getAllAssignmentsLogInAdmin);
 
 //register
-// router.post("/Register", controller.Register);
+router.post("/Register", check.checkDuplicate, controller.Register);
 //html register
 router.get('/register', controller.getAllAssignmentsRegister);
+
+
+
 
 module.exports = router;

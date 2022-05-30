@@ -238,5 +238,23 @@ module.exports.getAllAssignmentsRegister = async (req, res) => {
   }
 };
 
-
+//register
+module.exports.Register = async (req, res) => {
+  try {
+      const password = await bcrypt.hash(req.body.password, 10);
+      await UserModel.create({
+          username: req.body.username,
+          password: password,
+          role: req.body.role
+      });
+      // console.log(91,data);
+      res.json({
+          message: "Create user successfully",
+          status: 200,
+          err: false,
+      });
+  } catch (error) {
+      res.json({message: "Error server", status: 500, err: error});
+  }
+};
 
