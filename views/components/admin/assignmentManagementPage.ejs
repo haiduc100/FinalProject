@@ -13,7 +13,130 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <button class="btn btn-success">Add New</button>
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            onclick="openAddModal()"
+          >
+            Add New Asset
+          </button>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="createAssignment">
+                    <select name="AssignTo" id="" class="AssignTo">
+                      <% listUser.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.StaffCode %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
+                    <select name="AssetName" id="" class="AssetName">
+                      <% listAsset.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.AssetName %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
+                    <input
+                      type="text"
+                      name="Note"
+                      id=""
+                      placeholder="Note"
+                      class="Note"
+                    />
+                  </div>
+
+                  <div class="updateAssignment">
+                    <select name="AssignTo" id="" class="AssignToUpdate">
+                      <% listUser.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.StaffCode %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
+                    <select name="AssetName" id="" class="AssetNameUpdate">
+                      <% listAsset.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.AssetName %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
+                    <input
+                      type="text"
+                      name="Note"
+                      id=""
+                      placeholder="Note"
+                      class="NoteUpdate"
+                    />
+                    <br />
+                    <select name="Transferring" id="" class="TransferringUpdate">
+                      <% listUser.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.StaffCode %>
+                      </option>
+                      <% })%>
+                      <option value="none" selected>None</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary addbtn"
+                    onclick="handleAddNew()"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary updatebtn"
+                    onclick="handleUpdate()"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <table class="table">
             <thead>
               <tr>
@@ -21,11 +144,10 @@
                 <th scope="col">Assign To</th>
                 <th scope="col">Assign By</th>
                 <th scope="col">Asset Name</th>
-                <th scope="col">Asset Date</th>
                 <th scope="col">State</th>
                 <th scope="col">Note</th>
                 <th scope="col">Is Returning</th>
-                <th scope="col">TransferringId</th>
+                <th scope="col">Transfer</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -39,8 +161,23 @@
                 <td><%= value.State %></td>
                 <td><%= value.Note %></td>
                 <td><%= value.IsReturning %></td>
-                <td><%= value.Note %></td>
                 <td><%= value.TransferringId %></td>
+                <td>
+                  <p
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    class="btn btn-warning"
+                    onclick="openUpdate('<%= value._id %>')"
+                  >
+                    Update
+                  </p>
+                  <p
+                    class="btn btn-danger"
+                    onclick="handleDelete('<%= value._id %>')"
+                  >
+                    Delete
+                  </p>
+                </td>
               </tr>
               <% }) %>
             </tbody>
@@ -48,5 +185,12 @@
         </div>
       </section>
     </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/public/js/admin-AssignmentPage.js"></script>
   </body>
 </html>
