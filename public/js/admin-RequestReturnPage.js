@@ -28,3 +28,15 @@ handleUpdate = async () => {
     console.log(error);
   }
 };
+
+handleExport = async () => {
+  try {
+    const res = await $.ajax({
+      url: "/report/api",
+      type: "GET",
+    });
+    alert(res.message);
+  } catch (error) {
+    console.log(error);
+  }
+};
