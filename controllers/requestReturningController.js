@@ -26,7 +26,7 @@ module.exports.getRequestReturnById = async (req, res) => {
       _id: req.params.id,
     });
 
-    res.status(200).json( request );
+    res.status(200).json(request);
   } catch (error) {
     res.status(500).json({
       status: "Fail",

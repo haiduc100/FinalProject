@@ -85,7 +85,7 @@ handleDelete = async (id) => {
 
 handleSearch = () => {
   const inp = $(".searchBox").val().trim();
-  
+
   console.log(inp);
   window.location.href = `/asset/filter?search=${inp}`;
 };

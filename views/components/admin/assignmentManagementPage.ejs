@@ -76,14 +76,6 @@
                   </div>
 
                   <div class="updateAssignment">
-                    <select name="AssignTo" id="" class="AssignToUpdate">
-                      <% listUser.map((value)=>{%>
-                      <option value="<%= value._id %>">
-                        <%= value.StaffCode %>
-                      </option>
-                      <% })%>
-                    </select>
-                    <br />
                     <select name="AssetName" id="" class="AssetNameUpdate">
                       <% listAsset.map((value)=>{%>
                       <option value="<%= value._id %>">
@@ -100,7 +92,11 @@
                       class="NoteUpdate"
                     />
                     <br />
-                    <select name="Transferring" id="" class="TransferringUpdate">
+                    <select
+                      name="Transferring"
+                      id=""
+                      class="TransferringUpdate"
+                    >
                       <% listUser.map((value)=>{%>
                       <option value="<%= value._id %>">
                         <%= value.StaffCode %>
@@ -156,7 +152,9 @@
               <tr>
                 <td scope="row"><%= index + 1 %></td>
                 <td><%= value.AssignToId.UserName %></td>
-                <td><%= value.AssignById.UserName %></td>
+                <td>
+                  <%= value.AssignById ? value.AssignById.UserName : null %>
+                </td>
                 <td><%= value.AssetId.AssetName %></td>
                 <td><%= value.State %></td>
                 <td><%= value.Note %></td>

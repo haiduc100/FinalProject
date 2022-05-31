@@ -16,6 +16,29 @@ module.exports.getAllAsset = async (req, res) => {
   }
 };
 
+module.exports.filterAsset = async (req, res) => {
+  try {
+    const assets = await Asset.find({
+      AssetName: { $regex: `.*${req.query.search}*` },
+    });
+    const category = await Category.find({});
+    if (assets.length == 0) {
+      res.status(404).json({ status: "Fail", message: "Asset not found" });
+    } else {
+      res.status(200).render("components/admin/assetFilterPage", {
+        listAssets: assets,
+        listCategory: category,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+
 module.exports.getAssetById = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.params.id });

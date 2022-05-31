@@ -12,8 +12,8 @@ router.use("/assignments", assignmentsRoute);
 const categoryRoute = require("./categoryRoute");
 router.use("/category", categoryRoute);
 
-// const reportRoute = require("./reportRoute");
-// router.use("/report", reportRoute);
+const reportRoute = require("./reportRoute");
+router.use("/report", reportRoute);
 
 const requestReturningRoute = require("./requestReturningRoute");
 router.use("/requestReturning", requestReturningRoute);

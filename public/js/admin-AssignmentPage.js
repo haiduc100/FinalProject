@@ -20,7 +20,6 @@ handleAddNew = () => {
     })
     .catch((error) => {
       alert(error.responseJSON.message);
-
     });
 };
 
@@ -32,7 +31,6 @@ openUpdate = async (id) => {
       url: `/assignments/api/${idAssigmnet}`,
       type: "GET",
     });
-    $(".AssignToUpdate").val(res.assignments.AssignToId);
     $(".AssetNameUpdate").val(res.assignments.AssetId);
     $(".NoteUpdate").val(res.assignments.Note);
     $(".TransferringUpdate").val(res.assignments.TransferringId);
@@ -48,17 +46,14 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const AssignTo = $(".AssignToUpdate").val();
     const AssetName = $(".AssetNameUpdate").val();
     const Transferring = $(".TransferringUpdate").val();
     const Note = $(".NoteUpdate").val();
 
-    console.log(39, Note);
     await $.ajax({
       url: `/assignments/api/${idAssigmnet}`,
       type: "PUT",
       data: {
-        AssignToId: AssignTo,
         AssetId: AssetName,
         TransferringId: Transferring,
         Note: Note,
