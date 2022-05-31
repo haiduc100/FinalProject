@@ -20,7 +20,7 @@ module.exports.filterAsset = async (req, res) => {
   try {
     const assets = await Asset.find({
       AssetName: { $regex: `.*${req.query.search}*` },
-    });
+    }).populate("Category");
     const category = await Category.find({});
     if (assets.length == 0) {
       res.status(404).json({ status: "Fail", message: "Asset not found" });
