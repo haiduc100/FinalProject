@@ -85,6 +85,9 @@ handleDelete = async (id) => {
 
 handleSearch = () => {
   const inp = $(".searchBox").val().trim();
-  
-  window.location.href = `/asset/filter?search=${inp}`;
+  if (inp.length === 0) {
+    alert("You must fill the search before you can search!!!");
+  } else {
+    window.location.href = `/asset/filter?search=${inp}`;
+  }
 };

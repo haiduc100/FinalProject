@@ -19,17 +19,14 @@ module.exports.getAllAsset = async (req, res) => {
 module.exports.filterAsset = async (req, res) => {
   try {
     const assets = await Asset.find({
-      AssetName: { $regex: `.*${req.query.search}*` },
+      AssetName: { $regex: req.query.search, $options: "i" },
     }).populate("Category");
     const category = await Category.find({});
-    if (assets.length == 0) {
-      res.status(404).json({ status: "Fail", message: "Asset not found" });
-    } else {
-      res.status(200).render("components/admin/assetFilterPage", {
-        listAssets: assets,
-        listCategory: category,
-      });
-    }
+
+    res.status(200).render("components/admin/assetFilterPage", {
+      listAssets: assets,
+      listCategory: category,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
