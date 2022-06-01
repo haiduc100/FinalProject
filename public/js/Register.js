@@ -14,16 +14,24 @@ function SetRegister()
 {
     let userName = $('#UserName').val();
     let PassWord = $('#PassWord').val();
+    let Email = $('#Email').val();
+    let FistName =  $('#FistName').val();
+    let LastName =  $('#LastName').val();
+    let PhoneNumber =  $('#Phone').val();
+    let sfPass =  $('#CFPassword').val();
+    // let gender =  $('#Female').
+    
     $.ajax({
         url: '/user/register',
         type: 'POST',
         data:{
-            FistName: String,
-            LastName: String,
-            Email: String,
-            PhoneNumber: String,
-            PassWord: String,
-            Gender: String,
+            FistName: FistName,
+            LastName: LastName,
+            Email: Email,
+            PhoneNumber: PhoneNumber,
+            PassWord: PassWord,
+            Gender: "Male",
+            // Role: "admin"
         }
     })
     .then((data)=>{

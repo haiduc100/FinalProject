@@ -16,6 +16,26 @@ module.exports.getAllAsset = async (req, res) => {
   }
 };
 
+module.exports.filterAsset = async (req, res) => {
+  try {
+    const assets = await Asset.find({
+      AssetName: { $regex: req.query.search, $options: "i" },
+    }).populate("Category");
+    const category = await Category.find({});
+
+    res.status(200).render("components/admin/assetFilterPage", {
+      listAssets: assets,
+      listCategory: category,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+
 module.exports.getAssetById = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.params.id });

@@ -125,7 +125,7 @@ module.exports.deleteUser = async (req, res) => {
 //     if (token) {
 
 //     }
-    
+
 //   } catch (error) {
 //     res.status(500).json({
 //       status: "Fail",
@@ -133,7 +133,6 @@ module.exports.deleteUser = async (req, res) => {
 //     });
 //   }
 // };
-
 
 //View html Login
 module.exports.getAllAssignmentsLogInUser = async (req, res) => {
@@ -148,35 +147,42 @@ module.exports.getAllAssignmentsLogInUser = async (req, res) => {
 };
 
 //LogIn user
-module.exports.LogInUser =  async (req, res) => {
+module.exports.LogInUser = async (req, res) => {
   try {
-      const data = await User.findOne({
-       UserName: req.body.UserName  
-      });
-      if (data) {
-          const checkPass = await bcrypt.compare(req.body.PassWord, data._doc.PassWord);
-          if (checkPass) {
-              const userID = data._id;
-              const token = jwt.sign({id: userID}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 160});
-              await User.updateOne({_id: data._id}, {token: token});
-          
-              res.cookie("user", token, {
-                  expires: new Date(Date.now() + 6000000),
-              });
-              res.json({
-                  message: "login successfully!",
-                  status: 200,
-                  err: false,
-                  userid: userID,
-              });
-          } else {
-              res.json({message: "Incorrect password!!!"});
-          }
+    const data = await User.findOne({
+      UserName: req.body.UserName,
+    });
+    if (data) {
+      const checkPass = await bcrypt.compare(
+        req.body.PassWord,
+        data._doc.PassWord
+      );
+      if (checkPass) {
+        const userID = data._id;
+        const token = jwt.sign(
+          { id: userID },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: 160 }
+        );
+        await User.updateOne({ _id: data._id }, { token: token });
+
+        res.cookie("user", token, {
+          expires: new Date(Date.now() + 6000000),
+        });
+        res.json({
+          message: "login successfully!",
+          status: 200,
+          err: false,
+          userid: userID,
+        });
       } else {
-          res.json({message: "login failed", status: 400, err: false});
+        res.json({ message: "Incorrect password!!!" });
       }
+    } else {
+      res.json({ message: "login failed", status: 400, err: false });
+    }
   } catch (error) {
-      res.json({message: "Error server", status: 500, err: error});
+    res.json({ message: "Error server", status: 500, err: error });
   }
 };
 
@@ -193,38 +199,44 @@ module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
 };
 
 //LogIn admin
-module.exports.LogInAdmin =  async (req, res) => {
+module.exports.LogInAdmin = async (req, res) => {
   try {
-      const data = await User.findOne({
-       UserName: req.body.UserName  
-      });
-      if (data) {
-          const checkPass = await bcrypt.compare(req.body.PassWord, data._doc.PassWord);
-     
-          if (checkPass) {
-              const userID = data._id;
-              const token = jwt.sign({id: userID}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 160});
-              await User.updateOne({_id: data._id}, {token: token});
-              res.cookie("admin", token, {
-                  expires: new Date(Date.now() + 6000000),
-              });
-              res.json({
-                  message: "login successfully!",
-                  status: 200,
-                  err: false,
-                  userid: userID,
-              });
-          } else {
-              res.json({message: "Incorrect password!!!"});
-          }
+    const data = await User.findOne({
+      UserName: req.body.UserName,
+    });
+    if (data) {
+      const checkPass = await bcrypt.compare(
+        req.body.PassWord,
+        data._doc.PassWord
+      );
+
+      if (checkPass) {
+        const userID = data._id;
+        const token = jwt.sign(
+          { id: userID },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: 160 }
+        );
+        await User.updateOne({ _id: data._id }, { token: token });
+        res.cookie("admin", token, {
+          expires: new Date(Date.now() + 6000000),
+        });
+        res.json({
+          message: "login successfully!",
+          status: 200,
+          err: false,
+          userid: userID,
+        });
       } else {
-          res.json({message: "login failed", status: 400, err: false});
+        res.json({ message: "Incorrect password!!!" });
       }
+    } else {
+      res.json({ message: "login failed", status: 400, err: false });
+    }
   } catch (error) {
-      res.json({message: "Error server", status: 500, err: error});
+    res.json({ message: "Error server", status: 500, err: error });
   }
 };
-
 
 //views html register
 module.exports.getAllAssignmentsRegister = async (req, res) => {
@@ -241,20 +253,23 @@ module.exports.getAllAssignmentsRegister = async (req, res) => {
 //register
 module.exports.Register = async (req, res) => {
   try {
-      const password = await bcrypt.hash(req.body.password, 10);
-      await UserModel.create({
-          username: req.body.username,
-          password: password,
-          role: req.body.role
-      });
-      // console.log(91,data);
-      res.json({
-          message: "Create user successfully",
-          status: 200,
-          err: false,
-      });
+    const password = await bcrypt.hash(req.body.Password, 10);
+    console.log(91,req.body);
+    await User.create({
+      FistName: req.body.FirstName,
+      LastName: req.body.LastName,
+      Email: req.body.Email,
+      Password: password,
+      Gender: req.body.Gender,
+      // Role: req.body.Role
+    });
+    res.json({
+      message: "Create user successfully",
+      status: 200,
+      err: false,
+    });
   } catch (error) {
-      res.json({message: "Error server", status: 500, err: error});
+    console.log(error);
+    res.json({ message: "Error server", status: 500, err: error });
   }
 };
-

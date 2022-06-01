@@ -25,8 +25,9 @@ app.set("view engine", "ejs");
 // app.set("views", "views");
 
 // Listening
-const PORT = process.env.PORT || 3000;
+const port = 3000;
+const PORT = process.env.PORT || port;
 
 app.listen(PORT, () => {
-  console.log("Listening...");
+  console.log("Listening at " + port);
 });

@@ -11,7 +11,6 @@ const AssignmentSchema = mongoose.Schema(
     AssignById: {
       type: String,
       ref: "User",
-      // require: true,
     },
     AssetId: {
       type: String,
@@ -24,12 +23,12 @@ const AssignmentSchema = mongoose.Schema(
       enum: ["accepted", "denied", "waiting"],
       default: "waiting",
     },
-    Note: String,
+    Note: { type: String, default: "Nothing yet" },
     IsReturning: { type: Boolean, default: false },
     TransferringId: {
       type: String,
       ref: "User",
-      default: "none",
+      default: "None",
     },
   },
   { collection: "Assignment", timestamps: true }

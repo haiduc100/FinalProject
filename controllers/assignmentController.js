@@ -46,10 +46,6 @@ module.exports.createAssignment = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.body.AssetId });
     if (asset.State == "available") {
-      req.body.AssignById = "6289ad862e01cafc92301eb4";
-      req.body.State = "waiting";
-      req.body.IsReturning = false;
-      req.body.TransferringId = "none";
       const assignment = await Assginment.create(req.body);
       res.status(200).json(assignment);
     } else {

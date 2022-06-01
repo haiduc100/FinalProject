@@ -9,7 +9,7 @@ const RequestReturnSchema = mongoose.Schema(
     },
     State: {
       type: String,
-      enum: ["completed", "declined","waiting"],
+      enum: ["completed", "declined", "waiting"],
       default: "waiting",
     },
     AssignmentId: {

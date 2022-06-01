@@ -25,7 +25,7 @@ router.post("/LogInAdmin", controller.LogInAdmin);
 router.get('/loginAdmin', controller.getAllAssignmentsLogInAdmin);
 
 //register
-router.post("/Register", check.checkDuplicate, controller.Register);
+router.post("/Register",controller.Register);
 //html register
 router.get('/register', controller.getAllAssignmentsRegister);
 
