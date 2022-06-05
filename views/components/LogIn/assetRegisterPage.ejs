@@ -1,71 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--===============================================================================================================-->
-    <link rel="icon" type="image/png" href="/public/dist/img/LogIn/favicon.ico"/>
-<!--===============================================================================================================-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-<!--===============================================================================================================-->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                 
-<!--================================================================================================================-->
-     <link rel="stylesheet" href="/public/dist/css/register.css">
-<!--================================================================================================================-->
 
-     <title> Register </title>
-   </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--===============================================================================================================-->
+  <link rel="icon" type="image/png" href="/public/dist/img/LogIn/favicon.ico" />
+  <!--===============================================================================================================-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!--===============================================================================================================-->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <!--================================================================================================================-->
+  <link rel="stylesheet" href="/public/dist/css/register.css">
+  <!--================================================================================================================-->
+
+  <title> Register </title>
+</head>
+
 <body>
   <div class="container">
     <div class="title">Registration</div>
     <div class="content">
       <form action="#">
         <div class="user-details">
+          <!-- fist name -->
           <div class="input-box">
             <span class="details">Fist Name</span>
             <input type="text" placeholder="Enter your fist name" required id="FistName">
           </div>
+          <!-- last name -->
           <div class="input-box">
             <span class="details">Last Name</span>
             <input type="text" placeholder="Enter your last name" required id="LastName">
           </div>
+          <!-- date of birth -->
           <div class="input-box">
-            <span class="details">Email</span>
-            <input type="text" placeholder="Enter your email" required id="Email">
+            <span class="details">DateOfBirth</span>
+            <input type="text" placeholder="Enter Date Of Birth" required id="dateofbirth">
           </div>
+          <!-- user name -->
           <div class="input-box">
-            <span class="details">Phone Number</span>
-            <input type="text" placeholder="Enter your number" required id="Phone">
+            <span class="details">User Name</span>
+            <input type="text" placeholder="Enter User Name" required id="UserName">
           </div>
+          <!-- pass word -->
           <div class="input-box">
             <span class="details">Password</span>
             <input type="password" placeholder="Enter your password" required id="PassWord">
           </div>
+          <!-- cf password -->
           <div class="input-box">
             <span class="details">Confirm Password</span>
             <input type="password" placeholder="Confirm your password" required id="CFPassword">
           </div>
+          <!-- staff code number -->
+          <div class="input-box">
+            <span class="details">StaffCode</span>
+            <input type="text" placeholder="Enter StaffCode" required id="StaffCode">
+          </div>
+          <!-- email -->
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" placeholder="Enter your email" required id="Email">
+          </div>
+          <!-- phone number -->
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            <input type="text" placeholder="Enter your number" required id="Phone">
+          </div>
+
         </div>
         <div class="gender-details">
           <input type="radio" name="gender" id="dot-1">
           <input type="radio" name="gender" id="dot-2">
-          <input type="radio" name="gender" id="dot-3">
           <span class="gender-title">Gender</span>
           <div class="category">
             <label for="dot-1">
-            <span class="dot one Female"></span>
-            <span class="gender">Male</span>
-          </label>
-          <label for="dot-2">
-            <span class="dot two Female"></span>
-            <span class="gender">Female</span>
-          </label>
-          <!-- <label for="dot-3">
-            <span class="dot three"></span>
-            <span class="gender">Prefer not to say</span>
-            </label> -->
+              <span class="dot one Female"></span>
+              <span class="gender">Male</span>
+            </label>
+            <label for="dot-2">
+              <span class="dot two Female"></span>
+              <span class="gender">Female</span>
+            </label>
           </div>
         </div>
+        <!-- role -->
+        <div class="gender-details">
+          <span class="gender-title">Role : </span>
+          <select id="selectbox1">
+            <option value="">Select an User&hellip;</option>
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <!-- button reg   -->
         <div class="button">
           <input type="submit" value="Register" onclick="SetRegister()">
         </div>
@@ -75,13 +105,11 @@
 
 </body>
 <!--===============================================================================================-->
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-crossorigin="anonymous"
-referrerpolicy="no-referrer"
-></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!--===============================================================================================-->
-<script src="/public/js/Register.js"></script>
+<script src="/public/js/user-Register.js"></script>
 <!--===============================================================================================-->
+
 </html>

@@ -1,5 +1,8 @@
 
-
+ .Image_bg{
+	background-image: url('/public/dist/img/LogIn/bg-LogIn.jpg') !important;
+	background-color: #d41f1f;
+   }
 
 
 

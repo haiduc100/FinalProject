@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.checkDuplicate = (req, res, next) => {
   console.log(200,req.body);
-    User.findOne({ Username: req.body.username })
+    User.findOne({ Username: req.body.UserName })
       .then((user) => {
         if (user) {
           res.json({
@@ -23,19 +23,18 @@ module.exports.checkDuplicate = (req, res, next) => {
   };
 
 
-  module.exports.checkRole =  (req, res, next) => {
-    try {
-      const role =  req.role
-      if (role == 0) {
-        next()
-      } else {
-        res.json("You must have permission admin to view this page")
-      }
-  
-    } catch (e) {
-      res.json(e)
-    }
-  }
+  // module.exports.checkRole =  (req, res, next) => {
+  //   try {
+  //     const role =  req.role
+  //     if (role == 0) {
+  //       next()
+  //     } else {
+  //       res.json("You must have permission admin to view this page")
+  //     }
+  //   } catch (e) {
+  //     res.json(e)
+  //   }
+  // }
 
 
 
@@ -49,7 +48,7 @@ module.exports.checkDuplicate = (req, res, next) => {
             req.Role = data.role;
             next();
           } else {
-            res.redirect("/user/LogIn");
+            res.redirect("asset");
           }
         })
         .catch((err) => {

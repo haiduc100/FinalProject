@@ -1,15 +1,4 @@
 
-// $.ajax({
-//     url: 'http://localhost:4000/user/Login',
-//     type: 'GET'
-// })
-// .then((data) => {
-//   console.log(data);  
-// }).catch((err) => {
-//     console.log(err);
-// });
-
-
 //
 function LoginUser()
 {

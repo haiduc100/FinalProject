@@ -1,35 +1,34 @@
-const controller = require("../controllers/userController");
 const router = require("express").Router();
+const CONTROLLER_ = require("../controllers/userController");
+const LOGIN_USER_ = require("../controllers/LogInUserController");
+const LOGIN_ADMIN_ = require("../controllers/LogInAdminController");
+const REGIGISTER_ = require("../controllers/RegisterController");
+const CHECK_ = require("../middlewares/checkrole");
+const CHECK_DUPP = require('../middlewares/checkController') 
 
-const check = require('../controllers/checkController')
+router.get("/api", CONTROLLER_.getAllUsers);
 
+router.get("/api/:id", CONTROLLER_.getUserById);
 
-router.get("/api", controller.getAllUsers);
+router.post("/api", CONTROLLER_.createUser);
 
-router.get("/api/:id", controller.getUserById);
+router.put("/api/:id", CONTROLLER_.updateUser);
 
-router.post("/api", controller.createUser);
-
-router.put("/api/:id", controller.updateUser);
-
-router.delete("/api/:id", controller.deleteUser);
+router.delete("/api/:id", CONTROLLER_.deleteUser);
 
 //HungXoan - LogInUser
-router.post("/LogIn", controller.LogInUser);
+router.post("/LogIn", LOGIN_USER_.LogInUser);
 //html user
-router.get('/login', controller.getAllAssignmentsLogInUser);
+router.get("/login", LOGIN_USER_.getAllAssignmentsLogInUser);
 
 //admin
-router.post("/LogInAdmin", controller.LogInAdmin);
+router.post("/LogInAdmin", CHECK_.checkRole, LOGIN_ADMIN_.LogInAdmin);
 //html admin
-router.get('/loginAdmin', controller.getAllAssignmentsLogInAdmin);
+router.get("/loginAdmin", LOGIN_ADMIN_.getAllAssignmentsLogInAdmin);
 
 //register
-router.post("/Register",controller.Register);
+router.post("/Register", CHECK_DUPP.checkDuplicate,REGIGISTER_.Register);
 //html register
-router.get('/register', controller.getAllAssignmentsRegister);
-
-
-
+router.get("/register", REGIGISTER_.getAllAssignmentsRegister);
 
 module.exports = router;
