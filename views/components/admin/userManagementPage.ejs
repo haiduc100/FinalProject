@@ -77,7 +77,7 @@
             data-target="#exampleModal"
             onclick="openAddModal()"
           >
-            Add New Asset
+            Add New User Account
           </button>
 
           <!-- Modal -->
@@ -105,60 +105,91 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createAsset">
-                    <input
-                      type="text"
-                      name="AssetName"
-                      id=""
-                      placeholder="AssetName"
-                      class="AssetName"
-                    />
-                    <br />
-                    <select name="Category" id="" class="Category">
-                      <% listCategory.map((value)=>{%>
-                      <option value="<%= value._id %>">
-                        <%= value.CategoryName %>
-                      </option>
-                      <% })%>
-                    </select>
-                    <br />
-
-                    <input
-                      type="number"
-                      name="AssetDate"
-                      placeholder="AssetDate"
-                      class="AssetDate"
-                    />
-                  </div>
-
-                  <div class="updateAsset">
+                  <div class="createAccount">
                     <div class="form-group">
-                      <label for="">Asset Name</label>
+                      <label for="FirstName">First Name</label>
                       <input
                         type="text"
-                        name="AssetName"
-                        id=""
-                        placeholder="AssetName"
-                        class="AssetNameUpdate"
+                        class="FirstName"
+                        name="FirstName"
+                        placeholder="First Name"
                       />
                     </div>
                     <div class="form-group">
-                      <label for="">State</label>
-                      <select name="State" id="" class="State">
-                        <option value="unavailable">Unavailable</option>
-                        <option value="available">Available</option>
-                        <option value="waiting">Waiting</option>
-                        <option value="recycled">Recycled</option>
+                      <label for="LastName">Last Name</label>
+                      <input
+                        type="text"
+                        class="LastName"
+                        name="LastName"
+                        placeholder="Last Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="DateOfBirth">Date Of Birth</label>
+                      <input
+                        type="date"
+                        class="DateOfBirth"
+                        name="DateOfBirth"
+                        placeholder="Date Of Birth"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Role</label>
+                      <select class="roleCreate">
+                        <option value="0">Admin</option>
+                        <option value="1">Staff</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="">Category</label>
-                      <select name="Category" id="" class="CategoryUpdate">
-                        <% listCategory.map((value)=>{%>
-                        <option value="<%= value._id %>">
-                          <%= value.CategoryName %>
-                        </option>
-                        <% })%>
+                      <label>Gender</label>
+                      <select class="Gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="UserName">User Name</label>
+                      <input
+                        type="text"
+                        class="UserName"
+                        name="UserName"
+                        placeholder="User Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="StaffCode">Staff Code</label>
+                      <input
+                        type="text"
+                        class="StaffCode"
+                        name="StaffCode"
+                        placeholder="Staff Code"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="Password">Password</label>
+                      <input
+                        type="password"
+                        class="Password"
+                        name="Password"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="Email">Email</label>
+                      <input
+                        type="text"
+                        class="Email"
+                        name="Email"
+                        placeholder="Email"
+                      />
+                    </div>
+                  </div>
+                  <div class="updateAccount">
+                    <div class="form-group">
+                      <label>Role</label>
+                      <select class="roleUpdate">
+                        <option value="0">Admin</option>
+                        <option value="1">Staff</option>
                       </select>
                     </div>
                   </div>
@@ -197,23 +228,31 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Asset Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Asset Date</th>
-                        <th scope="col">Created Date</th>
-                        <th scope="col">State</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Date Of Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">StaffCode</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listAssets.map((value,index)=>{ %>
+                      <% listUser.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td><%= value.AssetName %></td>
-                        <td><%= value.Category.CategoryName %></td>
-                        <td><%= value.AssetDate %></td>
-                        <td><%= value.CreatedDate.toLocaleDateString() %></td>
-                        <td><%= value.State %></td>
+                        <td><%= value.FirstName %></td>
+                        <td><%= value.LastName %></td>
+                        <td>
+                          <%=value.DateOfBirth?
+                          value.DateOfBirth.toLocaleString('fr-CA', { year:
+                          'numeric', month: '2-digit', day: '2-digit' }):null %>
+                        </td>
+                        <td><%= value.Gender %></td>
+                        <td><%= value.Role %></td>
+                        <td><%= value.UserName %></td>
+                        <td><%= value.StaffCode %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -247,6 +286,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-AssetPage.js"></script>
+    <script src="/public/js/admin-UserPage.js"></script>
   </body>
 </html>

@@ -4,8 +4,10 @@ const jwt = require("jsonwebtoken");
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const user = await User.find();
-    res.status(200).json(user);
+    const users = await User.find();
+    res.render("components/admin/userManagementPage", {
+      listUser: users,
+    });
   } catch (error) {
     res.status(500).json({
       status: "Fail",
@@ -57,6 +59,7 @@ module.exports.createUser = async (req, res) => {
       data: { newUser, token },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,
@@ -125,7 +128,7 @@ module.exports.deleteUser = async (req, res) => {
 //     if (token) {
 
 //     }
-    
+
 //   } catch (error) {
 //     res.status(500).json({
 //       status: "Fail",
@@ -133,5 +136,3 @@ module.exports.deleteUser = async (req, res) => {
 //     });
 //   }
 // };
-
-

@@ -5,7 +5,7 @@ const UserSchema = mongoose.Schema(
   {
     FirstName: String,
     LastName: String,
-    DateOfBirth: String,
+    DateOfBirth: Date,
     Gender: {
       type: String,
       default: "Male",

@@ -32,7 +32,7 @@ openUpdate = async (id) => {
       url: `/asset/api/${idAsset}`,
       type: "GET",
     });
-
+    
     $(".CategoryUpdate").val(res.asset.Category);
     $(".AssetNameUpdate").val(res.asset.AssetName);
     $(".State").val(res.asset.State);
