@@ -37,12 +37,7 @@ module.exports.LogInUser = async (req, res) => {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 6000000)
         });
-        res.json({
-          message: "login successfully!",
-          status: 200,
-          err: false,
-          userid: userID,
-        });
+        res.redirect('/')
         //ve trag home
        // res.render("pages/home", { listAsset: userID });
       } else {
@@ -54,6 +49,8 @@ module.exports.LogInUser = async (req, res) => {
       // res.render("components/LogIn/assetLogInPage");
     }
   } catch (error) {
+    console.log(55, error);
+
     res.json({ message: "Error server", status: 500, err: error });
   }
 };

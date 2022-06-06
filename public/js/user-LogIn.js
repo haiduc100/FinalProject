@@ -13,13 +13,13 @@ function LoginUser()
         }
     })
     .then((data)=>{
-         console.log(data);
+         console.log(16, data);
     })
     .catch((err)=>
     {
-         console.log(err);
+         console.log(20, err);
     })
-    console.log(UserName,PassWord );
+    console.log(userName,PassWord );
 }
 
 

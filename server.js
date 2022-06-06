@@ -29,5 +29,5 @@ const port = 3000;
 const PORT = process.env.PORT || port;
 
 app.listen(PORT, () => {
-  console.log("Listening at " + port);
+  console.log("Listening at " + PORT);
 });

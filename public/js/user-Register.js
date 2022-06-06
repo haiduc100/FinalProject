@@ -20,8 +20,6 @@ function GetRadioChecked() {
   }
 }
 
-
-
 function SetRegister() {
   let FirstName = $("#FistName").val();
   let LastName = $("#LastName").val();

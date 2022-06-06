@@ -5,5 +5,5 @@ const CHECK_LOGIN = require('../middlewares/checkController')
 
 
 
-router.get("/", CHECK_LOGIN.checkLogin,CHECK_ROLE.checkRole, controller.getAllUser);
+router.get("/", CHECK_LOGIN.checkLogin, CHECK_ROLE.checkRole, controller.getAllUser);
 module.exports = router;

@@ -40,22 +40,26 @@ module.exports.checkDuplicate = (req, res, next) => {
 
   module.exports.checkLogin = (req, res, next) => {
     const cookies = req.cookies.user;
-    if (cookies) {
-      const userid = jwt.verify(cookies,  process.env.ACCESS_TOKEN_SECRET);
-      User.findOne({ _id: userid, token: cookies })
-        .then((data) => {
-          if (data) {
-            req.Role = data.role;
-            next();
-          } else {
-            res.redirect("asset");
-          }
-        })
-        .catch((err) => {
-          res.json(err);
-        });
-    } else {
-      res.redirect("/user/LogIn");
+    try {
+      if (cookies) {
+        const userid = jwt.verify(cookies,  process.env.ACCESS_TOKEN_SECRET).id;
+        User.findOne({ _id: userid, token: cookies })
+          .then((data) => {
+            if (data) {
+              req.Role = data.role;
+              next();
+            } else {
+              res.redirect("asset");
+            }
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      } else {
+        res.redirect("/user/LogIn");
+      }
+    } catch (error) {
+      console.log(62, error);
     }
   };
 
