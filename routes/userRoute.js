@@ -1,7 +1,7 @@
 const controller = require("../controllers/userController");
 const router = require("express").Router();
 
-router.get("/api", controller.getAllUsers);
+router.get("/", controller.getAllUsers);
 
 router.get("/api/:id", controller.getUserById);
 
