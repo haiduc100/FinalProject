@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const indexRoute = require("./indexRoute");
-router.use("/", indexRoute);
+router.use("/home", indexRoute);
 
 const assetRoute = require("./assetRoute");
 router.use("/asset", assetRoute);

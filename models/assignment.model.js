@@ -23,6 +23,7 @@ const AssignmentSchema = mongoose.Schema(
       enum: ["accepted", "denied", "waiting"],
       default: "waiting",
     },
+    Amount: Number,
     Note: { type: String, default: "Nothing yet" },
     IsReturning: { type: Boolean, default: false },
     TransferringId: {

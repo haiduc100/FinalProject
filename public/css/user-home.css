@@ -1,0 +1,58 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.navbar-brand img {
+  width: 50px;
+  height: 50px;
+}
+
+.search-input {
+  display: flex;
+}
+
+.listCategory ul {
+  list-style: none;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.listCategory ul li {
+  border: 1px solid #c1c1c1;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+}
+.listCategory ul li a {
+  width: 100%;
+  text-align: center;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.newAsset-button button {
+  margin: 10px 30px;
+  border-radius: 0px;
+}
+
+.table {
+  max-width: 95%;
+  margin: auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination button {
+  text-align: center;
+  padding: 3px 10px;
+  margin: 5px 5px 20px 5px;
+}

@@ -1,8 +1,6 @@
 const Assginment = require("../models/assignment.model");
 const Asset = require("../models/asset.model");
 const User = require("../models/user.model");
-
-
 module.exports.getAllAssignments = async (req, res) => {
   try {
     const assignments = await Assginment.find()
