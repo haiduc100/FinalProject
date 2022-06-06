@@ -13,7 +13,10 @@ function LoginUser()
         }
     })
     .then((data)=>{
-         console.log(16, data);
+        console.log(data);
+        if(data.status === 200){
+            window.location.href='/home'
+        }
     })
     .catch((err)=>
     {

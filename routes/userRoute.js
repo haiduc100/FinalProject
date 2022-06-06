@@ -22,7 +22,7 @@ router.post("/LogIn", LOGIN_USER_.LogInUser);
 router.get("/login", LOGIN_USER_.getAllAssignmentsLogInUser);
 
 //admin
-router.post("/LogInAdmin", CHECK_.checkRole, LOGIN_ADMIN_.LogInAdmin);
+router.post("/LogInAdmin", LOGIN_ADMIN_.LogInAdmin);
 //html admin
 router.get("/loginAdmin", LOGIN_ADMIN_.getAllAssignmentsLogInAdmin);
 

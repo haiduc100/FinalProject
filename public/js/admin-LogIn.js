@@ -20,13 +20,13 @@ function LoginAdmin()
         }
     })
     .then((data)=>{
-         console.log(data);
+         console.log(23, data);
     })
     .catch((err)=>
     {
-         console.log(err);
+         console.log(27, err);
     })
-    console.log(userName,PassWord );
+    console.log(userName,passWord );
 }
 
 

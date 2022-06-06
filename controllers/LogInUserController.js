@@ -37,7 +37,8 @@ module.exports.LogInUser = async (req, res) => {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 6000000)
         });
-        res.redirect('/')
+        res.status(200).json({mess:'login success', status: 200})
+        console.log(41)
         //ve trag home
        // res.render("pages/home", { listAsset: userID });
       } else {

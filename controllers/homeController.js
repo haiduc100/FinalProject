@@ -43,15 +43,14 @@ module.exports.postRequestByAssetNew = async (req, res) => {
 };
 module.exports.getFind = async (req, res) => {
   try {
+    console.log(46, req.query);
     const assets = await Asset.find({
       AssetName: { $regex: req.query.search, $options: "i" },
-      page: req.query.page,
-      limit: req.query.limit,
     })
       .populate("Category")
       .skip(req.query.limit * (req.query.page - 1))
       .limit(req.query.limit);
-
+    console.log(53, assets);
     if (assets) {
       const listCategory = await Category.find({});
       const total = await Asset.find({

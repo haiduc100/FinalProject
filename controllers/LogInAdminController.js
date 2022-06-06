@@ -19,15 +19,17 @@ module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
 //LogIn admin
 module.exports.LogInAdmin = async (req, res) => {
   try {
+    console.log(22, req.body);
     const data = await User.findOne({
       UserName: req.body.UserName,
     });
+    console.log(26, data);
     if (data) {
       const checkPass = await bcrypt.compare(
         req.body.PassWord,
         data._doc.Password
       );
-
+      console.log(32, checkPass);
       if (checkPass) {
         const userID = data._id;
         const token = jwt.sign(
