@@ -46,6 +46,7 @@ module.exports.createAssignment = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.body.AssetId });
     if (asset.State == "available") {
+      req.body.AssignBy = req.userId;
       const assignment = await Assginment.create(req.body);
       res.status(200).json(assignment);
     } else {
@@ -71,6 +72,7 @@ module.exports.updateAssignment = async (req, res) => {
         message: "Can not find assignment",
       });
     }
+    req.body.AssignById = req.userId;
     const newAssignment = await Assginment.updateOne(
       { _id: req.params.id },
       req.body

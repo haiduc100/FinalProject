@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const controller = require("../controllers/categoryController");
-const CHECK_ROLE = require('../middlewares/checkrole') 
 const CHECK_LOGIN = require('../middlewares/checkController') 
 
 

@@ -55,6 +55,7 @@ module.exports.createRequestByNew = async (req, res) => {
 
 module.exports.updateRequestByNew = async (req, res) => {
   try {
+    req.body.AccecptBy = req.userId;
     const request = await RequestByNew.findByIdAndUpdate(
       { _id: req.params.id },
       req.body

@@ -69,6 +69,7 @@ module.exports.createRequestReturning = async (req, res) => {
 
 module.exports.updateRequestReturning = async (req, res) => {
   try {
+    req.body.AccecptBy = req.userId;
     const updateRequestReturning = await RequestReturning.findByIdAndUpdate(
       {
         _id: req.params.id,

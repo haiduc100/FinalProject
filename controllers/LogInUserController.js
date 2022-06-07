@@ -2,7 +2,6 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 //View html Login
 module.exports.getAllAssignmentsLogInUser = async (req, res) => {
   try {
@@ -33,20 +32,20 @@ module.exports.LogInUser = async (req, res) => {
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: 160 }
         );
-        await User.updateOne({ _id: data._id }, { token: token });
+        await User.updateOne({ _id: data._id }, { Token: token });
         res.cookie("user", token, {
-          expires: new Date(Date.now() + 6000000)
+          expires: new Date(Date.now() + 6000000),
         });
-        res.status(200).json({mess:'login success', status: 200})
-        console.log(41)
+        res.status(200).json({ mess: "login success", status: 200 });
+        console.log(41);
         //ve trag home
-       // res.render("pages/home", { listAsset: userID });
+        // res.render("pages/home", { listAsset: userID });
       } else {
         res.json({ message: "Incorrect password!!!" });
       }
     } else {
       res.json({ message: "login failed", status: 400, err: false });
-     
+
       // res.render("components/LogIn/assetLogInPage");
     }
   } catch (error) {

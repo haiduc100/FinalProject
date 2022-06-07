@@ -49,7 +49,7 @@ handleUpdate = async () => {
     const AssetName = $(".AssetNameUpdate").val();
     const Transferring = $(".TransferringUpdate").val();
     const Note = $(".NoteUpdate").val();
-
+    const State = $(".StateUpdate").val();
     await $.ajax({
       url: `/assignments/api/${idAssigmnet}`,
       type: "PUT",
@@ -57,6 +57,7 @@ handleUpdate = async () => {
         AssetId: AssetName,
         TransferringId: Transferring,
         Note: Note,
+        State: State,
       },
     });
     window.location.reload();
