@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/public/css/user-category.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="body">
+    <div>
+      <div>
+        <nav class="navbar bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand">
+              MY<img src="/public/img/logo.gif" alt="" /> ASSET
+            </a>
+            <div class="search-input">
+              <form class="d-flex" role="search">
+                <input
+                  class="form-control me-2"
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+              </form>
+              <button
+                class="btn btn-outline-success"
+                type="submit"
+                onclick="SearchAsset()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="listCategory">
+        <ul>
+          <% listCategory.map((value)=>{%>
+          <li>
+            <a href="/home/findCategory?search=<%=value.id%>"
+              ><%=value.CategoryName%></a
+            >
+          </li>
+          <% })%>
+        </ul>
+      </div>
+
+      <div class="newAsset">
+        <div class="newAsset-button">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            New Asset
+          </button>
+        </div>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <table>
+                  <tr>
+                    <td><span>AssetName</span></td>
+                    <td>
+                      <input
+                        type="text"
+                        id="AssetName"
+                        placeholder="AssetName"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>Amount</span></td>
+                    <td>
+                      <input type="text" id="Amount" placeholder="Amount" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>Category</span></td>
+                    <td>
+                      <select id="Category">
+                        <% listCategory.map((value)=>{%>
+                        <option value="<%= value._id %>">
+                          <%= value.CategoryName %>
+                        </option>
+                        <% })%>
+                      </select>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="newAsset()"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div-table"><%- include('./user-pagination.ejs')%></div>
+
+      <div class="pagination">
+        <% for (var i = 1; i<=total ; i++){%>
+        <button onclick="log('<%= i %>',15)"><%= i %></button>
+        <% } %>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="/public/js/user-category.js"></script>
+</html>

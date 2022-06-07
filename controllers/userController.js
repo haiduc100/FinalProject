@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 module.exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -121,18 +122,3 @@ module.exports.deleteUser = async (req, res) => {
   }
 };
 
-// module.exports.checkRole = async (req, res, next) => {
-
-//   try {
-//     const token = req.cookies.user;
-//     if (token) {
-
-//     }
-
-//   } catch (error) {
-//     res.status(500).json({
-//       status: "Fail",
-//       error,
-//     });
-//   }
-// };

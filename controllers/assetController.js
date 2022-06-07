@@ -2,6 +2,7 @@ const Asset = require("../models/asset.model");
 const Category = require("../models/category.model");
 module.exports.getAllAsset = async (req, res) => {
   try {
+    console.log(123);
     const asset = await Asset.find({}).populate("Category");
     const category = await Category.find({});
     res.render("components/admin/assetManagementPage", {
@@ -79,7 +80,6 @@ module.exports.updateAsset = async (req, res) => {
         message: "Can not find asset",
       });
     }
-
     await Asset.updateOne({ _id: req.params.id }, req.body);
     const newAsset = await Asset.findOne({ _id: req.params.id });
     res.status(200).json({
