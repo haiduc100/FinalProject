@@ -20,7 +20,6 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Home</a>
         </li>
-      
       </ul>
 
       <!-- Right navbar links -->
@@ -161,7 +160,10 @@
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.RequestBy.StaffCode %></td>
                         <td><%= value.State %></td>
-                        <td><%= value.AccecptBy.StaffCode %></td>
+                        <td>
+                          <%= value.AccecptBy ? value.AccecptBy.StaffCode :
+                          null%>
+                        </td>
                         <td><%= value.Category.CategoryName %></td>
                         <td><%= value.AssetName %></td>
                         <td>

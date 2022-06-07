@@ -101,20 +101,6 @@
                       <option value="completed">Completed</option>
                       <option value="declined">Declined</option>
                     </select>
-                    <br />
-                    <label for="AccecptByUpdate">Accecpt By</label>
-
-                    <select
-                      name="AccecptByUpdate"
-                      id=""
-                      class="AccecptByUpdate"
-                    >
-                      <% listUsers.map((value)=>{%>
-                      <option value="<%= value._id %>">
-                        <%= value.StaffCode %>
-                      </option>
-                      <% })%>
-                    </select>
                   </div>
                 </div>
                 <div class="modal-footer">

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const controller = require("../controllers/assignmentController");
+const CHECK_LOGIN = require('../middlewares/checkController') 
 
 router.get("/", controller.getAllAssignments);
 router.get("/api/:id", controller.getAssignmentById);

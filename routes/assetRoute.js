@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const controller = require("../controllers/assetController");
+const CHECK_LOGIN = require('../middlewares/checkController') 
 
 router.get("/", controller.getAllAsset);
 router.get("/filter", controller.filterAsset);
