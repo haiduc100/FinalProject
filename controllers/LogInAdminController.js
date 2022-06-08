@@ -26,22 +26,29 @@ module.exports.LogInAdmin = async (req, res) => {
         data._doc.Password
       );
       if (checkPass) {
-        const userID = data._id;
-        const token = jwt.sign(
-          { id: userID },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: 160 }
-        );
-        await User.updateOne({ _id: data._id }, { Token: token });
-        res.cookie("admin", token, {
-          expires: new Date(Date.now() + 6000000),
-        });
-        res.json({
-          message: "login successfully!",
-          status: 200,
-          err: false,
-          userid: userID,
-        });
+        if (data.Role === 0) {
+          const userID = data._id;
+          const token = jwt.sign(
+            { id: userID },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: 16000 }
+          );
+          await User.updateOne({ _id: data._id }, { Token: token });
+          res.cookie("admin", token, {
+            expires: new Date(Date.now() + 6000000),
+          });
+          res.json({
+            message: "login successfully!",
+            status: 200,
+            err: false,
+            userid: userID,
+          });
+        } else {
+          res.status(400).json({
+            message:
+              "You must have the administrator role to access this page!!!",
+          });
+        }
       } else {
         res.json({ message: "Incorrect password!!!" });
       }

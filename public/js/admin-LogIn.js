@@ -16,12 +16,18 @@ function LoginAdmin() {
     },
   })
     .then((data) => {
-      if (data.status == 200) {
+      if (data.status === 200) {
         window.location.href = "/user";
+      } else {
+        alert(data.message);
       }
     })
     .catch((err) => {
-      console.log(27, err);
+      if (err.status === 400) {
+        alert(err.responseJSON.message);
+      } else {
+        console.log(27, err);
+      }
     });
   console.log(userName, passWord);
 }

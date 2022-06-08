@@ -2,12 +2,12 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 module.exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.render("components/admin/userManagementPage", {
       listUser: users,
+      staff: req.staff,
     });
   } catch (error) {
     res.status(500).json({
@@ -121,4 +121,3 @@ module.exports.deleteUser = async (req, res) => {
     });
   }
 };
-

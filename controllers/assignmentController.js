@@ -13,6 +13,7 @@ module.exports.getAllAssignments = async (req, res) => {
       listAssignment: assignments,
       listUser: users,
       listAsset: assets,
+      staff: req.staff,
     });
   } catch (error) {
     res.status(500).json({
@@ -46,7 +47,6 @@ module.exports.createAssignment = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.body.AssetId });
     if (asset.State == "available") {
-      req.body.AssignBy = req.userId;
       const assignment = await Assginment.create(req.body);
       res.status(200).json(assignment);
     } else {
@@ -66,23 +66,25 @@ module.exports.createAssignment = async (req, res) => {
 module.exports.updateAssignment = async (req, res) => {
   try {
     const assignment = await Assginment.findOne({ _id: req.params.id });
-    if (!assignment) {
-      return res.status(400).json({
+
+    req.body.AssignById = req.userId;
+    if (req.body.AssignById == assignment.AssignToId) {
+      res.status(400).json({
         status: "Fail",
-        message: "Can not find assignment",
+        message: "Can not assign for your self!!",
+      });
+    } else {
+      const newAssignment = await Assginment.updateOne(
+        { _id: req.params.id },
+        req.body
+      );
+      res.status(200).json({
+        status: "success",
+        data: { newAssignment },
       });
     }
-    req.body.AssignById = req.userId;
-    const newAssignment = await Assginment.updateOne(
-      { _id: req.params.id },
-      req.body
-    );
-
-    res.status(200).json({
-      status: "success",
-      data: { newAssignment },
-    });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,

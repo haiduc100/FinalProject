@@ -2,12 +2,13 @@ const Asset = require("../models/asset.model");
 const Category = require("../models/category.model");
 module.exports.getAllAsset = async (req, res) => {
   try {
-    console.log(123);
     const asset = await Asset.find({}).populate("Category");
     const category = await Category.find({});
+
     res.render("components/admin/assetManagementPage", {
       listAssets: asset,
       listCategory: category,
+      staff: req.staff,
     });
   } catch (error) {
     res.status(500).json({
@@ -27,6 +28,7 @@ module.exports.filterAsset = async (req, res) => {
     res.status(200).render("components/admin/assetFilterPage", {
       listAssets: assets,
       listCategory: category,
+      staff: req.staff,
     });
   } catch (error) {
     console.log(error);

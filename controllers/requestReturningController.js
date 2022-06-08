@@ -11,6 +11,8 @@ module.exports.getAllRequestReturn = async (req, res) => {
     res.render("components/admin/requestReturnPage", {
       listRequestReturning: requestReturning,
       listUsers: users,
+      staff: req.staff,
+
     });
   } catch (error) {
     res.status(500).json({
