@@ -64,7 +64,9 @@ handleUpdate = async () => {
 
     idAssigmnet = 0;
   } catch (error) {
-    console.log(error);
+    if (error.status === 400) {
+      alert(error.responseJSON.message);
+    }
   }
 };
 

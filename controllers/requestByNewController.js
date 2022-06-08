@@ -14,6 +14,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
       listRequest: requests,
       listUser: users,
       listCategory: categorys,
+      staff: req.staff,
     });
   } catch (error) {
     res.status(500).json({

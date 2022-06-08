@@ -30,7 +30,7 @@ module.exports.LogInUser = async (req, res) => {
         const token = jwt.sign(
           { id: userID },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: 160 }
+          { expiresIn: 16000 }
         );
         await User.updateOne({ _id: data._id }, { Token: token });
         res.cookie("user", token, {

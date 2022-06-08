@@ -3,7 +3,6 @@
     <tr>
       <th scope="col">STT</th>
       <th scope="col">AssetName</th>
-      <th scope="col">Amount</th>
       <th scope="col">Category</th>
       <th scope="col">State</th>
       <th scope="col">AssetDate</th>
@@ -16,7 +15,6 @@
     <tr>
       <th scope="row"><%= index+1 %></th>
       <td><%= asset.AssetName %></td>
-      <td><%= asset.Amount %></td>
       <td><%= asset.Category.CategoryName %></td>
       <td><%= asset.State %></td>
       <td><%= asset.AssetDate %></td>
@@ -29,7 +27,7 @@
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >
-            Add Asset
+            Add Assignment
           </button>
         </div>
       </td>

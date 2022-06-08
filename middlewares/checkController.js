@@ -33,24 +33,22 @@ module.exports.checkDuplicate = (req, res, next) => {
 //   }
 // }
 
-module.exports.checkLogin = (req, res, next) => {
-  const cookies = req.cookies.admin;
+module.exports.checkLogin = async (req, res, next) => {
+  const cookies = await req.cookies.admin;
   try {
     if (cookies) {
-      const userid = jwt.verify(cookies, process.env.ACCESS_TOKEN_SECRET).id;
-      User.findOne({ _id: userid, Token: cookies })
-        .then((data) => {
-          if (data) {
-            req.Role = data.role;
-            req.userId = userid;
-            next();
-          } else {
-            res.redirect("/user/LogInAdmin");
-          }
-        })
-        .catch((err) => {
-          res.json(err);
-        });
+      const userid = await jwt.verify(cookies, process.env.ACCESS_TOKEN_SECRET)
+        .id;
+      const data = await User.findOne({ _id: userid });
+
+      if (data) {
+        req.Role = data.role;
+        req.userId = userid;
+        req.staff = data.StaffCode;
+        next();
+      } else {
+        res.redirect("/user/LogInAdmin");
+      }
     } else {
       res.redirect("/user/LogInAdmin");
     }
