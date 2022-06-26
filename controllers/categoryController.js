@@ -1,8 +1,24 @@
 const Category = require("../models/category.model");
 module.exports.getAllCategories = async (req, res) => {
   try {
-    const category = await Category.find();
-    res.json(category);
+    const categorys = await Category.find({});
+    res.status(200).render("components/admin/categoryManagementPage", {
+      listCategory: categorys,
+      staff: req.staff,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+
+module.exports.getCategorieById = async (req, res) => {
+  try {
+    const category = await Category.findOne({ _id: req.params.id });
+
+    res.status(200).json(category);
   } catch (error) {
     res.status(500).json({
       status: "Fail",
@@ -20,9 +36,9 @@ module.exports.createCategory = async (req, res) => {
     if (category) {
       return res
         .status(400)
-        .json({ status: "Fail", message: "Category already exists" });
+        .json({ status: "Fail", message: "Category already exists!!!" });
     }
-
+    console.log(41, req.body);
     const newCategory = await Category.create(req.body);
 
     res.status(200).json({

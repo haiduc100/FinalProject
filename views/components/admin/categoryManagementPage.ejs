@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Request Returning</title>
+    <title>Asset Management</title>
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
@@ -21,12 +21,64 @@
           <a href="#" class="nav-link">Home</a>
         </li>
       </ul>
-    </nav>
 
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Navbar Search -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-widget="navbar-search"
+            href="#"
+            role="button"
+          >
+            <i class="fas fa-search"></i>
+          </a>
+          <div class="navbar-search-block">
+            <form class="form-inline">
+              <div class="input-group input-group-sm">
+                <input
+                  class="form-control form-control-navbar searchBox"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-navbar"
+                    type="button"
+                    onclick="handleSearch()"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button
+                    class="btn btn-navbar"
+                    type="button"
+                    data-widget="navbar-search"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </nav>
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            onclick="openAddModal()"
+          >
+            Add New Category
+          </button>
+
           <!-- Modal -->
           <div
             class="modal fade"
@@ -52,28 +104,24 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="updateAsset">
-                    <div class="form-group">
-                      <label for="StateUpdate">State</label>
-                      <select name="StateUpdate" id="" class="StateUpdate">
-                        <option value="accepted">Accepted</option>
-                        <option value="declined">Declined</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="AssetName">Asset Name</label>
-                      <input type="text" class="AssetName" />
-                    </div>
-                    <div class="form-group">
-                      <label for="Category">Category</label>
-                      <select name="Category" id="" class="CategoryUpdate">
-                        <% listCategory.map((value)=>{%>
-                        <option value="<%= value._id %>">
-                          <%= value ? value.CategoryName : null %>
-                        </option>
-                        <% })%>
-                      </select>
-                    </div>
+                  <div class="createCategory">
+                    <input
+                      type="text"
+                      name="CategoryName"
+                      id=""
+                      placeholder="Category Name"
+                      class="CategoryName"
+                    />
+                  </div>
+
+                  <div class="updateCategory">
+                    <input
+                      type="text"
+                      name="CategoryNameUpdate"
+                      id=""
+                      placeholder="Update Category Name"
+                      class="CategoryNameUpdate"
+                    />
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -86,6 +134,13 @@
                   </button>
                   <button
                     type="button"
+                    class="btn btn-primary addbtn"
+                    onclick="handleAddNew()"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
                     class="btn btn-primary updatebtn"
                     onclick="handleUpdate()"
                   >
@@ -95,6 +150,7 @@
               </div>
             </div>
           </div>
+
           <section class="content">
             <div class="container-fluid">
               <div class="row">
@@ -103,32 +159,15 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Request By</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Accepted By</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Asset Name</th>
+                        <th scope="col">Category Name</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listRequest.map((value,index)=>{ %>
+                      <% listCategory.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td>
-                          <%= value.RequestBy ? value.RequestBy.StaffCode : null
-                          %>
-                        </td>
-                        <td><%= value.State %></td>
-                        <td>
-                          <%= value.AccecptBy ? value.AccecptBy.StaffCode :
-                          null%>
-                        </td>
-                        <td>
-                          <%= value.Category ? value.Category.CategoryName :
-                          null %>
-                        </td>
-                        <td><%= value.AssetName %></td>
+                        <td><%= value.CategoryName %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -137,6 +176,12 @@
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
+                          </p>
+                          <p
+                            class="btn btn-danger"
+                            onclick="handleDelete('<%= value._id %>')"
+                          >
+                            Delete
                           </p>
                         </td>
                       </tr>
@@ -156,6 +201,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestByNewPage.js"></script>
+    <script src="/public/js/admin-CategoryPage.js"></script>
   </body>
 </html>

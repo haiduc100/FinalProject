@@ -10,6 +10,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
 
     const categorys = await Category.find({});
     const users = await User.find({});
+
     res.render("components/admin/requestByNewPage", {
       listRequest: requests,
       listUser: users,
@@ -19,7 +20,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "Fail",
-      error,
+      error: error,
     });
   }
 };
