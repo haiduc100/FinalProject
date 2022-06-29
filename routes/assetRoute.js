@@ -1,12 +1,42 @@
 const router = require("express").Router();
 const controller = require("../controllers/assetController");
-const CHECK_LOGIN = require("../middlewares/checkController");
+const checkController = require("../middlewares/checkController");
 
-router.get("/", CHECK_LOGIN.checkLogin, controller.getAllAsset);
-router.get("/filter", CHECK_LOGIN.checkLogin, controller.filterAsset);
-router.get("/api/:id", CHECK_LOGIN.checkLogin, controller.getAssetById);
-router.post("/api", CHECK_LOGIN.checkLogin, controller.createAsset);
-router.put("/api/:id", CHECK_LOGIN.checkLogin, controller.updateAsset);
-router.delete("/api/:id", CHECK_LOGIN.checkLogin, controller.deleteAsset);
+router.get(
+  "/",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.getAllAsset
+);
+router.get(
+  "/filter",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.filterAsset
+);
+router.get(
+  "/api/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.getAssetById
+);
+router.post(
+  "/api",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.createAsset
+);
+router.put(
+  "/api/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.updateAsset
+);
+router.delete(
+  "/api/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.deleteAsset
+);
 
 module.exports = router;

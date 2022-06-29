@@ -1,18 +1,31 @@
 const RequestReturning = require("../models/requestReturn.model");
 const Assignment = require("../models/assignment.model");
 const User = require("../models/user.model");
+const { Paginate } = require("../services/paginationServices");
+
 module.exports.getAllRequestReturn = async (req, res) => {
   try {
-    const requestReturning = await RequestReturning.find()
-      .populate("RequestBy")
-      .populate("AccecptBy");
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    // const requestReturning = await RequestReturning.find()
+    //   .populate("RequestBy")
+    //   .populate("AccecptBy");
+
+    const paginateData = await Paginate(
+      RequestReturning,
+      {},
+      {},
+      req.query.page,
+      req.query.pageSize,
+      ["RequestBy", "AccecptBy"]
+    );
     const users = await User.find({});
     // res.status(200).json(requestReturning);
     res.render("components/admin/requestReturnPage", {
-      listRequestReturning: requestReturning,
+      listRequestReturning: paginateData.data,
       listUsers: users,
       staff: req.staff,
-
+      totalPages: paginateData.totalPages,
     });
   } catch (error) {
     res.status(500).json({

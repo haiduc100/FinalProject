@@ -1,13 +1,26 @@
 const Asset = require("../models/asset.model");
 const Category = require("../models/category.model");
+const { Paginate } = require("../services/paginationServices");
+
 module.exports.getAllAsset = async (req, res) => {
   try {
-    const asset = await Asset.find({}).populate("Category");
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
     const category = await Category.find({});
 
+    const paginateData = await Paginate(
+      Asset,
+      {},
+      { AssetName: 1 },
+      req.query.page,
+      req.query.pageSize,
+      ["Category"]
+    );
+
     res.render("components/admin/assetManagementPage", {
-      listAssets: asset,
+      listAssets: paginateData.data,
       listCategory: category,
+      totalPages: paginateData.totalPages,
       staff: req.staff,
     });
   } catch (error) {

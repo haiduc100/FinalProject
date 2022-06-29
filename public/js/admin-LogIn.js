@@ -1,10 +1,6 @@
 function LoginAdmin() {
   let userName = $("#UserName").val();
   let passWord = $("#PassWord").val();
-  let Role;
-  if ($("input[type='radio'].radioBtnClass").is(":checked")) {
-    Role = $("input[type='radio'].radioBtnClass:checked").val();
-  }
   // alert( Role);
   $.ajax({
     url: "/user/LogInAdmin",
@@ -12,10 +8,10 @@ function LoginAdmin() {
     data: {
       UserName: userName,
       PassWord: passWord,
-      Role: Role,
     },
   })
     .then((data) => {
+      console.log(data);
       if (data.status === 200) {
         window.location.href = "/user";
       } else {
@@ -29,5 +25,5 @@ function LoginAdmin() {
         console.log(27, err);
       }
     });
-  console.log(userName, passWord);
+  console.log(29, userName, passWord);
 }

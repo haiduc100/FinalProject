@@ -21,10 +21,12 @@ module.exports.LogInUser = async (req, res) => {
       UserName: req.body.UserName,
     });
     if (data) {
+      console.log(data);
       const checkPass = await bcrypt.compare(
         req.body.PassWord,
         data._doc.Password
       );
+      console.log(29, checkPass);
       if (checkPass) {
         const userID = data._id;
         const token = jwt.sign(
@@ -36,10 +38,9 @@ module.exports.LogInUser = async (req, res) => {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 6000000),
         });
-        res.status(200).json({ mess: "login success", status: 200 });
-        console.log(41);
         //ve trag home
         // res.render("pages/home", { listAsset: userID });
+        res.json({ status: 200, message: "success" });
       } else {
         res.json({ message: "Incorrect password!!!" });
       }

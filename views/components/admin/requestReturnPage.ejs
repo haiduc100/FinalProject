@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <title>Request Returning</title>
+    <link rel="stylesheet" href="/public/css/admin-requestReturningManagementPage.css">
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
@@ -166,6 +167,11 @@
                   </table>
                 </div>
               </div>
+            </div>
+            <div class="paginateBtn">
+              <% for(let i = 0; i <totalPages;i++){%>
+                <a href="/requestReturning?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                              <% }%>
             </div>
           </section>
         </div>

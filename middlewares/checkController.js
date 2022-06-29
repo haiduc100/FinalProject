@@ -20,18 +20,18 @@ module.exports.checkDuplicate = (req, res, next) => {
     });
 };
 
-// module.exports.checkRole =  (req, res, next) => {
-//   try {
-//     const role =  req.role
-//     if (role == 0) {
-//       next()
-//     } else {
-//       res.json("You must have permission admin to view this page")
-//     }
-//   } catch (e) {
-//     res.json(e)
-//   }
-// }
+module.exports.checkRole = (req, res, next) => {
+  try {
+    const role = req.Role;
+    if (role == 0) {
+      next();
+    } else {
+      res.redirect("/user/LogInAdmin");
+    }
+  } catch (e) {
+    res.json(e);
+  }
+};
 
 module.exports.checkLogin = async (req, res, next) => {
   const cookies = await req.cookies.admin;
@@ -42,19 +42,19 @@ module.exports.checkLogin = async (req, res, next) => {
       const data = await User.findOne({ _id: userid });
 
       if (data) {
-        req.Role = data.role;
+        req.Role = data.Role;
         req.userId = userid;
         req.staff = data.StaffCode;
         next();
       } else {
-        res.redirect("/user/LogInAdmin");
+        res.redirect("/user/LogIn");
       }
     } else {
-      res.redirect("/user/LogInAdmin");
+      res.redirect("/user/LogIn");
     }
   } catch (error) {
     if (error.message === "jwt expired") {
-      res.redirect("/user/LogInAdmin");
+      res.redirect("/user/LogIn");
     } else {
       console.log(62, error);
     }

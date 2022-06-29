@@ -1,10 +1,21 @@
 const Category = require("../models/category.model");
+const { Paginate } = require("../services/paginationServices");
 module.exports.getAllCategories = async (req, res) => {
   try {
-    const categorys = await Category.find({});
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    const paginateData = await Paginate(
+      Category,
+      {},
+      {},
+      req.query.page,
+      req.query.pageSize,
+      []
+    );
     res.status(200).render("components/admin/categoryManagementPage", {
-      listCategory: categorys,
+      listCategory: paginateData.data,
       staff: req.staff,
+      totalPages: paginateData.totalPages,
     });
   } catch (error) {
     res.status(500).json({

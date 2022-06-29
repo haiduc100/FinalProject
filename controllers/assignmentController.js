@@ -1,19 +1,33 @@
 const Assginment = require("../models/assignment.model");
 const Asset = require("../models/asset.model");
 const User = require("../models/user.model");
+const { Paginate } = require("../services/paginationServices");
+
 module.exports.getAllAssignments = async (req, res) => {
   try {
-    const assignments = await Assginment.find()
-      .populate("AssignToId")
-      .populate("AssignById")
-      .populate("AssetId");
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    // const assignments = await Assginment.find()
+    //   .populate("AssignToId")
+    //   .populate("AssignById")
+    //   .populate("AssetId");
+
+    const paginateData = await Paginate(
+      Assginment,
+      {},
+      {},
+      req.query.page,
+      req.query.pageSize,
+      ["AssignToId", "AssignById", "AssetId"]
+    );
     const assets = await Asset.find({});
     const users = await User.find({});
     res.render("components/admin/assignmentManagementPage", {
-      listAssignment: assignments,
+      listAssignment: paginateData.data,
       listUser: users,
       listAsset: assets,
       staff: req.staff,
+      totalPages: paginateData.totalPages,
     });
   } catch (error) {
     res.status(500).json({

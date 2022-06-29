@@ -1,15 +1,27 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Paginate } = require("../services/paginationServices");
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    const paginateData = await Paginate(
+      User,
+      {},
+      { UserName: 1 },
+      req.query.page,
+      req.query.pageSize,
+      []
+    );
     res.render("components/admin/userManagementPage", {
-      listUser: users,
+      listUser: paginateData.data,
       staff: req.staff,
+      totalPages: paginateData.totalPages,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,

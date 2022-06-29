@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <title>Asset Management</title>
+    <link rel="stylesheet" href="/public/css/admin-assetManagementPage.css">
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
-
+    
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -247,9 +248,17 @@
                     </tbody>
                   </table>
                 </div>
+
               </div>
             </div>
           </section>
+        <div class="paginateBtn" id="">
+          <% for(let i = 0; i <totalPages; i++) { %>
+            <a href="/asset?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+          <% }%>
+        </div>
+        
+        
         </div>
       </section>
     </div>
