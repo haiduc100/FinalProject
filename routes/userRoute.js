@@ -26,7 +26,7 @@ router.post("/LogInAdmin", LOGIN_ADMIN_.LogInAdmin);
 router.get("/loginAdmin", LOGIN_ADMIN_.getAllAssignmentsLogInAdmin);
 
 //register
-router.post("/Register", CHECK_DUPP.checkDuplicate, REGIGISTER_.Register);
+// router.post("/Register", CHECK_DUPP.checkDuplicate, REGIGISTER_.Register);
 //html register
 router.get("/register", REGIGISTER_.getAllAssignmentsRegister);
 
