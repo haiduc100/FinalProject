@@ -11,7 +11,6 @@ function LoginAdmin() {
     },
   })
     .then((data) => {
-      console.log(data);
       if (data.status === 200) {
         window.location.href = "/user";
       } else {
@@ -25,5 +24,4 @@ function LoginAdmin() {
         console.log(27, err);
       }
     });
-  console.log(29, userName, passWord);
 }

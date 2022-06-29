@@ -2,7 +2,6 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
 module.exports.checkDuplicate = (req, res, next) => {
-  console.log(200, req.body);
   User.findOne({ Username: req.body.UserName })
     .then((user) => {
       if (user) {
@@ -34,7 +33,7 @@ module.exports.checkRole = (req, res, next) => {
 };
 
 module.exports.checkLogin = async (req, res, next) => {
-  const cookies = await req.cookies.admin;
+  const cookies = await req.cookies.user;
   try {
     if (cookies) {
       const userid = await jwt.verify(cookies, process.env.ACCESS_TOKEN_SECRET)

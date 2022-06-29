@@ -26,7 +26,6 @@ module.exports.LogInUser = async (req, res) => {
         req.body.PassWord,
         data._doc.Password
       );
-      console.log(29, checkPass);
       if (checkPass) {
         const userID = data._id;
         const token = jwt.sign(
@@ -50,7 +49,6 @@ module.exports.LogInUser = async (req, res) => {
       // res.render("components/LogIn/assetLogInPage");
     }
   } catch (error) {
-    console.log(55, error);
 
     res.json({ message: "Error server", status: 500, err: error });
   }

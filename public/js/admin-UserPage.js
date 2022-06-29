@@ -43,7 +43,6 @@ let idAccount;
 openUpdate = async (id) => {
   try {
     idAccount = id;
-    console.log(28, idAccount);
     const res = await $.ajax({
       url: `/user/api/${idAccount}`,
       type: "GET",

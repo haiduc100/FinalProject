@@ -27,7 +27,6 @@ let idAsset;
 openUpdate = async (id) => {
   try {
     idAsset = id;
-    console.log(28, idAsset);
     const res = await $.ajax({
       url: `/asset/api/${idAsset}`,
       type: "GET",

@@ -30,7 +30,6 @@ SearchAsset = () => {
 
 async function log(page, limit) {
   const inp = window.location.href.split("/")[4];
-  console.log(inp);
   const res = await $.ajax({
     url: `/home/${inp}&page=${page}&limit=${limit}`,
     type: "GET",

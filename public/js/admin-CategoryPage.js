@@ -26,14 +26,12 @@ let idCategory;
 openUpdate = async (id) => {
   try {
     idCategory = id;
-    console.log(28, idCategory);
     const res = await $.ajax({
       url: `/category/api/${idCategory}`,
       type: "GET",
     });
 
     $(".CategoryNameUpdate").val(res.CategoryName);
-    console.log(res);
 
     $(".createCategory").css("display", "none");
     $(".addbtn").css("display", "none");

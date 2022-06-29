@@ -11,7 +11,6 @@ function LoginUser() {
     },
   })
     .then((data) => {
-      console.log(data);
       if (data.status === 200) {
         window.location.href = "/home";
       }
@@ -19,5 +18,4 @@ function LoginUser() {
     .catch((err) => {
       console.log(20, err);
     });
-  console.log(userName, PassWord);
 }

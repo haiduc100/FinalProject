@@ -34,7 +34,7 @@ module.exports.LogInAdmin = async (req, res) => {
             { expiresIn: 16000 }
           );
           await User.updateOne({ _id: data._id }, { Token: token });
-          res.cookie("admin", token, {
+          res.cookie("user", token, {
             expires: new Date(Date.now() + 6000000),
           });
           res.json({
