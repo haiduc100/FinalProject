@@ -1,10 +1,14 @@
 const router = require("express").Router();
 const controller = require("../controllers/requestByNewController");
-const CHECK_LOGIN = require("../middlewares/checkController");
+const checkController = require("../middlewares/checkController");
 
-router.get("/", CHECK_LOGIN.checkLogin, controller.getAllRequestByNew);
-router.get("/api/:id", CHECK_LOGIN.checkLogin, controller.getRequestById);
-router.post("/api", CHECK_LOGIN.checkLogin, controller.createRequestByNew);
-router.put("/api/:id", CHECK_LOGIN.checkLogin, controller.updateRequestByNew);
+router.get("/", checkController.checkLogin, controller.getAllRequestByNew);
+router.get("/api/:id", checkController.checkLogin, controller.getRequestById);
+router.post("/api", checkController.checkLogin, controller.createRequestByNew);
+router.put(
+  "/api/:id",
+  checkController.checkLogin,
+  controller.updateRequestByNew
+);
 
 module.exports = router;

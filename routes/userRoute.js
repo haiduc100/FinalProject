@@ -3,18 +3,17 @@ const controller = require("../controllers/userController");
 const LOGIN_USER_ = require("../controllers/LogInUserController");
 const LOGIN_ADMIN_ = require("../controllers/LogInAdminController");
 const REGIGISTER_ = require("../controllers/RegisterController");
-const CHECK_DUPP = require("../middlewares/checkController");
-const CHECK_LOGIN = require("../middlewares/checkController");
+const checkController = require("../middlewares/checkController");
 
-router.get("/", CHECK_LOGIN.checkLogin, controller.getAllUsers);
+router.get("/", checkController.checkLogin, controller.getAllUsers);
 
-router.get("/api/:id", CHECK_LOGIN.checkLogin, controller.getUserById);
+router.get("/api/:id", checkController.checkLogin, controller.getUserById);
 
-router.post("/api", CHECK_LOGIN.checkLogin, controller.createUser);
+router.post("/api", checkController.checkLogin, controller.createUser);
 
-router.put("/api/:id", CHECK_LOGIN.checkLogin, controller.updateUser);
+router.put("/api/:id", checkController.checkLogin, controller.updateUser);
 
-router.delete("/api/:id", CHECK_LOGIN.checkLogin, controller.deleteUser);
+router.delete("/api/:id", checkController.checkLogin, controller.deleteUser);
 
 //LogInUser
 router.post("/LogIn", LOGIN_USER_.LogInUser);
