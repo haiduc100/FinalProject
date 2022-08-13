@@ -55,7 +55,7 @@ module.exports.checkLogin = async (req, res, next) => {
     if (error.message === "jwt expired") {
       res.redirect("/user/LogIn");
     } else {
-      console.log(62, error);
+      console.log(error);
     }
   }
 };

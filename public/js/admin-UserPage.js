@@ -49,7 +49,7 @@ openUpdate = async (id) => {
     });
 
     $(".roleUpdate").val(res.Role);
-    console.log(res);
+    // console.log(res);
 
     $(".createAccount").css("display", "none");
     $(".addbtn").css("display", "none");

@@ -3,12 +3,12 @@ let idRequest;
 openUpdate = async (id) => {
   try {
     idRequest = id;
-    console.log(idRequest);
+    // console.log(idRequest);
     const res = await $.ajax({
       url: `/requestByNew/api/${idRequest}`,
       type: "GET",
     });
-    console.log(res.State);
+    // console.log(res.State);
     $(".StateUpdate").val(res.State);
     $(".CategoryUpdate").val(res.Category);
     $(".AssetName").val(res.AssetName);
