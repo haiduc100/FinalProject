@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
+    <title>Asset Management</title>
+    <link rel="stylesheet" href="/public/css/admin-assetManagementPage.css">
+  </head>
+  <body>
+    <%- include("./sidebar.ejs") %>
+    
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+            ><i class="fas fa-bars"></i
+          ></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Home</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Navbar Search -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-widget="navbar-search"
+            href="#"
+            role="button"
+          >
+            <i class="fas fa-search"></i>
+          </a>
+          <div class="navbar-search-block">
+            <form class="form-inline">
+              <div class="input-group input-group-sm">
+                <input
+                  class="form-control form-control-navbar searchBox"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-navbar"
+                    type="button"
+                    onclick="handleSearch()"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button
+                    class="btn btn-navbar"
+                    type="button"
+                    data-widget="navbar-search"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <!-- <div class="search">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="searchBox"
+              name=""
+              id=""
+            />
+            <button onclick="handleSearch()">Search</button>
+          </div> -->
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            onclick="openAddModal()"
+          >
+            Add New Asset
+          </button>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="createAsset">
+                    <input
+                      type="text"
+                      name="AssetName"
+                      id=""
+                      placeholder="AssetName"
+                      class="AssetName"
+                    />
+                    <br />
+                    <select name="Category" id="" class="Category">
+                      <% listCategory.map((value)=>{%>
+                      <option value="<%= value._id %>">
+                        <%= value.CategoryName %>
+                      </option>
+                      <% })%>
+                    </select>
+                    <br />
+
+                    <input
+                      type="number"
+                      name="AssetDate"
+                      placeholder="AssetDate"
+                      class="AssetDate"
+                    />
+                  </div>
+
+                  <div class="updateAsset">
+                    <div class="form-group">
+                      <label for="">Asset Name</label>
+                      <input
+                        type="text"
+                        name="AssetName"
+                        id=""
+                        placeholder="AssetName"
+                        class="AssetNameUpdate"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">State</label>
+                      <select name="State" id="" class="State">
+                        <option value="unavailable">Unavailable</option>
+                        <option value="available">Available</option>
+                        <option value="waiting">Waiting</option>
+                        <option value="recycled">Recycled</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Category</label>
+                      <select name="Category" id="" class="CategoryUpdate">
+                        <% listCategory.map((value)=>{%>
+                        <option value="<%= value._id %>">
+                          <%= value.CategoryName %>
+                        </option>
+                        <% })%>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary addbtn"
+                    onclick="handleAddNew()"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary updatebtn"
+                    onclick="handleUpdate()"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Asset Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Asset Date</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% listAssets.map((value,index)=>{ %>
+                      <tr>
+                        <td scope="row"><%= index + 1 %></td>
+                        <td><%= value.AssetName %></td>
+                        <td><%= value.Category.CategoryName %></td>
+                        <td><%= value.AssetDate %></td>
+                        <td><%= value.CreatedDate.toLocaleDateString() %></td>
+                        <td><%= value.State %></td>
+                        <td>
+                          <p
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            class="btn btn-warning"
+                            onclick="openUpdate('<%= value._id %>')"
+                          >
+                            Update
+                          </p>
+                          <p
+                            class="btn btn-danger"
+                            onclick="handleDelete('<%= value._id %>')"
+                          >
+                            Delete
+                          </p>
+                        </td>
+                      </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        <div class="paginateBtn" id="">
+          <% for(let i = 0; i <totalPages; i++) { %>
+            <a href="/asset?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+          <% }%>
+        </div>
+        
+        
+        </div>
+      </section>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/public/js/admin-AssetPage.js"></script>
+  </body>
+</html>

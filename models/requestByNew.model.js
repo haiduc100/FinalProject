@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
 
 const RequestByNewSchema = mongoose.Schema(
   {
@@ -16,9 +15,9 @@ const RequestByNewSchema = mongoose.Schema(
     AssetName: { type: String, require: true },
     RequestBy: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },
+    ProcessStep: Number,
   },
   { collection: "RequestByNew" }
 );
 
-RequestByNewSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("RequestByNew", RequestByNewSchema);

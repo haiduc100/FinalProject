@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="/public/plugins/fontawesome-free/css/all.min.css"
+    />
+    <!-- Ion Slider -->
+    <link
+      rel="stylesheet"
+      href="/public/plugins/ion-rangeslider/css/ion.rangeSlider.min.css"
+    />
+    <!-- bootstrap slider -->
+    <link
+      rel="stylesheet"
+      href="/public/plugins/bootstrap-slider/css/bootstrap-slider.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/public/dist/css/adminlte.min.css" />
+  </head>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/user/LogInAdmin" class="brand-link">
+        <img
+          src="/public/dist/img/AdminLTELogo.png"
+          alt="AdminLTE Logo"
+          class="brand-image img-circle elevation-3"
+          style="opacity: 0.8"
+        />
+        <span class="brand-text font-weight-light">Admin</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img
+              src="/public/dist/img/user2-160x160.jpg"
+              class="img-circle elevation-2"
+              alt="User Image"
+            />
+          </div>
+          <div class="info">
+            <a href="#" class="d-block"><%= staff %></a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul
+            class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+          >
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            
+          
+            <li class="nav-item">
+              <a href="/staff/asset" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>List Asset</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/staff/request" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>List Request</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/staff/account" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>Account Management</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- jQuery -->
+    <script src="/public/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/public/dist/js/adminlte.min.js"></script>
+    <!-- Ion Slider -->
+    <script src="/public/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+    <!-- Bootstrap slider -->
+    <script src="/public/plugins/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/public/dist/js/demo.js"></script>
+    <!-- Page specific script -->
+    <script>
+      $(function () {
+        /* BOOTSTRAP SLIDER */
+        $(".slider").bootstrapSlider();
+
+        /* ION SLIDER */
+        $("#range_1").ionRangeSlider({
+          min: 0,
+          max: 5000,
+          from: 1000,
+          to: 4000,
+          type: "double",
+          step: 1,
+          prefix: "$",
+          prettify: false,
+          hasGrid: true,
+        });
+        $("#range_2").ionRangeSlider();
+
+        $("#range_5").ionRangeSlider({
+          min: 0,
+          max: 10,
+          type: "single",
+          step: 0.1,
+          postfix: " mm",
+          prettify: false,
+          hasGrid: true,
+        });
+        $("#range_6").ionRangeSlider({
+          min: -50,
+          max: 50,
+          from: 0,
+          type: "single",
+          step: 1,
+          postfix: "°",
+          prettify: false,
+          hasGrid: true,
+        });
+
+        $("#range_4").ionRangeSlider({
+          type: "single",
+          step: 100,
+          postfix: " light years",
+          from: 55000,
+          hideMinMax: true,
+          hideFromTo: false,
+        });
+        $("#range_3").ionRangeSlider({
+          type: "double",
+          postfix: " miles",
+          step: 10000,
+          from: 25000000,
+          to: 35000000,
+          onChange: function (obj) {
+            var t = "";
+            for (var prop in obj) {
+              t += prop + ": " + obj[prop] + "\r\n";
+            }
+            $("#result").html(t);
+          },
+          onLoad: function (obj) {
+            //
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

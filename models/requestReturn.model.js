@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
 
 const RequestReturnSchema = mongoose.Schema(
   {
@@ -22,9 +21,9 @@ const RequestReturnSchema = mongoose.Schema(
       ref: "User",
       require: true,
     },
+    ProcessStep: Number,
   },
   { collection: "RequestReturn" }
 );
 
-RequestReturnSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("RequestReturn", RequestReturnSchema);

@@ -12,7 +12,7 @@ function LoginUser() {
   })
     .then((data) => {
       if (data.status === 200) {
-        window.location.href = "/home";
+        window.location.href = "/staff";
       }
     })
     .catch((err) => {

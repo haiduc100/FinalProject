@@ -6,6 +6,9 @@ router.get("/", (req, res) => {
 const indexRoute = require("./indexRoute");
 router.use("/home", indexRoute);
 
+const staffRoute = require("./staffRoute");
+router.use("/staff", staffRoute);
+
 const assetRoute = require("./assetRoute");
 router.use("/asset", assetRoute);
 
