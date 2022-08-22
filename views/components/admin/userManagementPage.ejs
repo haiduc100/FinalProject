@@ -108,90 +108,93 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createAccount">
-                    <div class="form-group">
-                      <label for="FirstName">First Name</label>
-                      <input
-                        type="text"
-                        class="FirstName"
-                        name="FirstName"
-                        placeholder="First Name"
-                      />
+
+                    <div id="createAccount" class="row d-flex bg-light">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="FirstName">First Name</label>
+                          <input
+                            type="text"
+                            class="FirstName form-control"
+                            name="FirstName"
+                            placeholder="First Name"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="LastName">Last Name</label>
+                          <input
+                            type="text"
+                            class="LastName form-control"
+                            name="LastName"
+                            placeholder="Last Name"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="DateOfBirth">Date Of Birth</label>
+                          <input
+                            type="date"
+                            class="DateOfBirth form-control"
+                            name="DateOfBirth"
+                            placeholder="Date Of Birth"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label>Role</label>
+                          <select class="roleCreate form-control">
+                            <option value="">--Select--</option>
+
+                            <option value="0">Administrator</option>
+                            <option value="1">Staff</option>
+                          </select>
+                        </div>
+                        
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="UserName">User Name</label>
+                          <input
+                            type="text"
+                            class="UserName form-control"
+                            name="UserName"
+                            placeholder="User Name"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="Department">Department</label>
+                          <select name="Department" id="" class="Department form-control">
+                            <option value="">--Select--</option>
+                            <% listDepartment.map((value)=>{%>
+                            <option value="<%= value._id %>">
+                             <%= value.Prefix %> 
+                            </option>
+                            <% })%>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Gender</label>
+                          <select class="Gender form-control">
+
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="Email">Email</label>
+                          <input
+                            type="text"
+                            class="Email form-control"
+                            name="Email"
+                            placeholder="Email"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="LastName">Last Name</label>
-                      <input
-                        type="text"
-                        class="LastName"
-                        name="LastName"
-                        placeholder="Last Name"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="DateOfBirth">Date Of Birth</label>
-                      <input
-                        type="date"
-                        class="DateOfBirth"
-                        name="DateOfBirth"
-                        placeholder="Date Of Birth"
-                      />
-                    </div>
+                  <div id="updateAccount">
                     <div class="form-group">
                       <label>Role</label>
-                      <select class="roleCreate">
-                        <option value="0">Admin</option>
-                        <option value="1">Staff</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Gender</label>
-                      <select class="Gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="UserName">User Name</label>
-                      <input
-                        type="text"
-                        class="UserName"
-                        name="UserName"
-                        placeholder="User Name"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="StaffCode">Staff Code</label>
-                      <input
-                        type="text"
-                        class="StaffCode"
-                        name="StaffCode"
-                        placeholder="Staff Code"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="Password">Password</label>
-                      <input
-                        type="password"
-                        class="Password"
-                        name="Password"
-                        placeholder="Password"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="Email">Email</label>
-                      <input
-                        type="text"
-                        class="Email"
-                        name="Email"
-                        placeholder="Email"
-                      />
-                    </div>
-                  </div>
-                  <div class="updateAccount">
-                    <div class="form-group">
-                      <label>Role</label>
-                      <select class="roleUpdate">
-                        <option value="0">Admin</option>
+                      <select class="roleUpdate form-control">
+                        <option value="">--Select--</option>
+                        <option value="0">Administrator</option>
                         <option value="1">Staff</option>
                       </select>
                     </div>
@@ -238,6 +241,7 @@
                         <th scope="col">Role</th>
                         <th scope="col">User Name</th>
                         <th scope="col">StaffCode</th>
+                        <th scope="col">Department</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -256,6 +260,7 @@
                         <td><%= value.Role %></td>
                         <td><%= value.UserName %></td>
                         <td><%= value.StaffCode %></td>
+                        <td><%= value.Department.DepartmentName %></td>
                         <td>
                           <p
                             data-toggle="modal"

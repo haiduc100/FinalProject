@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const RequestReturnSchema = mongoose.Schema(
   {
-    AccecptBy: {
+    Handler: {
       type: String,
       ref: "User",
     },

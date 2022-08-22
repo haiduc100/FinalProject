@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const Department = require("../models/department.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Paginate } = require("../services/paginationServices");
@@ -13,10 +14,12 @@ module.exports.getAllUsers = async (req, res) => {
       { UserName: 1 },
       req.query.page,
       req.query.pageSize,
-      []
+      ["Department"]
     );
+    const department = await Department.find({});
     res.render("components/admin/userManagementPage", {
       listUser: paginateData.data,
+      listDepartment: department,
       staff: req.staff,
       totalPages: paginateData.totalPages,
     });
@@ -57,8 +60,20 @@ module.exports.createUser = async (req, res) => {
         .status(400)
         .json({ status: "Fail", message: "User already exists" });
     }
-    req.body.Password = await bcrypt.hash(req.body.Password, 10);
+    const department = await Department.find({ _id: req.body.Department });
 
+    req.body.StaffCode = department.Prefix + new Date().getTime();
+
+    let firstName = req.body.FirstName.toLocaleLowerCase().split(" ");
+    for (let i = 0; i < firstName.length; i++) {
+      firstName[i] = firstName[i][0];
+    }
+    req.body.Password =
+      req.body.LastName.toLocaleLowerCase() +
+      firstName.join("") +
+      req.body.DateOfBirth.split("-").reverse().join("");
+
+    req.body.Password = await bcrypt.hash(req.body.Password, 10);
     const newUser = new User({
       ...req.body,
     });
@@ -73,10 +88,10 @@ module.exports.createUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      status: "Fail",
-      error,
-    });
+    // res.status(500).json({
+    //   status: "Fail",
+    //   error,
+    // });
   }
 };
 

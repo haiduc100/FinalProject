@@ -9,7 +9,7 @@ module.exports.getAllRequestReturn = async (req, res) => {
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
     // const requestReturning = await RequestReturning.find()
     //   .populate("RequestBy")
-    //   .populate("AccecptBy");
+    //   .populate("Handler");
 
     const paginateData = await Paginate(
       RequestReturning,
@@ -17,7 +17,7 @@ module.exports.getAllRequestReturn = async (req, res) => {
       {},
       req.query.page,
       req.query.pageSize,
-      ["RequestBy", "AccecptBy"]
+      ["RequestBy", "Handler"]
     );
     const users = await User.find({});
     // res.status(200).json(requestReturning);
@@ -84,7 +84,7 @@ module.exports.createRequestReturning = async (req, res) => {
 
 module.exports.updateRequestReturning = async (req, res) => {
   try {
-    req.body.AccecptBy = req.userId;
+    req.body.Handler = req.userId;
     const updateRequestReturning = await RequestReturning.findByIdAndUpdate(
       {
         _id: req.params.id,

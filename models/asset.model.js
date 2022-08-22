@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const AssetSchema = mongoose.Schema(
   {
+    AssetCode: { type: String },
     AssetName: {
       type: String,
       require: true,
@@ -16,9 +17,10 @@ const AssetSchema = mongoose.Schema(
       ref: "Category",
       require: true,
     },
-    AssetDate: Number,
+    AssetDate: Date,
     Amount: Number,
-    CreatedDate: { type: Date, default: new Date() },
+    PurchaseDate: { type: Date, default: new Date() },
+    Description: String,
   },
   { collection: "Asset" }
 );

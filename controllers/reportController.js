@@ -23,14 +23,14 @@ module.exports.getRequestReturnReport = async (req, res) => {
   try {
     const request = await RequestReturning.find({})
       .populate("RequestBy")
-      .populate("AccecptBy")
+      .populate("Handler")
       .lean();
     request.map((value) => {
       data.push([
         { value: value.AssignmentId },
         { value: value.State },
         { value: value.RequestBy.StaffCode },
-        { value: value.AccecptBy ? value.AccecptBy.StaffCode : null },
+        { value: value.Handler ? value.Handler.StaffCode : null },
       ]);
     });
     await writeXlsxFile(data, {

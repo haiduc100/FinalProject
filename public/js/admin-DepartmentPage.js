@@ -1,17 +1,17 @@
 openAddModal = () => {
-  $(".updateCategory").attr("style", "display: none !important");
+  $(".updateDepartment").attr("style", "display: none !important");
   $(".updatebtn").attr("style", "display: none !important");
-  $(".createCategory").css("display", "inline-block");
+  $(".createDepartment").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
 
 handleAddNew = () => {
-  const CategoryName = $(".CategoryName").val().trim();
+  const DepartmentName = $(".DepartmentName").val().trim().toUpperCase();
   const Prefix = $(".Prefix").val().trim().toUpperCase();
   $.ajax({
-    url: "/category/api",
+    url: "/department/api",
     type: "POST",
-    data: { CategoryName: CategoryName, Prefix: Prefix },
+    data: { DepartmentName: DepartmentName, Prefix: Prefix },
   })
     .then(() => {
       window.location.reload();
@@ -22,21 +22,21 @@ handleAddNew = () => {
     });
 };
 
-let idCategory;
+let idDepartment;
 openUpdate = async (id) => {
   try {
-    idCategory = id;
+    idDepartment = id;
     const res = await $.ajax({
-      url: `/category/api/${idCategory}`,
+      url: `/department/api/${idDepartment}`,
       type: "GET",
     });
 
-    $(".CategoryNameUpdate").val(res.CategoryName);
+    $(".DepartmentNameUpdate").val(res.DepartmentName);
     $(".PrefixUpdate").val(res.Prefix);
 
-    $(".createCategory").attr("style", "display: none !important");
+    $(".createDepartment").attr("style", "display: none !important");
     $(".addbtn").attr("style", "display: none !important");
-    $(".updateCategory").css("display", "inline-block");
+    $(".updateDepartment").css("display", "inline-block");
     $(".updatebtn").css("display", "inline-block");
   } catch (error) {
     console.log(error);
@@ -45,17 +45,20 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const CategoryName = $(".CategoryNameUpdate").val().trim();
+    const DepartmentName = $(".DepartmentNameUpdate")
+      .val()
+      .trim()
+      .toUpperCase();
     const Prefix = $(".PrefixUpdate").val().trim().toUpperCase();
 
     await $.ajax({
-      url: `/category/api/${idCategory}`,
+      url: `/department/api/${idDepartment}`,
       type: "PUT",
-      data: { CategoryName: CategoryName, Prefix: Prefix },
+      data: { DepartmentName: DepartmentName, Prefix: Prefix },
     });
     window.location.reload();
 
-    idCategory = 0;
+    idDepartment = 0;
   } catch (error) {
     console.log(error);
   }
@@ -63,10 +66,10 @@ handleUpdate = async () => {
 
 handleDelete = async (id) => {
   try {
-    let processed = confirm("Do you want to delete this category?");
+    let processed = confirm("Do you want to delete this Department?");
     if (processed) {
       await $.ajax({
-        url: `/category/api/${id}`,
+        url: `/department/api/${id}`,
         type: "DELETE",
       });
       window.location.reload();

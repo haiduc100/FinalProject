@@ -21,6 +21,11 @@ const UserSchema = mongoose.Schema(
     Password: String,
     Email: String,
     Avatar: String,
+    Department: {
+      type: String,
+      ref: "Department",
+      require: true,
+    },
   },
   { collection: "User", timestamps: true }
 );

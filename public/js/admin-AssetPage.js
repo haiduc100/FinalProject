@@ -1,19 +1,21 @@
 openAddModal = () => {
-  $(".updateAsset").css("display", "none");
-  $(".updatebtn").css("display", "none");
+  $(".updateAsset").attr("style", "display: none !important");
+  $(".updatebtn").attr("style", "display: none !important");
   $(".createAsset").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
 
 handleAddNew = () => {
-  const AssetName = $(".AssetName").val().trim();
+  const AssetName = $(".AssetName").val().trim().toUpperCase();
   const Category = $(".Category").val().trim();
   const AssetDate = $(".AssetDate").val().trim();
+  const Description = $(".Description").val().trim();
+  const Amount = $(".Amount").val().trim();
 
   $.ajax({
     url: "/asset/api",
     type: "POST",
-    data: { AssetName, Category, AssetDate },
+    data: { AssetName, Category, AssetDate, Amount, Description },
   })
     .then(() => {
       window.location.reload();
@@ -35,9 +37,11 @@ openUpdate = async (id) => {
     $(".CategoryUpdate").val(res.asset.Category);
     $(".AssetNameUpdate").val(res.asset.AssetName);
     $(".State").val(res.asset.State);
+    $(".DescriptionUpdate").val(res.asset.Description);
+    $(".AssetCodeUpdate").val(res.asset.AssetCode);
 
-    $(".createAsset").css("display", "none");
-    $(".addbtn").css("display", "none");
+    $(".createAsset").attr("style", "display: none !important");
+    $(".addbtn").attr("style", "display: none !important");
     $(".updateAsset").css("display", "inline-block");
     $(".updatebtn").css("display", "inline-block");
   } catch (error) {
@@ -48,8 +52,10 @@ openUpdate = async (id) => {
 handleUpdate = async () => {
   try {
     const Category = $(".CategoryUpdate").val();
-    const AssetName = $(".AssetNameUpdate").val().trim();
+    const AssetName = $(".AssetNameUpdate").val().trim().toUpperCase();
     const State = $(".State").val();
+    const Description = $(".DescriptionUpdate").val().trim();
+    const AssetCode = $(".AssetCodeUpdate").val().trim();
     await $.ajax({
       url: `/asset/api/${idAsset}`,
       type: "PUT",
@@ -57,6 +63,8 @@ handleUpdate = async () => {
         Category: Category,
         AssetName: AssetName,
         State: State,
+        Description: Description,
+        AssetCode: AssetCode,
       },
     });
     window.location.reload();

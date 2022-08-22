@@ -108,23 +108,51 @@
                 </div>
                 <div class="modal-body">
                   <div class="createCategory">
-                    <input
+                    <div class="form-group">
+
+                      <label>Category Name</label>
+                      <input
+                        type="text"
+                        name="CategoryName"
+                        id=""
+                        placeholder="Category Name"
+                        class="CategoryName form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Prefix</label>
+                      <input
                       type="text"
-                      name="CategoryName"
+                      name="Prefix"
                       id=""
-                      placeholder="Category Name"
-                      class="CategoryName"
+                      placeholder="Prefix"
+                      class="Prefix form-control"
                     />
+                    </div>
                   </div>
 
                   <div class="updateCategory">
-                    <input
+                    <div class="form-group">
+                      <label for="">Category Name</label>
+                      <input
+                        type="text"
+                        name="CategoryNameUpdate"
+                        id=""
+                        placeholder="Update Category Name"
+                        class="CategoryNameUpdate form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Prefix</label>
+
+                      <input
                       type="text"
-                      name="CategoryNameUpdate"
+                      name="PrefixUpdate"
                       id=""
-                      placeholder="Update Category Name"
-                      class="CategoryNameUpdate"
+                      placeholder="Update Prefix"
+                      class="PrefixUpdate form-control"
                     />
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -163,6 +191,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Category Name</th>
+                        <th scope="col">Prefix</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -171,6 +200,7 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.CategoryName %></td>
+                        <td><%= value.Prefix %></td>
                         <td>
                           <p
                             data-toggle="modal"

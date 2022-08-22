@@ -8,7 +8,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
     // const requests = await RequestByNew.find({})
-    //   .populate("AccecptBy")
+    //   .populate("Handler")
     //   .populate("Category")
     //   .populate("RequestBy");
     const paginateData = await Paginate(
@@ -17,7 +17,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
       {},
       req.query.page,
       req.query.pageSize,
-      ["AccecptBy", "Category", "RequestBy"]
+      ["Handler", "Category", "RequestBy"]
     );
     const categorys = await Category.find({});
     const users = await User.find({});
@@ -69,7 +69,7 @@ module.exports.createRequestByNew = async (req, res) => {
 
 module.exports.updateRequestByNew = async (req, res) => {
   try {
-    req.body.AccecptBy = req.userId;
+    req.body.Handler = req.userId;
     const request = await RequestByNew.findByIdAndUpdate(
       { _id: req.params.id },
       req.body

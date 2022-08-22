@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <title>Asset Management</title>
-    <link rel="stylesheet" href="/public/css/admin-assetManagementPage.css">
+    <link rel="stylesheet" href="/public/css/admin-departmentManagementPage.css">
+
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
-    
+
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -71,17 +72,6 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <!-- <div class="search">
-            <input
-              type="text"
-              placeholder="Search..."
-              class="searchBox"
-              name=""
-              id=""
-            />
-            <button onclick="handleSearch()">Search</button>
-          </div> -->
-          <!-- Button trigger modal -->
           <button
             type="button"
             class="btn btn-primary"
@@ -89,7 +79,7 @@
             data-target="#exampleModal"
             onclick="openAddModal()"
           >
-            Add New Asset
+            Add New Department
           </button>
 
           <!-- Modal -->
@@ -103,8 +93,6 @@
           >
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-                <form action="">
-
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
                     Modal title
@@ -119,105 +107,53 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createAsset row d-flex">
-                    <div class="col">
-
-                      <div class="form-group">
-                        <label for="AssetName">Asset Name</label>
-                        <input
-                          type="text"
-                          name="AssetName"
-                          id=""
-                          placeholder="AssetName"
-                          class="AssetName form-control"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="">Category</label>
-                        <select name="Category" id="" class="Category form-control">
-                          <% listCategory.map((value)=>{%>
-                          <option value="<%= value._id %>">
-                            <%= value.CategoryName %> - <%= value.Prefix %> 
-                          </option>
-                          <% })%>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="">Description</label>
-                        <textarea
-                          placeholder="Description"
-                          class="Description form-control"
-                        ></textarea>
-                      </div>
-                     
-                    </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="">Amount</label>
-                        <input
-                        type="number"
-                          placeholder="Amount"
-                          class="Amount form-control"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="">Asset Date</label>
-                        <input
-                          type="date"
-                          name="AssetDate"
-                          placeholder="AssetDate"
-                          class="AssetDate form-control"
-                          required
-                        />
-                      </div>
-                     
-                    </div>
-                  </div>
-
-                  <div class="updateAsset bg-light col">
+                  <div class="createDepartment">
                     <div class="form-group">
-                      <label for="">Asset Name</label>
+
+                      <label>Department Name</label>
                       <input
                         type="text"
-                        name="AssetName"
+                        name="DepartmentName"
                         id=""
-                        placeholder="AssetName"
-                        class="AssetNameUpdate form-control"
-                        readonly
+                        placeholder="Department Name"
+                        class="DepartmentName form-control"
                       />
                     </div>
                     <div class="form-group">
-                      <label for="">Asset Code</label>
-                      <input type="text" name="" id="" class="AssetCodeUpdate form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="">State</label>
-                      <select name="State" id="" class="State form-control">
-                        <option value="unavailable">Unavailable</option>
-                        <option value="available">Available</option>
-                        <option value="waiting">Waiting</option>
-                        <option value="recycled">Recycled</option>
-                      </select>
-                    </div>
-                   
-                    <div class="form-group">
-                      <label for="">Description</label>
-                      <textarea type="text" name="" id="" class="DescriptionUpdate form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="">Category</label>
-                      <select name="Category" id="" class="form-control CategoryUpdate">
-                        <% listCategory.map((value)=>{%>
-                        <option value="<%= value._id %>">
-                          <%= value.CategoryName %> - <%= value.Prefix %>
-                        </option>
-                        <% })%>
-                      </select>
+                      <label for="">Prefix</label>
+                      <input
+                      type="text"
+                      name="Prefix"
+                      id=""
+                      placeholder="Prefix"
+                      class="Prefix form-control"
+                    />
                     </div>
                   </div>
-                
+
+                  <div class="updateDepartment">
+                    <div class="form-group">
+                      <label for="">Department Name</label>
+                      <input
+                        type="text"
+                        name="DepartmentNameUpdate"
+                        id=""
+                        placeholder="Update Department Name"
+                        class="DepartmentNameUpdate form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Prefix</label>
+
+                      <input
+                      type="text"
+                      name="PrefixUpdate"
+                      id=""
+                      placeholder="Update Prefix"
+                      class="PrefixUpdate form-control"
+                    />
+                    </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button
@@ -228,22 +164,20 @@
                     Close
                   </button>
                   <button
-                    type="submit"
+                    type="button"
                     class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
                     Add
                   </button>
                   <button
-                    type="submit"
+                    type="button"
                     class="btn btn-primary updatebtn"
                     onclick="handleUpdate()"
                   >
                     Update
                   </button>
                 </div>
-                </form>
-
               </div>
             </div>
           </div>
@@ -256,27 +190,17 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Asset Name</th>
-                        <th scope="col">Asset Code</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Asset Date</th>
-                        <th scope="col">Purchase Date</th>
-                        <th scope="col">State</th>
+                        <th scope="col">Department Name</th>
+                        <th scope="col">Prefix</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listAssets.map((value,index)=>{ %>
+                      <% listDepartments.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td><%= value.AssetName %></td>
-                        <td><%= value.AssetCode %></td>
-                        <td><%= value.Category.CategoryName %></td>
-                        <td><%= value.Description %></td>
-                        <td><%= value.AssetDate.toLocaleDateString() %></td>
-                        <td><%= value.PurchaseDate.toLocaleDateString() %></td>
-                        <td><%= value.State %></td>
+                        <td><%= value.DepartmentName %></td>
+                        <td><%= value.Prefix %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -298,17 +222,14 @@
                     </tbody>
                   </table>
                 </div>
-
               </div>
             </div>
+            <div class="paginateBtn" id="">
+              <% for(let i = 0; i <totalPages; i++) { %>
+                <a href="/department?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+              <% }%>
+            </div>
           </section>
-        <div class="paginateBtn" id="">
-          <% for(let i = 0; i <totalPages; i++) { %>
-            <a href="/asset?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
-          <% }%>
-        </div>
-        
-        
         </div>
       </section>
     </div>
@@ -318,6 +239,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-AssetPage.js"></script>
+    <script src="/public/js/admin-DepartmentPage.js"></script>
   </body>
 </html>

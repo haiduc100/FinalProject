@@ -1,6 +1,6 @@
 openAddModal = () => {
-  $(".updateAsset").css("display", "none");
-  $(".updatebtn").css("display", "none");
+  $(".updateAsset").attr("style", "display: none !important");
+  $(".updatebtn").attr("style", "display: none !important");
   $(".createAsset").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
@@ -36,8 +36,8 @@ openUpdate = async (id) => {
     $(".AssetNameUpdate").val(res.asset.AssetName);
     $(".State").val(res.asset.State);
 
-    $(".createAsset").css("display", "none");
-    $(".addbtn").css("display", "none");
+    $(".createAsset").attr("style", "display: none !important");
+    $(".addbtn").attr("style", "display: none !important");
     $(".updateAsset").css("display", "inline-block");
     $(".updatebtn").css("display", "inline-block");
   } catch (error) {

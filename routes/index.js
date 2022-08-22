@@ -9,6 +9,9 @@ router.use("/home", indexRoute);
 const staffRoute = require("./staffRoute");
 router.use("/staff", staffRoute);
 
+const departmentRoute = require("./departmentRoute");
+router.use("/department", departmentRoute);
+
 const assetRoute = require("./assetRoute");
 router.use("/asset", assetRoute);
 

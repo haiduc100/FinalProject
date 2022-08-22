@@ -1,7 +1,7 @@
 openAddModal = () => {
-  $(".updateAccount").css("display", "none");
-  $(".updatebtn").css("display", "none");
-  $(".createAccount").css("display", "inline-block");
+  $("#updateAccount").attr("style", "display: none !important");
+  $(".updatebtn").attr("style", "display: none !important");
+  $("#createAccount").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
 
@@ -11,10 +11,9 @@ handleAddNew = () => {
   const Role = $(".roleCreate").val().trim();
   const Gender = $(".Gender").val().trim();
   const UserName = $(".UserName").val().trim();
-  const StaffCode = $(".StaffCode").val().trim();
   const Email = $(".Email ").val().trim();
-  const Password = $(".Password ").val().trim();
   const DateOfBirth = $(".DateOfBirth").val().trim();
+  const Department = $(".Department").val().trim();
 
   $.ajax({
     url: "/user/api",
@@ -25,10 +24,9 @@ handleAddNew = () => {
       Role,
       Gender,
       UserName,
-      StaffCode,
       Email,
-      Password,
       DateOfBirth,
+      Department,
     },
   })
     .then(() => {
@@ -51,9 +49,9 @@ openUpdate = async (id) => {
     $(".roleUpdate").val(res.Role);
     // console.log(res);
 
-    $(".createAccount").css("display", "none");
-    $(".addbtn").css("display", "none");
-    $(".updateAccount").css("display", "inline-block");
+    $("#createAccount").attr("style", "display: none !important");
+    $(".addbtn").attr("style", "display: none !important");
+    $("#updateAccount").css("display", "inline-block");
     $(".updatebtn").css("display", "inline-block");
   } catch (error) {
     console.log(error);

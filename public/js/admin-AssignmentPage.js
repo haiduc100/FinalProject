@@ -1,6 +1,6 @@
 openAddModal = () => {
-  $(".updateAssignment").css("display", "none");
-  $(".updatebtn").css("display", "none");
+  $(".updateAssignment").attr("style", "display: none !important");
+  $(".updatebtn").attr("style", "display: none !important");
   $(".createAssignment").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
@@ -35,8 +35,8 @@ openUpdate = async (id) => {
     $(".NoteUpdate").val(res.assignments.Note);
     $(".TransferringUpdate").val(res.assignments.TransferringId);
 
-    $(".createAssignment").css("display", "none");
-    $(".addbtn").css("display", "none");
+    $(".createAssignment").attr("style", "display: none !important");
+    $(".addbtn").attr("style", "display: none !important");
     $(".updateAssignment").css("display", "inline-block");
     $(".updatebtn").css("display", "inline-block");
   } catch (error) {

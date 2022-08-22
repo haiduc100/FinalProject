@@ -69,18 +69,45 @@ module.exports.getAssetById = async (req, res) => {
 
 module.exports.createAsset = async (req, res) => {
   try {
-    const AssetDate = new Date().getFullYear() + Number(req.body.AssetDate);
-    req.body.AssetDate = AssetDate;
-    const newAsset = await Asset.create(req.body);
+    const category = await Category.findOne({ _id: req.body.Category });
+    const check = new Date(req.body.AssetDate).getTime();
+    const Now = new Date().getTime();
+    if (check < Now) {
+      res.status(400).json({
+        status: "Fail",
+        message: "Asset Date must be greater than today",
+      });
+    }
+    // const newAsset = await Asset.create(req.body);
+    let State = "available";
+    let newCategory = req.body.Category;
+    let AssetDate = req.body.AssetDate;
+    let AssetName = req.body.AssetName;
+    let Description = req.body.Description;
+    let PurchaseDate = req.body.PurchaseDate;
+    let Amount = req.body.Amount;
 
+    for (let i = 0; i < Amount; i++) {
+      let AssetCode = category.Prefix + new Date().getTime();
+      Asset.create({
+        State: State,
+        Category: newCategory,
+        Amount: Amount,
+        AssetCode: AssetCode,
+        PurchaseDate: PurchaseDate,
+        Description: Description,
+        AssetName: AssetName,
+        AssetDate: AssetDate,
+      });
+    }
     res.status(200).json({
       status: "Create asset successfully",
-      data: newAsset,
+      // data: newAsset,
     });
   } catch (error) {
     res.status(500).json({
       status: "Fail",
-      error,
+      error: error,
     });
   }
 };
