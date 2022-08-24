@@ -16,7 +16,7 @@ module.exports.getAllAssignments = async (req, res) => {
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId"]
     );
-    const assets = await Asset.find({ State: "available" });
+    const assets = await Asset.find({ State: "waiting" });
     const users = await User.find({});
     res.render("components/admin/assignmentManagementPage", {
       listAssignment: paginateData.data,
@@ -55,11 +55,12 @@ module.exports.getAssignmentById = async (req, res) => {
 };
 module.exports.createAssignment = async (req, res) => {
   try {
-    const asset = await Asset.findOne({ _id: req.body.AssetId });
+    await Asset.findByIdAndUpdate(
+      { _id: req.body.AssetId },
+      { State: "assigned" }
+    );
     const staff = await User.findOne({ StaffCode: req.staff });
     req.body.AssignById = staff._id;
-    console.log(asset.State);
-    asset.State = "waiting";
     if (req.body.AssignById == req.body.AssignToId) {
       res.status(400).json({
         status: "Fail",
@@ -85,8 +86,10 @@ module.exports.createAssignment = async (req, res) => {
 module.exports.updateAssignment = async (req, res) => {
   try {
     const assignment = await Assginment.findOne({ _id: req.params.id });
+    const staff = await User.findOne({ StaffCode: req.staff });
+    req.body.AssignById = staff._id;
 
-    req.body.AssignById = req.userId;
+    // req.body.AssignById = req.userId;
     if (req.body.AssignById == assignment.AssignToId) {
       res.status(400).json({
         status: "Fail",
@@ -120,18 +123,11 @@ module.exports.deleteAssignment = async (req, res) => {
         message: "Can not find assignment",
       });
     }
-    if (assignment.State === "accepted" || assignment.State === "denied") {
-      await Assginment.deleteOne({ _id: req.params.id });
-      res.status(200).json({
-        status: "success",
-        message: "Delete category successfully",
-      });
-    } else {
-      res.status(400).json({
-        status: "Fail",
-        message: "Assignment State must be accepted or denied to be deleted",
-      });
-    }
+    await Assginment.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: "success",
+      message: "Delete category successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

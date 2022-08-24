@@ -3,12 +3,17 @@ let idRequest;
 openUpdate = async (id) => {
   try {
     idRequest = id;
+    // console.log(idRequest);
     const res = await $.ajax({
-      url: `/requestReturning/api/${idRequest}`,
+      url: `/requestBorrow/api/${idRequest}`,
       type: "GET",
     });
+    // console.log(res.State);
+    // $(".StateUpdate").val(res.State);
     $(".AssetCode").val(res.AssetId);
+    $(".CategoryUpdate").val(res.Category);
     $(".RequestBy").val(res.RequestBy);
+    $(".Description").val(res.Description);
   } catch (error) {
     console.log(error);
   }
@@ -18,24 +23,14 @@ handleUpdate = async () => {
   try {
     const newState = $(".StateUpdate").val();
     await $.ajax({
-      url: `/requestReturning/api/${idRequest}`,
+      url: `/requestBorrow/api/${idRequest}`,
       type: "PUT",
-      data: { State: newState },
+      data: {
+        State: newState,
+      },
     });
-
+    $("#btnUpdate").prop("disabled", true);
     window.location.reload();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-handleExport = async () => {
-  try {
-    const res = await $.ajax({
-      url: "/report/api",
-      type: "GET",
-    });
-    alert(res.message);
   } catch (error) {
     console.log(error);
   }

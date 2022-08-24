@@ -1,14 +1,14 @@
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Request Returning</title>
+    <title>Request Borrow</title>
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <link
       rel="stylesheet"
-      href="/public/css/admin-requestByNewManagementPage.css"
+      href="/public/css/admin-requestBorrowManagementPage.css"
     />
   </head>
   <body>
@@ -59,7 +59,6 @@
                 <div class="modal-body">
                   <div class="updateAsset d-flex">
                     <div class="col">
-
                       <div class="form-group">
                         <label for="StateUpdate">State</label>
                         <select name="StateUpdate" id="" class="StateUpdate form-control">
@@ -69,8 +68,8 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="AssetName">Asset Name</label>
-                        <input type="text" class="AssetName form-control" readonly />
+                        <label for="AssetName">Asset Code</label>
+                        <input type="text" class="AssetCode form-control" readonly />
                       </div>
                       <div class="form-group">
                         <label for="Category">Category</label>
@@ -86,17 +85,12 @@
                     <div class="col">
 
                       <div class="form-group">
-                        <label for="">Suggestion Link</label>
-                        <input type="text" class="SuggestionLink form-control" readonly />
+                        <label for="">Request By</label>
+                        <input type="text" class="RequestBy form-control" readonly />
                       </div>
                       <div class="form-group">
-                        <label for="">Amount</label>
-                        <input type="text" class="Amount form-control" readonly />
-                      </div>
-                      <div class="form-group">
-                        <label for="">Reason</label>
-                        <textarea name="" id=""  class="Reason form-control">
-                        </textarea>
+                        <label for="">Description</label>
+                        <textarea name="" id="" class="Description form-control" readonly></textarea>
                       </div>
                     </div>
                   </div>
@@ -132,7 +126,7 @@
                         <th scope="col">State</th>
                         <th scope="col">Handler</th>
                         <th scope="col">Category</th>
-                        <th scope="col">Asset Name</th>
+                        <th scope="col">Asset Code</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -153,7 +147,7 @@
                           <%= value.Category ? value.Category.CategoryName :
                           null %>
                         </td>
-                        <td><%= value.AssetName %></td>
+                        <td><%= value.AssetId.AssetCode %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -187,6 +181,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestByNewPage.js"></script>
+    <script src="/public/js/admin-RequestBorrowPage.js"></script>
   </body>
 </html>

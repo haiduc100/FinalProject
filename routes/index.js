@@ -30,6 +30,9 @@ router.use("/requestReturning", requestReturningRoute);
 const requestByNewRoute = require("./requestByNewRoute");
 router.use("/requestByNew", requestByNewRoute);
 
+const requestBorowRoute = require("./requestBorowRoute");
+router.use("/requestBorrow", requestBorowRoute);
+
 const userRoute = require("./userRoute");
 router.use("/user", userRoute);
 

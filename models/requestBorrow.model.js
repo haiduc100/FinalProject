@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const RequestSchema = mongoose.Schema(
+const RequestBorrowSchema = mongoose.Schema(
   {
     Handler: {
       type: String,
@@ -14,9 +14,9 @@ const RequestSchema = mongoose.Schema(
     AssetId: { type: String, ref: "Asset" },
     RequestBy: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },
-    ProcessStep: Number,
+    Description: String,
   },
-  { collection: "Request" }
+  { collection: "RequestBorrow" }
 );
 
-module.exports = mongoose.model("Request", RequestSchema);
+module.exports = mongoose.model("RequestBorrow", RequestBorrowSchema);

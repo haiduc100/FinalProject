@@ -42,21 +42,11 @@ let idAsset;
 openUpdate = async (id) => {
   try {
     idAsset = id;
-    const res = await $.ajax({
-      url: `/requestByNew/api/${idAsset}`,
-      type: "GET",
-    });
-
-    $(".CategoryUpdate").val(res.asset.Category);
-    $(".AssetNameUpdate").val(res.asset.AssetName);
-    $(".State").val(res.asset.State);
-    $(".DescriptionUpdate").val(res.asset.Description);
-    $(".AssetCodeUpdate").val(res.asset.AssetCode);
 
     $(".createAsset").attr("style", "display: none !important");
     $(".addbtn").attr("style", "display: none !important");
-    $(".updateAsset").css("display", "inline-block");
-    $(".updatebtn").css("display", "inline-block");
+    $(".updateAsset").attr("style", "display:inline-block");
+    $(".updatebtn").attr("style", "display:inline-block");
   } catch (error) {
     console.log(error);
   }
@@ -64,20 +54,19 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const Category = $(".CategoryUpdate").val();
-    const AssetName = $(".AssetNameUpdate").val().trim().toUpperCase();
-    const State = $(".State").val();
-    const Description = $(".DescriptionUpdate").val().trim();
-    const AssetCode = $(".AssetCodeUpdate").val().trim();
+    const Description = $(".DescriptionBorrow").val().trim();
+    const res = await $.ajax({
+      url: `/asset/api/${idAsset}`,
+      type: "GET",
+    });
+
     await $.ajax({
-      url: `/requestByNew/api/${idAsset}`,
-      type: "PUT",
+      url: `/requestBorrow/api`,
+      type: "POST",
       data: {
-        Category: Category,
-        AssetName: AssetName,
-        State: State,
+        AssetId: idAsset,
         Description: Description,
-        AssetCode: AssetCode,
+        Category: res.asset.Category,
       },
     });
     window.location.reload();
@@ -93,7 +82,7 @@ handleDelete = async (id) => {
     let processed = confirm("Do you want to delete this request?");
     if (processed) {
       await $.ajax({
-        url: `/requestByNew/api/${id}`,
+        url: `/requestBorrow/api/${id}`,
         type: "DELETE",
       });
       window.location.reload();

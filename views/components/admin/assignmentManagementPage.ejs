@@ -146,9 +146,15 @@
                   </div>
 
                   <div class="updateAssignment">
+                    <!-- <div class="form-group">
+                      <label for="">Assign To</label>
+                      <% listUser.map((value)=>{%>
+                          <input value="<%= value.StaffCode %>"  type="text" name="" id="" class="AssignToUpdate form-control" readonly>
+                        <% })%>
+                    </div> -->
                    <div class="form-group">
                     <label for="">Asset Code</label>
-                    <select name="AssetName" id="" class="AssetNameUpdate form-control" required>
+                    <select name="AssetName" id="" class="AssetNameUpdate form-control" required disabled>
                       <% listAsset.map((value)=>{%>
                       <option value="<%= value._id %>">
                         <%= value.AssetCode %>
@@ -171,8 +177,9 @@
                     <select
                       name="Transferring"
                       id=""
-                      class="TransferringUpdate form-control" required
+                      class="TransferringUpdate form-control"
                     >
+                    <option value="">--Select--</option>
                       <% listUser.map((value)=>{%>
                       <option value="<%= value._id %>">
                         <%= value.StaffCode %>
@@ -181,13 +188,7 @@
                       <option value="none" selected>None</option>
                     </select>
                   </div>
-                    <div class="form-group">
-                      <label for="">State</label>
-                      <select class="stateUpdate form-control" required>
-                        <option value="accepted">Accepted</option>
-                        <option value="denied">Denied</option>
-                      </select>
-                    </div>
+                   
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -226,7 +227,6 @@
                 <th scope="col">Assign To</th>
                 <th scope="col">Assign By</th>
                 <th scope="col">Asset Code</th>
-                <th scope="col">State</th>
                 <th scope="col">Note</th>
                 <th scope="col">Is Returning</th>
                 <th scope="col">Transfer</th>
@@ -242,7 +242,6 @@
                   <%= value.AssignById ? value.AssignById.StaffCode : null %>
                 </td>
                 <td><%= value.AssetId.AssetCode %></td>
-                <td><%= value.State %></td>
                 <td><%= value.Note %></td>
                 <td><%= value.IsReturning %></td>
                 <td><%= value.TransferringId %></td>

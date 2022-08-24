@@ -17,12 +17,6 @@ const AssignmentSchema = mongoose.Schema(
       ref: "Asset",
       require: true,
     },
-    State: {
-      type: String,
-      require: true,
-      enum: ["accepted", "denied", "waiting"],
-      default: "waiting",
-    },
     Note: { type: String, default: "Nothing yet" },
     IsReturning: { type: Boolean, default: false },
     TransferringId: {

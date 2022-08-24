@@ -14,12 +14,7 @@ router.get(
   checkController.checkRole,
   controller.filterAsset
 );
-router.get(
-  "/api/:id",
-  checkController.checkLogin,
-  checkController.checkRole,
-  controller.getAssetById
-);
+router.get("/api/:id", checkController.checkLogin, controller.getAssetById);
 router.post(
   "/api",
   checkController.checkLogin,

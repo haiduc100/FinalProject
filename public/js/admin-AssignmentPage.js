@@ -34,6 +34,7 @@ openUpdate = async (id) => {
       type: "GET",
     });
     $(".AssetNameUpdate").val(res.assignments.AssetId);
+    $(".AssignToUpdate").val(res.assignments.AssignToId);
     $(".NoteUpdate").val(res.assignments.Note);
     $(".TransferringUpdate").val(res.assignments.TransferringId);
 
@@ -51,7 +52,6 @@ handleUpdate = async () => {
     const AssetName = $(".AssetNameUpdate").val();
     const Transferring = $(".TransferringUpdate").val();
     const Note = $(".NoteUpdate").val();
-    const State = $(".StateUpdate").val();
     await $.ajax({
       url: `/assignments/api/${idAssigmnet}`,
       type: "PUT",
@@ -59,7 +59,6 @@ handleUpdate = async () => {
         AssetId: AssetName,
         TransferringId: Transferring,
         Note: Note,
-        State: State,
       },
     });
     window.location.reload();

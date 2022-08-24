@@ -1,14 +1,14 @@
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Request Returning</title>
+    <title>Request Borrow</title>
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <link
       rel="stylesheet"
-      href="/public/css/admin-requestByNewManagementPage.css"
+      href="/public/css/admin-requestBorrowManagementPage.css"
     />
   </head>
   <body>
@@ -132,8 +132,8 @@
                         <th scope="col">State</th>
                         <th scope="col">Handler</th>
                         <th scope="col">Category</th>
-                        <th scope="col">Asset Name</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Asset Code</th>
+                        <!-- <th scope="col">Action</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -153,8 +153,8 @@
                           <%= value.Category ? value.Category.CategoryName :
                           null %>
                         </td>
-                        <td><%= value.AssetName %></td>
-                        <td>
+                        <td><%= value.AssetId.AssetCode %></td>
+                        <!-- <td>
                           <p
                             data-toggle="modal"
                             data-target="#exampleModal"
@@ -164,7 +164,7 @@
                           >
                             Update
                           </p>
-                        </td>
+                        </td> -->
                       </tr>
                       <% }) %>
                     </tbody>
