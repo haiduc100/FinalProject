@@ -3,7 +3,6 @@ let idRequest;
 openUpdate = async (id) => {
   try {
     idRequest = id;
-    console.log(idRequest);
     const res = await $.ajax({
       url: `/requestReturning/api/${idRequest}`,
       type: "GET",

@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const RequestByNewSchema = mongoose.Schema(
+const RequestSchema = mongoose.Schema(
   {
-    SuggestionLink: String,
-    Price: Number,
-    Reason: String,
     Handler: {
       type: String,
       ref: "User",
@@ -14,14 +11,12 @@ const RequestByNewSchema = mongoose.Schema(
       enum: ["accepted", "denied", "waiting"],
       default: "waiting",
     },
-    Amount: Number,
-    AssetName: { type: String, require: true },
+    AssetId: { type: String, ref: "Asset" },
     RequestBy: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },
     ProcessStep: Number,
-    Description: String,
   },
-  { collection: "RequestByNew" }
+  { collection: "Request" }
 );
 
-module.exports = mongoose.model("RequestByNew", RequestByNewSchema);
+module.exports = mongoose.model("Request", RequestSchema);

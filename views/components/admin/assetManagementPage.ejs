@@ -136,6 +136,7 @@
                       <div class="form-group">
                         <label for="">Category</label>
                         <select name="Category" id="" class="Category form-control">
+                          <option value="">--Select--</option>
                           <% listCategory.map((value)=>{%>
                           <option value="<%= value._id %>">
                             <%= value.CategoryName %> - <%= value.Prefix %> 
@@ -144,10 +145,11 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="">Description</label>
+                        <label for="Description">Description</label>
                         <textarea
                           placeholder="Description"
                           class="Description form-control"
+                          name="Description"
                         ></textarea>
                       </div>
                      
@@ -171,51 +173,60 @@
                           class="AssetDate form-control"
                           required
                         />
+                        <div id="warning_message" class="invalid-feedback">
+
+                        </div>
                       </div>
                      
                     </div>
                   </div>
 
-                  <div class="updateAsset bg-light col">
-                    <div class="form-group">
-                      <label for="">Asset Name</label>
-                      <input
-                        type="text"
-                        name="AssetName"
-                        id=""
-                        placeholder="AssetName"
-                        class="AssetNameUpdate form-control"
-                        readonly
-                      />
+                  <div class="updateAsset bg-light d-flex row ">
+                    <div class="col">
+
+                      <div class="form-group">
+                        <label for="">Asset Name</label>
+                        <input
+                          type="text"
+                          name="AssetName"
+                          id=""
+                          placeholder="AssetName"
+                          class="AssetNameUpdate form-control"
+                          readonly
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="">Asset Code</label>
+                        <input type="text" name="" id="" class="AssetCodeUpdate form-control" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="">State</label>
+                        <select name="State" id="" class="State form-control">
+                          <option value="unavailable">Unavailable</option>
+                          <option value="available">Available</option>
+                          <option value="waiting">Waiting</option>
+                          <option value="recycled">Recycled</option>
+                        </select>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="">Asset Code</label>
-                      <input type="text" name="" id="" class="AssetCodeUpdate form-control" readonly>
+                   <div class="col">
+
+                     
+                     <div class="form-group">
+                       <label for="">Category</label>
+                       <select name="Category" id="" class="form-control CategoryUpdate" disabled>
+                         <% listCategory.map((value)=>{%>
+                         <option value="<%= value._id %>">
+                           <%= value.CategoryName %> - <%= value.Prefix %>
+                         </option>
+                         <% })%>
+                       </select>
+                     </div>
+                     <div class="form-group">
+                      <label for="DescriptionUpdate">Description</label>
+                      <textarea type="text" name="DescriptionUpdate" id="" class="DescriptionUpdate form-control" required></textarea>
                     </div>
-                    <div class="form-group">
-                      <label for="">State</label>
-                      <select name="State" id="" class="State form-control">
-                        <option value="unavailable">Unavailable</option>
-                        <option value="available">Available</option>
-                        <option value="waiting">Waiting</option>
-                        <option value="recycled">Recycled</option>
-                      </select>
-                    </div>
-                   
-                    <div class="form-group">
-                      <label for="">Description</label>
-                      <textarea type="text" name="" id="" class="DescriptionUpdate form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="">Category</label>
-                      <select name="Category" id="" class="form-control CategoryUpdate">
-                        <% listCategory.map((value)=>{%>
-                        <option value="<%= value._id %>">
-                          <%= value.CategoryName %> - <%= value.Prefix %>
-                        </option>
-                        <% })%>
-                      </select>
-                    </div>
+                   </div>
                   </div>
                 
                 </div>

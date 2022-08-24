@@ -8,23 +8,25 @@ openAddModal = () => {
 handleAddNew = () => {
   const AssetName = $(".AssetName").val().trim().toUpperCase();
   const Category = $(".Category").val().trim();
-  const AssetDate = $(".AssetDate").val().trim();
+  const Price = $(".Price").val().trim();
   const Description = $(".Description").val().trim();
   const Amount = $(".Amount").val().trim();
+  const SuggestionLink = $(".SuggestionLink").val().trim();
 
-  const check = new Date(AssetDate).getTime();
-  const Now = new Date().getTime();
-  if (check < Now) {
-    $("#warning_message").html(`<p>Asset Date must be greater than today</p>`);
-    return;
-  }
-  if (!AssetName || !Description || !Category || !AssetDate || !Amount) {
+  if (
+    !AssetName ||
+    !Description ||
+    !Category ||
+    !Price ||
+    !Amount ||
+    !SuggestionLink
+  ) {
     return;
   }
   $.ajax({
-    url: "/asset/api",
+    url: "/requestByNew/api",
     type: "POST",
-    data: { AssetName, Category, AssetDate, Amount, Description },
+    data: { AssetName, Category, Price, Amount, Description, SuggestionLink },
   })
     .then(() => {
       window.location.reload();
@@ -41,7 +43,7 @@ openUpdate = async (id) => {
   try {
     idAsset = id;
     const res = await $.ajax({
-      url: `/asset/api/${idAsset}`,
+      url: `/requestByNew/api/${idAsset}`,
       type: "GET",
     });
 
@@ -68,7 +70,7 @@ handleUpdate = async () => {
     const Description = $(".DescriptionUpdate").val().trim();
     const AssetCode = $(".AssetCodeUpdate").val().trim();
     await $.ajax({
-      url: `/asset/api/${idAsset}`,
+      url: `/requestByNew/api/${idAsset}`,
       type: "PUT",
       data: {
         Category: Category,
@@ -88,10 +90,10 @@ handleUpdate = async () => {
 
 handleDelete = async (id) => {
   try {
-    let processed = confirm("Do you want to delete this asset?");
+    let processed = confirm("Do you want to delete this request?");
     if (processed) {
       await $.ajax({
-        url: `/asset/api/${id}`,
+        url: `/requestByNew/api/${id}`,
         type: "DELETE",
       });
       window.location.reload();

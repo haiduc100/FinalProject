@@ -9,7 +9,9 @@ handleAddNew = () => {
   const AssignToId = $(".AssignTo").val().trim();
   const AssetId = $(".AssetName").val().trim();
   const Note = $(".Note").val().trim();
-
+  if (!AssignToId || !AssetId || !Note) {
+    return;
+  }
   $.ajax({
     url: "/assignments/api",
     type: "POST",

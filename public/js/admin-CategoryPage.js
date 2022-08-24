@@ -8,6 +8,9 @@ openAddModal = () => {
 handleAddNew = () => {
   const CategoryName = $(".CategoryName").val().trim();
   const Prefix = $(".Prefix").val().trim().toUpperCase();
+  if (!CategoryName || !Prefix) {
+    return;
+  }
   $.ajax({
     url: "/category/api",
     type: "POST",

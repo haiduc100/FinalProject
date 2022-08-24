@@ -52,6 +52,9 @@ module.exports.getRequestById = async (req, res) => {
 
 module.exports.createRequestByNew = async (req, res) => {
   try {
+    const user = await User.findOne({ StaffCode: req.staff });
+    req.body.RequestBy = user._id;
+    req.body.ProcessStep = 1;
     req.body.State = "waiting";
     const request = await RequestByNew.create(req.body);
 

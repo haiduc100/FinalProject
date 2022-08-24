@@ -93,6 +93,8 @@
           >
             <div class="modal-dialog" role="document">
               <div class="modal-content">
+                <form action="">
+
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
                     Modal title
@@ -116,7 +118,7 @@
                         name="DepartmentName"
                         id=""
                         placeholder="Department Name"
-                        class="DepartmentName form-control"
+                        class="DepartmentName form-control" required
                       />
                     </div>
                     <div class="form-group">
@@ -126,7 +128,7 @@
                       name="Prefix"
                       id=""
                       placeholder="Prefix"
-                      class="Prefix form-control"
+                      class="Prefix form-control" required
                     />
                     </div>
                   </div>
@@ -139,7 +141,7 @@
                         name="DepartmentNameUpdate"
                         id=""
                         placeholder="Update Department Name"
-                        class="DepartmentNameUpdate form-control"
+                        class="DepartmentNameUpdate form-control" required
                       />
                     </div>
                     <div class="form-group">
@@ -150,21 +152,21 @@
                       name="PrefixUpdate"
                       id=""
                       placeholder="Update Prefix"
-                      class="PrefixUpdate form-control"
+                      class="PrefixUpdate form-control" required
                     />
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-secondary"
                     data-dismiss="modal"
                   >
                     Close
                   </button>
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
@@ -178,6 +180,8 @@
                     Update
                   </button>
                 </div>
+              </form>
+
               </div>
             </div>
           </div>

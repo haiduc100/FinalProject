@@ -94,6 +94,8 @@
           >
             <div class="modal-dialog" role="document">
               <div class="modal-content">
+                <form action="">
+
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
                     Modal title
@@ -117,7 +119,7 @@
                             type="text"
                             class="FirstName form-control"
                             name="FirstName"
-                            placeholder="First Name"
+                            placeholder="First Name" required
                           />
                         </div>
                         <div class="form-group">
@@ -126,7 +128,7 @@
                             type="text"
                             class="LastName form-control"
                             name="LastName"
-                            placeholder="Last Name"
+                            placeholder="Last Name" required
                           />
                         </div>
                         <div class="form-group">
@@ -135,12 +137,12 @@
                             type="date"
                             class="DateOfBirth form-control"
                             name="DateOfBirth"
-                            placeholder="Date Of Birth"
+                            placeholder="Date Of Birth" required
                           />
                         </div>
                         <div class="form-group">
                           <label>Role</label>
-                          <select class="roleCreate form-control">
+                          <select class="roleCreate form-control" required>
                             <option value="">--Select--</option>
 
                             <option value="0">Administrator</option>
@@ -156,12 +158,12 @@
                             type="text"
                             class="UserName form-control"
                             name="UserName"
-                            placeholder="User Name"
+                            placeholder="User Name" required
                           />
                         </div>
                         <div class="form-group">
                           <label for="Department">Department</label>
-                          <select name="Department" id="" class="Department form-control">
+                          <select name="Department" id="" class="Department form-control" required>
                             <option value="">--Select--</option>
                             <% listDepartment.map((value)=>{%>
                             <option value="<%= value._id %>">
@@ -172,8 +174,8 @@
                         </div>
                         <div class="form-group">
                           <label>Gender</label>
-                          <select class="Gender form-control">
-
+                          <select class="Gender form-control" required>
+                            <option value="">--Select--</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -184,7 +186,7 @@
                             type="text"
                             class="Email form-control"
                             name="Email"
-                            placeholder="Email"
+                            placeholder="Email" required
                           />
                         </div>
                       </div>
@@ -192,7 +194,7 @@
                   <div id="updateAccount">
                     <div class="form-group">
                       <label>Role</label>
-                      <select class="roleUpdate form-control">
+                      <select class="roleUpdate form-control" required>
                         <option value="">--Select--</option>
                         <option value="0">Administrator</option>
                         <option value="1">Staff</option>
@@ -202,14 +204,14 @@
                 </div>
                 <div class="modal-footer">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-secondary"
                     data-dismiss="modal"
                   >
                     Close
                   </button>
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
@@ -223,6 +225,8 @@
                     Update
                   </button>
                 </div>
+              </form>
+
               </div>
             </div>
           </div>
@@ -259,7 +263,7 @@
                         <td><%= value.Gender %></td>
                         <td><%= value.Role %></td>
                         <td><%= value.UserName %></td>
-                        <td><%= value.StaffCode %></td>
+                        <td><%= value.StaffCode %> </td>
                         <td><%= value.Department.DepartmentName %></td>
                         <td>
                           <p

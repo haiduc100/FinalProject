@@ -60,9 +60,11 @@ module.exports.createUser = async (req, res) => {
         .status(400)
         .json({ status: "Fail", message: "User already exists" });
     }
-    const department = await Department.find({ _id: req.body.Department });
+    const department = await Department.findOne({ _id: req.body.Department });
+    console.log(req.body.Department);
 
-    req.body.StaffCode = department.Prefix + new Date().getTime();
+    req.body.StaffCode =
+      department.Prefix + Math.random().toString(36).substring(7);
 
     let firstName = req.body.FirstName.toLocaleLowerCase().split(" ");
     for (let i = 0; i < firstName.length; i++) {

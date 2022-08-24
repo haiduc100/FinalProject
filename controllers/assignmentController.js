@@ -7,10 +7,6 @@ module.exports.getAllAssignments = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    // const assignments = await Assginment.find()
-    //   .populate("AssignToId")
-    //   .populate("AssignById")
-    //   .populate("AssetId");
 
     const paginateData = await Paginate(
       Assginment,
@@ -20,7 +16,7 @@ module.exports.getAllAssignments = async (req, res) => {
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId"]
     );
-    const assets = await Asset.find({});
+    const assets = await Asset.find({ State: "available" });
     const users = await User.find({});
     res.render("components/admin/assignmentManagementPage", {
       listAssignment: paginateData.data,
@@ -60,15 +56,24 @@ module.exports.getAssignmentById = async (req, res) => {
 module.exports.createAssignment = async (req, res) => {
   try {
     const asset = await Asset.findOne({ _id: req.body.AssetId });
-    if (asset.State == "available") {
-      const assignment = await Assginment.create(req.body);
-      res.status(200).json(assignment);
-    } else {
+    const staff = await User.findOne({ StaffCode: req.staff });
+    req.body.AssignById = staff._id;
+    console.log(asset.State);
+    asset.State = "waiting";
+    if (req.body.AssignById == req.body.AssignToId) {
       res.status(400).json({
         status: "Fail",
-        message: "Asset must be available",
+        message: "Can not assign for your self!!",
       });
     }
+    if (req.body.AssignById == req.body.AssignToId) {
+      res.status(400).json({
+        status: "Fail",
+        message: "Can not assign for your self!!",
+      });
+    }
+    const assignment = await Assginment.create(req.body);
+    res.status(200).json(assignment);
   } catch (error) {
     res.status(500).json({
       status: "Fail",

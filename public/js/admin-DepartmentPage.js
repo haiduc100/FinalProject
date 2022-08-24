@@ -8,6 +8,10 @@ openAddModal = () => {
 handleAddNew = () => {
   const DepartmentName = $(".DepartmentName").val().trim().toUpperCase();
   const Prefix = $(".Prefix").val().trim().toUpperCase();
+
+  if (!DepartmentName || !Prefix) {
+    return;
+  }
   $.ajax({
     url: "/department/api",
     type: "POST",

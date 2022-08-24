@@ -70,14 +70,7 @@ module.exports.getAssetById = async (req, res) => {
 module.exports.createAsset = async (req, res) => {
   try {
     const category = await Category.findOne({ _id: req.body.Category });
-    const check = new Date(req.body.AssetDate).getTime();
-    const Now = new Date().getTime();
-    if (check < Now) {
-      res.status(400).json({
-        status: "Fail",
-        message: "Asset Date must be greater than today",
-      });
-    }
+    
     // const newAsset = await Asset.create(req.body);
     let State = "available";
     let newCategory = req.body.Category;
@@ -88,7 +81,7 @@ module.exports.createAsset = async (req, res) => {
     let Amount = req.body.Amount;
 
     for (let i = 0; i < Amount; i++) {
-      let AssetCode = category.Prefix + new Date().getTime();
+      let AssetCode = category.Prefix + Math.random().toString(36).substring(7);
       Asset.create({
         State: State,
         Category: newCategory,

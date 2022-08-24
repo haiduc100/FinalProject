@@ -4,17 +4,37 @@ openAddModal = () => {
   $("#createAccount").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
+function capitalize(str) {
+  const arr = str.split(" ");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  return arr.join(" ");
+}
 
 handleAddNew = () => {
-  const FirstName = $(".FirstName").val().trim();
-  const LastName = $(".LastName").val().trim();
+  let FirstName = $(".FirstName").val().trim().toLowerCase();
+  let LastName = $(".LastName").val().trim().toLowerCase();
   const Role = $(".roleCreate").val().trim();
   const Gender = $(".Gender").val().trim();
   const UserName = $(".UserName").val().trim();
   const Email = $(".Email ").val().trim();
   const DateOfBirth = $(".DateOfBirth").val().trim();
   const Department = $(".Department").val().trim();
-
+  if (
+    !FirstName ||
+    !LastName ||
+    !Email ||
+    !DateOfBirth ||
+    !Department ||
+    !Role ||
+    !Gender ||
+    !UserName
+  ) {
+    return;
+  }
+  FirstName = capitalize(FirstName);
+  LastName = capitalize(LastName);
   $.ajax({
     url: "/user/api",
     type: "POST",

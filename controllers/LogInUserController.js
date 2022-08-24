@@ -21,7 +21,6 @@ module.exports.LogInUser = async (req, res) => {
       UserName: req.body.UserName,
     });
     if (data) {
-      console.log(data);
       const checkPass = await bcrypt.compare(
         req.body.PassWord,
         data._doc.Password
