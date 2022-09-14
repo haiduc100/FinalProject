@@ -61,7 +61,7 @@ module.exports.createUser = async (req, res) => {
         .json({ status: "Fail", message: "User already exists" });
     }
     const department = await Department.findOne({ _id: req.body.Department });
-    console.log(req.body.Department);
+    // console.log(req.body.Department);
 
     req.body.StaffCode =
       department.Prefix + Math.random().toString(36).substring(7);

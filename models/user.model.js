@@ -12,10 +12,9 @@ const UserSchema = mongoose.Schema(
     },
     Token: String,
     Role: {
-      type: Number,
-      enum: [0, 1],
-      default: 1,
-    }, //0 is admin, 1 is staff
+      type: String,
+      ref: "Role",
+    },
     UserName: String,
     StaffCode: String,
     Password: String,

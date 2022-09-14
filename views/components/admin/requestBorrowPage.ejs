@@ -149,15 +149,16 @@
                         </td>
                         <td><%= value.AssetId.AssetCode %></td>
                         <td>
-                          <p
+                          <button
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning"
                             id='btnUpdate'
+                            <%= value.State === 'accepted' ? 'disabled' : '' %>
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
-                          </p>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>

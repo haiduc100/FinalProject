@@ -8,7 +8,7 @@ exports.Paginate = async (model, options, sort, page, pageSize, populate) => {
     test = test.populate(populate[i]);
   }
   const data = await test;
-  const totalData = await model.count({ options });
+  const totalData = await model.count(options);
 
   const totalPages = Math.ceil(totalData / pageSize);
 
