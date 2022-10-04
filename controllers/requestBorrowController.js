@@ -18,7 +18,6 @@ module.exports.getAllRequestBorrow = async (req, res) => {
     );
     const categorys = await Category.find({});
     const users = await User.find({});
-    console.log(paginateData.data);
     res.render("components/admin/requestBorrowPage", {
       listRequest: paginateData.data,
       listUser: users,

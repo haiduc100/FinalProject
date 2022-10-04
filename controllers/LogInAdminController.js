@@ -26,7 +26,7 @@ module.exports.LogInAdmin = async (req, res) => {
         data._doc.Password
       );
       if (checkPass) {
-        if (data.Role === 0) {
+        if (data.Role == 0) {
           const userID = data._id;
           const token = jwt.sign(
             { id: userID },

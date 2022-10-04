@@ -71,10 +71,10 @@ module.exports.createUser = async (req, res) => {
       firstName[i] = firstName[i][0];
     }
     req.body.Password =
-      req.body.LastName.toLocaleLowerCase() +
-      firstName.join("") +
+      req.body.LastName.toLocaleLowerCase().trim() +
+      firstName.join("").trim() +
       req.body.DateOfBirth.split("-").reverse().join("");
-
+    console.log(req.body.Password);
     req.body.Password = await bcrypt.hash(req.body.Password, 10);
     const newUser = new User({
       ...req.body,
