@@ -3,7 +3,6 @@ let idRequest;
 openUpdate = async (id) => {
   try {
     idRequest = id;
-    // console.log(idRequest);
     const res = await $.ajax({
       url: `/requestBorrow/api/${idRequest}`,
       type: "GET",
@@ -30,6 +29,18 @@ handleUpdate = async () => {
       },
     });
     $("#btnUpdate").prop("disabled", true);
+    if (newState == "accepted") {
+      const res = await $.ajax({
+        url: `/requestBorrow/api/${idRequest}`,
+        type: "GET",
+      });
+
+      await $.ajax({
+        url: "/assignments/api",
+        type: "POST",
+        data: { AssignToId: res.RequestBy, AssetId: res.AssetId },
+      });
+    }
     window.location.reload();
   } catch (error) {
     console.log(error);

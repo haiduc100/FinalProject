@@ -15,6 +15,8 @@ const RequestBorrowSchema = mongoose.Schema(
     RequestBy: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },
     Description: String,
+    ReturnDate: { type: Date },
+    BorrowDate: { type: Date, default: new Date() },
   },
   { collection: "RequestBorrow" }
 );
