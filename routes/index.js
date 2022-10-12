@@ -36,4 +36,7 @@ router.use("/requestBorrow", requestBorowRoute);
 const userRoute = require("./userRoute");
 router.use("/user", userRoute);
 
+const roleRoute = require("./roleRoute");
+router.use("/role", roleRoute);
+
 module.exports = router;

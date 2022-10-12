@@ -11,7 +11,7 @@ module.exports.getAllAsset = async (req, res) => {
     const paginateData = await Paginate(
       Asset,
       {},
-      { AssetName: 1 },
+      { updatedAt: 1 },
       req.query.page,
       req.query.pageSize,
       ["Category"]
@@ -22,6 +22,7 @@ module.exports.getAllAsset = async (req, res) => {
       listCategory: category,
       totalPages: paginateData.totalPages,
       staff: req.staff,
+      test: 1,
     });
   } catch (error) {
     res.status(500).json({
@@ -70,7 +71,7 @@ module.exports.getAssetById = async (req, res) => {
 module.exports.createAsset = async (req, res) => {
   try {
     const category = await Category.findOne({ _id: req.body.Category });
-    
+
     // const newAsset = await Asset.create(req.body);
     let State = "available";
     let newCategory = req.body.Category;

@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const roleModel = require("../models/role.model");
 
 module.exports.checkDuplicate = (req, res, next) => {
   User.findOne({ Username: req.body.UserName })
@@ -19,10 +20,11 @@ module.exports.checkDuplicate = (req, res, next) => {
     });
 };
 
-module.exports.checkRole = (req, res, next) => {
+module.exports.checkRole = async (req, res, next) => {
   try {
-    const role = req.Role;
-    if (role == 0) {
+    const role = await roleModel.findById(req.Role);
+
+    if (role.Role !== 1) {
       next();
     } else {
       res.redirect("/user/LogInAdmin");

@@ -36,7 +36,10 @@ module.exports.getAllRequestBorrow = async (req, res) => {
 
 module.exports.getRequestById = async (req, res) => {
   try {
-    const requests = await RequestBorrow.findOne({ _id: req.params.id });
+    const requests = await RequestBorrow.findOne({
+      _id: req.params.id,
+    }).populate("RequestBy");
+    // console.log(requests);
 
     res.status(200).json(requests);
   } catch (error) {

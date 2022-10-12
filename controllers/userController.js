@@ -3,6 +3,7 @@ const Department = require("../models/department.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Paginate } = require("../services/paginationServices");
+const roleModel = require("../models/role.model");
 
 module.exports.getAllUsers = async (req, res) => {
   try {
@@ -14,14 +15,17 @@ module.exports.getAllUsers = async (req, res) => {
       { UserName: 1 },
       req.query.page,
       req.query.pageSize,
-      ["Department"]
+      ["Department", "Role"]
     );
+    console.log(paginateData.data);
     const department = await Department.find({});
+    const roles = await roleModel.find({});
     res.render("components/admin/userManagementPage", {
       listUser: paginateData.data,
       listDepartment: department,
       staff: req.staff,
       totalPages: paginateData.totalPages,
+      listRole: roles,
     });
   } catch (error) {
     console.log(error);

@@ -11,7 +11,7 @@ openUpdate = async (id) => {
     // $(".StateUpdate").val(res.State);
     $(".AssetCode").val(res.AssetId);
     $(".CategoryUpdate").val(res.Category);
-    $(".RequestBy").val(res.RequestBy);
+    $(".RequestBy").val(res.RequestBy.StaffCode);
     $(".Description").val(res.Description);
   } catch (error) {
     console.log(error);
@@ -29,18 +29,7 @@ handleUpdate = async () => {
       },
     });
     $("#btnUpdate").prop("disabled", true);
-    if (newState == "accepted") {
-      const res = await $.ajax({
-        url: `/requestBorrow/api/${idRequest}`,
-        type: "GET",
-      });
 
-      await $.ajax({
-        url: "/assignments/api",
-        type: "POST",
-        data: { AssignToId: res.RequestBy, AssetId: res.AssetId },
-      });
-    }
     window.location.reload();
   } catch (error) {
     console.log(error);

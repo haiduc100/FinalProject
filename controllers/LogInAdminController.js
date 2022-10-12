@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const roleModel = require("../models/role.model");
 
 //View html Login
 module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
@@ -20,13 +21,14 @@ module.exports.LogInAdmin = async (req, res) => {
     const data = await User.findOne({
       UserName: req.body.UserName,
     });
+    const role = await roleModel.findById(data.Role);
     if (data) {
       const checkPass = await bcrypt.compare(
         req.body.PassWord,
         data._doc.Password
       );
       if (checkPass) {
-        if (data.Role == 0) {
+        if (role.Role !== 1) {
           const userID = data._id;
           const token = jwt.sign(
             { id: userID },
@@ -53,9 +55,12 @@ module.exports.LogInAdmin = async (req, res) => {
         res.json({ message: "Incorrect password!!!" });
       }
     } else {
+      console.log(error);
+
       res.json({ message: "login failed", status: 400, err: false });
     }
   } catch (error) {
+    console.log(error);
     res.json({ message: "Error server", status: 500, err: error });
   }
 };

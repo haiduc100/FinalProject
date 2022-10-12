@@ -18,6 +18,7 @@ module.exports.getAllAssignments = async (req, res) => {
     );
     const assets = await Asset.find({ State: "waiting" });
     const users = await User.find({});
+    console.log(paginateData.data);
     res.render("components/admin/assignmentManagementPage", {
       listAssignment: paginateData.data,
       listUser: users,

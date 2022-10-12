@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <title>Asset Management</title>
-    <link rel="stylesheet" href="/public/css/admin-userManagementPage.css">
+    <link rel="stylesheet" href="/public/css/admin-RoleManagementPage.css">
 
   </head>
   <body>
@@ -72,7 +72,6 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <!-- Button trigger modal -->
           <button
             type="button"
             class="btn btn-primary"
@@ -80,7 +79,7 @@
             data-target="#exampleModal"
             onclick="openAddModal()"
           >
-            Add New User Account
+            Add New Role
           </button>
 
           <!-- Modal -->
@@ -110,95 +109,51 @@
                   </button>
                 </div>
                 <div class="modal-body">
-
-                    <div id="createAccount" class="row d-flex bg-light">
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="FirstName">First Name</label>
-                          <input
-                            type="text"
-                            class="FirstName form-control"
-                            name="FirstName"
-                            placeholder="First Name" required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="LastName">Last Name</label>
-                          <input
-                            type="text"
-                            class="LastName form-control"
-                            name="LastName"
-                            placeholder="Last Name" required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="DateOfBirth">Date Of Birth</label>
-                          <input
-                            type="date"
-                            class="DateOfBirth form-control"
-                            name="DateOfBirth"
-                            placeholder="Date Of Birth" required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label>Role</label>
-                          <select class="roleCreate form-control" required>
-                            <option value="">--Select--</option>
-                            <% listRole.map((value)=>{ %>
-                            <option value="<%= value._id %>"><%= value.RoleName %></option>
-                            <% })%>
-                          </select>
-                        </div>
-                        
-                      </div>
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="UserName">User Name</label>
-                          <input
-                            type="text"
-                            class="UserName form-control"
-                            name="UserName"
-                            placeholder="User Name" required
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="Department">Department</label>
-                          <select name="Department" id="" class="Department form-control" required>
-                            <option value="">--Select--</option>
-                            <% listDepartment.map((value)=>{%>
-                            <option value="<%= value._id %>">
-                             <%= value.Prefix %> 
-                            </option>
-                            <% })%>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label>Gender</label>
-                          <select class="Gender form-control" required>
-                            <option value="">--Select--</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="Email">Email</label>
-                          <input
-                            type="text"
-                            class="Email form-control"
-                            name="Email"
-                            placeholder="Email" required
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  <div id="updateAccount">
+                  <div class="createRole">
                     <div class="form-group">
-                      <label>Role</label>
-                      <select class="roleUpdate form-control" required>
-                        <% listRole.map((value)=>{ %>
-                          <option value="<%= value._id %>"><%= value.RoleName %></option>
-                          <% })%>
-                      </select>
+
+                      <label>Role Name</label>
+                      <input
+                        type="text"
+                        name="RoleName"
+                        id=""
+                        placeholder="Role Name"
+                        class="RoleName form-control" required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Role</label>
+                      <input
+                      type="text"
+                      name="Role"
+                      id=""
+                      placeholder="Role"
+                      class="Role form-control" required
+                    />
+                    </div>
+                  </div>
+
+                  <div class="updateRole">
+                    <div class="form-group">
+                      <label for="">Role Name</label>
+                      <input
+                        type="text"
+                        name="RoleNameUpdate"
+                        id=""
+                        placeholder="Update Role Name"
+                        class="RoleNameUpdate form-control" required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Role</label>
+
+                      <input
+                      type="text"
+                      name="RoleUpdate"
+                      id=""
+                      placeholder="Update Role"
+                      class="RoleUpdate form-control" required
+                    />
                     </div>
                   </div>
                 </div>
@@ -230,6 +185,7 @@
               </div>
             </div>
           </div>
+
           <section class="content">
             <div class="container-fluid">
               <div class="row">
@@ -238,33 +194,17 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Date Of Birth</th>
-                        <th scope="col">Gender</th>
+                        <th scope="col">Role Name</th>
                         <th scope="col">Role</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">StaffCode</th>
-                        <th scope="col">Department</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listUser.map((value,index)=>{ %>
+                      <% listRole.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td><%= value.FirstName %></td>
-                        <td><%= value.LastName %></td>
-                        <td>
-                          <%=value.DateOfBirth?
-                          value.DateOfBirth.toLocaleString('fr-CA', { year:
-                          'numeric', month: '2-digit', day: '2-digit' }):null %>
-                        </td>
-                        <td><%= value.Gender %></td>
-                        <td><%= value.Role.RoleName %></td>
-                        <td><%= value.UserName %></td>
-                        <td><%= value.StaffCode %> </td>
-                        <td><%= value.Department.DepartmentName %></td>
+                        <td><%= value.RoleName %></td>
+                        <td><%= value.Role %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -290,7 +230,7 @@
             </div>
             <div class="paginateBtn" id="">
               <% for(let i = 0; i <totalPages; i++) { %>
-                <a href="/user?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                <a href="/role?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
               <% }%>
             </div>
           </section>
@@ -303,6 +243,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-UserPage.js"></script>
+    <script src="/public/js/admin-RolePage.js"></script>
   </body>
 </html>

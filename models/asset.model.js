@@ -7,10 +7,20 @@ const AssetSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+
     State: {
       type: String,
       default: "available",
-      enum: ["unavailable", "available", "waiting", "repairing", "assigned"],
+      enum: [
+        "unavailable",
+        "available",
+        "waiting",
+        "repairing",
+        "accepted",
+        "assigned",
+        "sold",
+        "auction",
+      ],
     },
     Category: {
       type: String,
