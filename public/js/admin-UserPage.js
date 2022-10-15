@@ -50,10 +50,18 @@ handleAddNew = () => {
     },
   })
     .then(() => {
+      $(".FirstName").val("");
+      $(".LastName").val("");
+      $(".roleCreate").val("");
+      $(".Gender").val("");
+      $(".UserName").val("");
+      $(".Email ").val("");
+      $(".DateOfBirth").val("");
+      $(".Department").val("");
       window.location.reload();
     })
     .catch((error) => {
-      console.log(error);
+      alert(error.responseJSON.message);
     });
 };
 
@@ -66,7 +74,7 @@ openUpdate = async (id) => {
       type: "GET",
     });
 
-    $(".roleUpdate").val(res.Role);
+    $(".emailUpdate").val(res.Email);
     // console.log(res);
 
     $("#createAccount").attr("style", "display: none !important");
@@ -80,13 +88,14 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const Role = $(".roleUpdate").val();
+    // const Role = $(".roleUpdate").val();
+    const Email = $(".emailUpdate").val();
 
     await $.ajax({
       url: `/user/api/${idAccount}`,
       type: "PUT",
       data: {
-        Role,
+        Email,
       },
     });
     window.location.reload();

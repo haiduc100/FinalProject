@@ -183,8 +183,8 @@
                         <div class="form-group">
                           <label for="Email">Email</label>
                           <input
+                          class="Email form-control"
                             type="text"
-                            class="Email form-control"
                             name="Email"
                             placeholder="Email" required
                           />
@@ -193,12 +193,12 @@
                     </div>
                   <div id="updateAccount">
                     <div class="form-group">
-                      <label>Role</label>
-                      <select class="roleUpdate form-control" required>
-                        <% listRole.map((value)=>{ %>
-                          <option value="<%= value._id %>"><%= value.RoleName %></option>
-                          <% })%>
-                      </select>
+                      <label for="Email">Email</label>
+                      <input class="emailUpdate form-control"   
+                      type="text"
+                      name="Email"
+                      placeholder="Email" required />
+                      
                     </div>
                   </div>
                 </div>
@@ -245,7 +245,8 @@
                         <th scope="col">Role</th>
                         <th scope="col">User Name</th>
                         <th scope="col">StaffCode</th>
-                        <th scope="col">Department</th>
+                        <th scope="col">Department</th> 
+                        <th scope="col">Active Account</th> 
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -265,6 +266,7 @@
                         <td><%= value.UserName %></td>
                         <td><%= value.StaffCode %> </td>
                         <td><%= value.Department.DepartmentName %></td>
+                        <td><%= value.IsActive %> </td>
                         <td>
                           <p
                             data-toggle="modal"

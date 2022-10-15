@@ -25,6 +25,14 @@ const UserSchema = mongoose.Schema(
       ref: "Department",
       require: true,
     },
+    IsActive: {
+      type: Boolean,
+      default: false,
+    },
+    IsDelete: {
+      type: Boolean,
+      default: false,
+    },
   },
   { collection: "User", timestamps: true }
 );
