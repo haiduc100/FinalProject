@@ -18,13 +18,11 @@ handleAddNew = () => {
   const Role = $(".roleCreate").val().trim();
   const Gender = $(".Gender").val().trim();
   const UserName = $(".UserName").val().trim();
-  const Email = $(".Email ").val().trim();
   const DateOfBirth = $(".DateOfBirth").val().trim();
   const Department = $(".Department").val().trim();
   if (
     !FirstName ||
     !LastName ||
-    !Email ||
     !DateOfBirth ||
     !Department ||
     !Role ||
@@ -44,7 +42,6 @@ handleAddNew = () => {
       Role,
       Gender,
       UserName,
-      Email,
       DateOfBirth,
       Department,
     },
@@ -55,7 +52,6 @@ handleAddNew = () => {
       $(".roleCreate").val("");
       $(".Gender").val("");
       $(".UserName").val("");
-      $(".Email ").val("");
       $(".DateOfBirth").val("");
       $(".Department").val("");
       window.location.reload();
@@ -65,46 +61,46 @@ handleAddNew = () => {
     });
 };
 
-let idAccount;
-openUpdate = async (id) => {
-  try {
-    idAccount = id;
-    const res = await $.ajax({
-      url: `/user/api/${idAccount}`,
-      type: "GET",
-    });
+// let idAccount;
+// openUpdate = async (id) => {
+//   try {
+//     idAccount = id;
+//     const res = await $.ajax({
+//       url: `/user/api/${idAccount}`,
+//       type: "GET",
+//     });
 
-    $(".emailUpdate").val(res.Email);
-    // console.log(res);
+//     $(".emailUpdate").val(res.Email);
+//     // console.log(res);
 
-    $("#createAccount").attr("style", "display: none !important");
-    $(".addbtn").attr("style", "display: none !important");
-    $("#updateAccount").css("display", "inline-block");
-    $(".updatebtn").css("display", "inline-block");
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     $("#createAccount").attr("style", "display: none !important");
+//     $(".addbtn").attr("style", "display: none !important");
+//     $("#updateAccount").css("display", "inline-block");
+//     $(".updatebtn").css("display", "inline-block");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-handleUpdate = async () => {
-  try {
-    // const Role = $(".roleUpdate").val();
-    const Email = $(".emailUpdate").val();
+// handleUpdate = async () => {
+//   try {
+//     // const Role = $(".roleUpdate").val();
+//     const Email = $(".emailUpdate").val();
 
-    await $.ajax({
-      url: `/user/api/${idAccount}`,
-      type: "PUT",
-      data: {
-        Email,
-      },
-    });
-    window.location.reload();
+//     await $.ajax({
+//       url: `/user/api/${idAccount}`,
+//       type: "PUT",
+//       data: {
+//         Email,
+//       },
+//     });
+//     window.location.reload();
 
-    idAccount = 0;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     idAccount = 0;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 handleDelete = async (id) => {
   try {

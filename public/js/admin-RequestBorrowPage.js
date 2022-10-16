@@ -9,7 +9,7 @@ openUpdate = async (id) => {
     });
     // console.log(res.State);
     // $(".StateUpdate").val(res.State);
-    $(".AssetCode").val(res.AssetId);
+    $(".AssetCode").val(res.AssetId.AssetCode);
     $(".CategoryUpdate").val(res.Category);
     $(".RequestBy").val(res.RequestBy.StaffCode);
     $(".Description").val(res.Description);
@@ -28,6 +28,23 @@ handleUpdate = async () => {
         State: newState,
       },
     });
+    if (newState == "signed") {
+      await $.ajax({
+        url: `/requestBorrow/api/${idRequest}`,
+        type: "PUT",
+        data: {
+          State: newState,
+        },
+      });
+      await $.ajax({
+        url: `/assignment/api`,
+        type: "POST",
+        data: {
+          State: newState,
+          AssignById: idRequest,
+        },
+      });
+    }
     $("#btnUpdate").prop("disabled", true);
 
     window.location.reload();

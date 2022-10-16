@@ -44,6 +44,7 @@ module.exports.LogInAdmin = async (req, res) => {
             status: 200,
             err: false,
             userid: userID,
+            currentRole:role.Role
           });
         } else {
           res.status(400).json({

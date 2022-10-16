@@ -27,6 +27,8 @@ module.exports.getAllRequestByNew = async (req, res) => {
       listUser: users,
       listCategory: categorys,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {

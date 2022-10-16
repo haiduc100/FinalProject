@@ -2,6 +2,7 @@ const Assginment = require("../models/assignment.model");
 const Asset = require("../models/asset.model");
 const User = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
+const requestBorrowModel = require("../models/requestBorrow.model");
 
 module.exports.getAllAssignments = async (req, res) => {
   try {
@@ -23,6 +24,8 @@ module.exports.getAllAssignments = async (req, res) => {
       listUser: users,
       listAsset: assets,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
@@ -60,8 +63,11 @@ module.exports.createAssignment = async (req, res) => {
       { State: "assigned" }
     );
     const staff = await User.findOne({ StaffCode: req.staff });
-    req.body.AssignById = staff._id;
-    if (req.body.AssignById == req.body.AssignToId) {
+    req.body.SignedBy = staff._id;
+    const manager = await requestBorrowModel.findById(req.body.AssignById);
+
+    req.body.AssignById = manager.Handler;
+    if (req.body.SignedBy == req.body.AssignToId) {
       res.status(400).json({
         status: "Fail",
         message: "Can not assign for your self!!",

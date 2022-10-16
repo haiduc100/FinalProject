@@ -23,7 +23,7 @@ const RequestReturnSchema = mongoose.Schema(
     },
     ProcessStep: Number,
   },
-  { collection: "RequestReturn" }
+  { collection: "RequestReturn", timestamps: true }
 );
 
 module.exports = mongoose.model("RequestReturn", RequestReturnSchema);

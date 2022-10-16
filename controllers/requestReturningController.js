@@ -26,6 +26,8 @@ module.exports.getAllRequestReturn = async (req, res) => {
       listRequestReturning: paginateData.data,
       listUsers: users,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {

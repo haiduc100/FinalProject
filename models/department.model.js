@@ -5,7 +5,7 @@ const DepartmentSchema = mongoose.Schema(
     DepartmentName: { type: String },
     Prefix: { type: String },
   },
-  { collection: "Department" }
+  { collection: "Department", timestamps: true }
 );
 
 module.exports = mongoose.model("Department", DepartmentSchema);

@@ -12,6 +12,10 @@ const AssignmentSchema = mongoose.Schema(
       type: String,
       ref: "User",
     },
+    SignedBy: {
+      type: String,
+      ref: "User",
+    },
     AssetId: {
       type: String,
       ref: "Asset",

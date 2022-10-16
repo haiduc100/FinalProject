@@ -18,16 +18,11 @@ const UserSchema = mongoose.Schema(
     UserName: String,
     StaffCode: String,
     Password: String,
-    Email: String,
     Avatar: String,
     Department: {
       type: String,
       ref: "Department",
       require: true,
-    },
-    IsActive: {
-      type: Boolean,
-      default: false,
     },
     IsDelete: {
       type: Boolean,

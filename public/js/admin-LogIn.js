@@ -12,7 +12,19 @@ function LoginAdmin() {
   })
     .then((data) => {
       if (data.status === 200) {
-        window.location.href = "/user";
+        if (data.currentRole == 4) {
+          //supper admin
+          window.location.href = "/user";
+        } else if (data.currentRole == 2) {
+          //stocker
+          window.location.href = "/asset";
+        } else if (data.currentRole == 3) {
+          //director
+          window.location.href = "/requestBorrow";
+        } else {
+          //manager
+          window.location.href = "/requestBorrow";
+        }
       } else {
         alert(data.message);
       }

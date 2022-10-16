@@ -32,7 +32,7 @@ const AssetSchema = mongoose.Schema(
     PurchaseDate: { type: Date, default: new Date() },
     Description: String,
   },
-  { collection: "Asset" }
+  { collection: "Asset", timestamps: true }
 );
 
 AssetSchema.plugin(mongoosePaginate);

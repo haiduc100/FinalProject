@@ -15,6 +15,8 @@ module.exports.getAllCategories = async (req, res) => {
     res.status(200).render("components/admin/categoryManagementPage", {
       listCategory: paginateData.data,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {

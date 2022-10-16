@@ -180,27 +180,12 @@
                             <option value="Female">Female</option>
                           </select>
                         </div>
-                        <div class="form-group">
-                          <label for="Email">Email</label>
-                          <input
-                          class="Email form-control"
-                            type="text"
-                            name="Email"
-                            placeholder="Email" required
-                          />
-                        </div>
+                        
                       </div>
                     </div>
-                  <div id="updateAccount">
-                    <div class="form-group">
-                      <label for="Email">Email</label>
-                      <input class="emailUpdate form-control"   
-                      type="text"
-                      name="Email"
-                      placeholder="Email" required />
-                      
-                    </div>
-                  </div>
+                  <!-- <div id="updateAccount">
+                    
+                  </div> -->
                 </div>
                 <div class="modal-footer">
                   <button
@@ -216,13 +201,6 @@
                     onclick="handleAddNew()"
                   >
                     Add
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary updatebtn"
-                    onclick="handleUpdate()"
-                  >
-                    Update
                   </button>
                 </div>
               </form>
@@ -246,7 +224,6 @@
                         <th scope="col">User Name</th>
                         <th scope="col">StaffCode</th>
                         <th scope="col">Department</th> 
-                        <th scope="col">Active Account</th> 
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -258,24 +235,14 @@
                         <td><%= value.LastName %></td>
                         <td>
                           <%=value.DateOfBirth?
-                          value.DateOfBirth.toLocaleString('fr-CA', { year:
-                          'numeric', month: '2-digit', day: '2-digit' }):null %>
+                          value.DateOfBirth.toLocaleString('en-US'):null %>
                         </td>
                         <td><%= value.Gender %></td>
                         <td><%= value.Role.RoleName %></td>
                         <td><%= value.UserName %></td>
                         <td><%= value.StaffCode %> </td>
                         <td><%= value.Department.DepartmentName %></td>
-                        <td><%= value.IsActive %> </td>
                         <td>
-                          <p
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                            class="btn btn-warning"
-                            onclick="openUpdate('<%= value._id %>')"
-                          >
-                            Update
-                          </p>
                           <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"

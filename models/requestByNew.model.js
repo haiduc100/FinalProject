@@ -21,7 +21,7 @@ const RequestByNewSchema = mongoose.Schema(
     ProcessStep: Number,
     Description: String,
   },
-  { collection: "RequestByNew" }
+  { collection: "RequestByNew", timestamps: true }
 );
 
 module.exports = mongoose.model("RequestByNew", RequestByNewSchema);

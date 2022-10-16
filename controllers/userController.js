@@ -12,7 +12,7 @@ module.exports.getAllUsers = async (req, res) => {
     const paginateData = await Paginate(
       User,
       { IsDelete: false },
-      { updatedAt: 1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Department", "Role"]
@@ -25,6 +25,8 @@ module.exports.getAllUsers = async (req, res) => {
       staff: req.staff,
       totalPages: paginateData.totalPages,
       listRole: roles,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
     });
   } catch (error) {
     console.log(error);
@@ -56,18 +58,15 @@ module.exports.getUserById = async (req, res) => {
 
 module.exports.createUser = async (req, res) => {
   try {
-    const user = await User.findOne({ UserName: req.body.UserName });
-    const userEmail = await User.findOne({ Email: req.body.Email });
+    const user = await User.findOne({
+      UserName: req.body.UserName,
+      IsDelete: false,
+    });
 
     if (user) {
       return res
         .status(400)
         .json({ status: "Fail", message: "User name already exists" });
-    }
-    if (userEmail) {
-      return res
-        .status(400)
-        .json({ status: "Fail", message: "Email already exists" });
     }
     if (new Date(req.body.DateOfBirth).getTime() > new Date().getTime()) {
       return res.status(400).json({

@@ -3,15 +3,19 @@ const Category = require("../models/category.model");
 const Asset = require("../models/asset.model");
 const { Paginate } = require("../services/paginationServices");
 const RequestBorrow = require("../models/requestBorrow.model");
+const userModel = require("../models/user.model");
+const departmentModel = require("../models/department.model");
 
 module.exports.getAllRequestBorrow = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    let currentStaff = await userModel.findOne({ StaffCode: req.staff });
+
     const paginateData = await Paginate(
       RequestBorrow,
-      {},
-      {},
+      { Department: currentStaff.Department },
+      { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Handler", "Category", "RequestBy", "AssetId"]
@@ -23,6 +27,8 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       listUser: users,
       listCategory: categorys,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
@@ -38,7 +44,9 @@ module.exports.getRequestById = async (req, res) => {
   try {
     const requests = await RequestBorrow.findOne({
       _id: req.params.id,
-    }).populate("RequestBy");
+    })
+      .populate("RequestBy")
+      .populate("AssetId");
     // console.log(requests);
 
     res.status(200).json(requests);
@@ -59,6 +67,7 @@ module.exports.createRequestBorrow = async (req, res) => {
     );
     req.body.RequestBy = user._id;
     req.body.State = "waiting";
+    req.body.Department = user.Department;
     const request = await RequestBorrow.create(req.body);
 
     res.status(200).json({

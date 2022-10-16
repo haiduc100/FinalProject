@@ -25,6 +25,8 @@ module.exports.getAllAssetAvailable = async (req, res) => {
       staff: req.staff,
       listCategory: listCategory,
       totalPages: paginateData.totalPages,
+      role: req.Role.Role,
+      currentRole: req.RoleName,
     });
   } catch (error) {
     console.log(error);
