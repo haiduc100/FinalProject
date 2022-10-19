@@ -10,9 +10,9 @@ router.get(
   controller.getAllAssignment
 );
 router.get(
-  "/requestbynew",
+  "/RequestBuyNew",
   checkController.checkLogin,
-  controller.getAllRequestByNew
+  controller.getAllRequestBuyNew
 );
 
 router.get(

@@ -63,10 +63,8 @@ module.exports.createAssignment = async (req, res) => {
       { State: "assigned" }
     );
     const staff = await User.findOne({ StaffCode: req.staff });
-    req.body.SignedBy = staff._id;
-    const manager = await requestBorrowModel.findById(req.body.AssignById);
 
-    req.body.AssignById = manager.Handler;
+    req.body.AssignById = staff._id;
     if (req.body.SignedBy == req.body.AssignToId) {
       res.status(400).json({
         status: "Fail",

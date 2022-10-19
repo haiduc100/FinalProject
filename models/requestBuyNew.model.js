@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const RequestByNewSchema = mongoose.Schema(
+const RequestBuyNewSchema = mongoose.Schema(
   {
     SuggestionLink: String,
     Price: Number,
@@ -21,7 +21,7 @@ const RequestByNewSchema = mongoose.Schema(
     ProcessStep: Number,
     Description: String,
   },
-  { collection: "RequestByNew", timestamps: true }
+  { collection: "RequestBuyNew", timestamps: true }
 );
 
-module.exports = mongoose.model("RequestByNew", RequestByNewSchema);
+module.exports = mongoose.model("RequestBuyNew", RequestBuyNewSchema);

@@ -27,8 +27,8 @@ router.use("/report", reportRoute);
 const requestReturningRoute = require("./requestReturningRoute");
 router.use("/requestReturning", requestReturningRoute);
 
-const requestByNewRoute = require("./requestByNewRoute");
-router.use("/requestByNew", requestByNewRoute);
+const RequestBuyNewRoute = require("./RequestBuyNewRoute");
+router.use("/RequestBuyNew", RequestBuyNewRoute);
 
 const requestBorowRoute = require("./requestBorowRoute");
 router.use("/requestBorrow", requestBorowRoute);
@@ -38,5 +38,17 @@ router.use("/user", userRoute);
 
 const roleRoute = require("./roleRoute");
 router.use("/role", roleRoute);
+
+const storageRoute = require("./storageRoute");
+router.use("/storage", storageRoute);
+
+const requestRepairRoute = require("./requestRepairRoute");
+router.use("/requestRepair", requestRepairRoute);
+
+const penaltyRuleRoute = require("./penaltyRuleRoute");
+router.use("/penaltyRule", penaltyRuleRoute);
+
+const penaltyBillRoute = require("./penaltyBillRoute");
+router.use("/penaltyBill", penaltyBillRoute);
 
 module.exports = router;

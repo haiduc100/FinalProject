@@ -1,6 +1,6 @@
 const Category = require("../models/category.model");
 const Asset = require("../models/asset.model");
-const NewAsset = require("../models/requestByNew.model");
+const NewAsset = require("../models/RequestBuyNew.model");
 module.exports.getAllAssetAvailable = async (req, res) => {
   try {
     const assets = await Asset.find({ State: "available" })

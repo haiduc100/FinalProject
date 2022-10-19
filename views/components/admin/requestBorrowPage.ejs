@@ -60,18 +60,24 @@
                   <div class="updateAsset d-flex">
                     <div class="col">
                       <div class="form-group">
-                        <label for="StateUpdate">State</label>
-                        <select name="StateUpdate" id="" class="StateUpdate form-control">
-                          <option value="">--Select--</option>
-                          <option value="accepted">Accepted</option>
-                          <option value="declined">Declined</option>
-                        </select>
+                        <div class="<%= role == 2 ? '' : 'd-none'%>" >
+                          <label for="Quality ">Quality</label>
+                          <input type="text" class="Quality form-control" />
+                        </div>
+                        <div class="<%= role !=2 ? '' : 'd-none'%>">
+                          <label for="StateUpdate ">State</label>
+                          <select name="StateUpdate" class="StateUpdate form-control ">
+                            <option value="">--Select--</option>
+                            <option value="<%= role == 0 ? 'submitToApproval' : 'signed' %>"><%= role==0? 'Submit To Approval' : 'Signed' %></option>
+                            <option value="declined">Declined</option>
+                          </select>
+                        </div>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group <%= role !=2 ? '' : 'd-none'%>">
                         <label for="AssetName">Asset Code</label>
                         <input type="text" class="AssetCode form-control" readonly />
                       </div>
-                      <div class="form-group">
+                      <div class="form-group <%= role !=2 ? '' : 'd-none'%>">
                         <label for="Category">Category</label>
                         <select name="Category" id="" class="CategoryUpdate form-control" disabled>
                           <% listCategory.map((value)=>{%>
@@ -84,11 +90,11 @@
                     </div>
                     <div class="col">
 
-                      <div class="form-group">
+                      <div class="form-group <%= role !=2 ? '' : 'd-none'%>">
                         <label for="">Request By</label>
                         <input type="text" class="RequestBy form-control" readonly />
                       </div>
-                      <div class="form-group">
+                      <div class="form-group  <%= role !=2 ? '' : 'd-none'%>">
                         <label for="">Description</label>
                         <textarea name="" id="" class="Description form-control" readonly></textarea>
                       </div>
@@ -106,9 +112,9 @@
                   <button
                     type="button"
                     class="btn btn-primary updatebtn"
-                    onclick="handleUpdate()"
+                    onclick="<%= role !=2 ? 'handleUpdate()' : 'handleAddNew()'%>"
                   >
-                    Update
+                  <%= role !=2 ? 'Update' : 'Add'%>
                   </button>
                 </div>
               </div>
@@ -123,8 +129,9 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Request By</th>
-                        <th scope="col">State</th>
+                        <!-- <th scope="col">State</th> -->
                         <th scope="col">Handler</th>
+                        <th scope="col">Approval</th>
                         <th scope="col">Category</th>
                         <th scope="col">Asset Code</th>
                         <th scope="col">Action</th>
@@ -138,9 +145,13 @@
                           <%= value.RequestBy ? value.RequestBy.StaffCode : null
                           %>
                         </td>
-                        <td><%= value.State %></td>
+                        <!-- <td><%= value.State %></td> -->
                         <td>
                           <%= value.Handler ? value.Handler.StaffCode :
+                          null%>
+                        </td>
+                        <td>
+                          <%= value.Approval ? value.Approval.StaffCode :
                           null%>
                         </td>
                         <td>
@@ -152,13 +163,21 @@
                           <button
                             data-toggle="modal"
                             data-target="#exampleModal"
-                            class="btn btn-warning"
+                            class="btn btn-warning   <%= role ==2 ? 'd-none' : ''%>"
                             id='btnUpdate'
-                            <%= value.State === 'accepted' ? 'disabled' : '' %>
                             onclick="openUpdate('<%= value._id %>')"
                           >
-                            Update
+                          Update
                           </button>
+                          <button
+                          type="button"
+                          class="btn btn-primary   <%= role !=2 ? 'd-none' : ''%>"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          onclick="openAddModal('<%= value._id %>')"
+                        >
+                        Add Assignment
+                        </button>
                         </td>
                       </tr>
                       <% }) %>

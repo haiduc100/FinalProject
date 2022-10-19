@@ -31,6 +31,7 @@ const AssetSchema = mongoose.Schema(
     Amount: Number,
     PurchaseDate: { type: Date, default: new Date() },
     Description: String,
+    QualityId: { type: String, ref: "Quality" },
   },
   { collection: "Asset", timestamps: true }
 );

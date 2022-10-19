@@ -11,15 +11,37 @@ module.exports.getAllRequestBorrow = async (req, res) => {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
     let currentStaff = await userModel.findOne({ StaffCode: req.staff });
-
-    const paginateData = await Paginate(
-      RequestBorrow,
-      { Department: currentStaff.Department },
-      { updateAt: -1 },
-      req.query.page,
-      req.query.pageSize,
-      ["Handler", "Category", "RequestBy", "AssetId"]
-    );
+    let paginateData;
+    if (req.Role.Role == 3) {
+      paginateData = await Paginate(
+        RequestBorrow,
+        {
+          $or: [{ State: "submitToApproval" }, { Approval: { $exists: true } }],
+        },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy", "AssetId", "Approval"]
+      );
+    } else if (req.Role.Role == 0) {
+      paginateData = await Paginate(
+        RequestBorrow,
+        { Department: currentStaff.Department },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy", "AssetId", "Approval"]
+      );
+    } else {
+      paginateData = await Paginate(
+        RequestBorrow,
+        { State: "signed" },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy", "AssetId", "Approval"]
+      );
+    }
     const categorys = await Category.find({});
     const users = await User.find({});
     res.render("components/admin/requestBorrowPage", {
@@ -84,7 +106,11 @@ module.exports.createRequestBorrow = async (req, res) => {
 
 module.exports.updateRequestBorrow = async (req, res) => {
   try {
-    req.body.Handler = req.userId;
+    if (req.Role.Role == 0) {
+      req.body.Handler = req.userId;
+    } else {
+      req.body.Approval = req.userId;
+    }
     const request = await RequestBorrow.findByIdAndUpdate(
       { _id: req.params.id },
       req.body

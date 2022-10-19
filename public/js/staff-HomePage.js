@@ -24,7 +24,7 @@ handleAddNew = () => {
     return;
   }
   $.ajax({
-    url: "/requestByNew/api",
+    url: "/RequestBuyNew/api",
     type: "POST",
     data: { AssetName, Category, Price, Amount, Description, SuggestionLink },
   })

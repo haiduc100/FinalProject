@@ -1,18 +1,19 @@
-const RequestByNew = require("../models/requestByNew.model");
+const RequestBuyNew = require("../models/RequestBuyNew.model");
 const User = require("../models/user.model");
 const Category = require("../models/category.model");
 const { Paginate } = require("../services/paginationServices");
+const RequestBuyNewModel = require("../models/RequestBuyNew.model");
 
-module.exports.getAllRequestByNew = async (req, res) => {
+module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    // const requests = await RequestByNew.find({})
+    // const requests = await RequestBuyNew.find({})
     //   .populate("Handler")
     //   .populate("Category")
     //   .populate("RequestBy");
     const paginateData = await Paginate(
-      RequestByNew,
+      RequestBuyNewModel,
       {},
       {},
       req.query.page,
@@ -22,7 +23,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
     const categorys = await Category.find({});
     const users = await User.find({});
 
-    res.render("components/admin/requestByNewPage", {
+    res.render("components/admin/RequestBuyNewPage", {
       listRequest: paginateData.data,
       listUser: users,
       listCategory: categorys,
@@ -39,9 +40,9 @@ module.exports.getAllRequestByNew = async (req, res) => {
   }
 };
 
-module.exports.getRequestById = async (req, res) => {
+module.exports.getRequestBuyNewById = async (req, res) => {
   try {
-    const requests = await RequestByNew.findOne({ _id: req.params.id });
+    const requests = await RequestBuyNewModel.findOne({ _id: req.params.id });
 
     res.status(200).json(requests);
   } catch (error) {
@@ -52,13 +53,13 @@ module.exports.getRequestById = async (req, res) => {
   }
 };
 
-module.exports.createRequestByNew = async (req, res) => {
+module.exports.createRequestBuyNew = async (req, res) => {
   try {
     const user = await User.findOne({ StaffCode: req.staff });
     req.body.RequestBy = user._id;
-    req.body.ProcessStep = 1;
+    req.body.ProcessStep = RequestBuyNew;
     req.body.State = "waiting";
-    const request = await RequestByNew.create(req.body);
+    const request = await RequestBuyNewModel.create(req.body);
 
     res.status(200).json({
       status: "Create Request By New successfully",
@@ -72,10 +73,10 @@ module.exports.createRequestByNew = async (req, res) => {
   }
 };
 
-module.exports.updateRequestByNew = async (req, res) => {
+module.exports.updateRequestBuyNew = async (req, res) => {
   try {
     req.body.Handler = req.userId;
-    const request = await RequestByNew.findByIdAndUpdate(
+    const request = await RequestBuyNewModel.findByIdAndUpdate(
       { _id: req.params.id },
       req.body
     );

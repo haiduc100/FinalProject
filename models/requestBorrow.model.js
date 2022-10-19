@@ -12,7 +12,7 @@ const RequestBorrowSchema = mongoose.Schema(
     },
     State: {
       type: String,
-      enum: ["accepted", "denied", "waiting", "signed"],
+      enum: ["submitToApproval", "denied", "waiting", "signed"],
       default: "waiting",
     },
     Department: { type: String, ref: "Department" },

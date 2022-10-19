@@ -8,7 +8,7 @@
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
     <link
       rel="stylesheet"
-      href="/public/css/admin-requestByNewManagementPage.css"
+      href="/public/css/admin-RequestBuyNewManagementPage.css"
     />
   </head>
   <body>
@@ -174,7 +174,7 @@
             </div>
             <div class="paginateBtn" id="">
               <% for(let i = 0; i <totalPages; i++) { %>
-                <a href="/requestByNew?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                <a href="/RequestBuyNew?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
               <% }%>
             </div>
           </section>
@@ -187,6 +187,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestByNewPage.js"></script>
+    <script src="/public/js/admin-RequestBuyNewPage.js"></script>
   </body>
 </html>

@@ -6,8 +6,8 @@ const PenaltyBillSechema = mongoose.Schema(
     PenaltyRuleId: { type: String, ref: "PenaltyRule" },
     UserId: { type: String, ref: "User" },
     StorageId: { type: String, ref: "Storage" },
-    OldQuality: { type: Number },
-    NewQuality: { type: Number },
+    OldQuality: { type: Number, ref: "Quality" },
+    NewQuality: { type: Number, ref: "Quality" },
   },
   { collection: "PenaltyBill", timestamps: true }
 );
