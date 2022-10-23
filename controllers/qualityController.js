@@ -1,4 +1,5 @@
 const qualityModel = require("../models/quality.model");
+const userModel = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
 
 module.exports.getAllQuality = async (req, res) => {
@@ -49,13 +50,14 @@ module.exports.getQualityById = async (req, res) => {
 
 module.exports.createQuality = async (req, res) => {
   try {
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     req.body.EvaluatedBy = staff._id;
     qualityModel.create(req.body);
     res.status(200).json({
       status: "Create Quality successfully",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,

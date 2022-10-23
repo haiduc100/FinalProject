@@ -3,6 +3,9 @@ const Asset = require("../models/asset.model");
 const User = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
 const requestBorrowModel = require("../models/requestBorrow.model");
+const assetModel = require("../models/asset.model");
+const userModel = require("../models/user.model");
+const assignmentModel = require("../models/assignment.model");
 
 module.exports.getAllAssignments = async (req, res) => {
   try {
@@ -58,11 +61,11 @@ module.exports.getAssignmentById = async (req, res) => {
 };
 module.exports.createAssignment = async (req, res) => {
   try {
-    await Asset.findByIdAndUpdate(
+    await assetModel.findByIdAndUpdate(
       { _id: req.body.AssetId },
       { State: "assigned" }
     );
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
 
     req.body.AssignById = staff._id;
     if (req.body.SignedBy == req.body.AssignToId) {
@@ -77,9 +80,10 @@ module.exports.createAssignment = async (req, res) => {
         message: "Can not assign for your self!!",
       });
     }
-    const assignment = await Assginment.create(req.body);
-    res.status(200).json(assignment);
+    const newAssignment = await assignmentModel.create(req.body);
+    res.status(200).json({ newAssignment });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,

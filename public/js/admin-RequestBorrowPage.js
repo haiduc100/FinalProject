@@ -12,52 +12,50 @@ handleAddNew = async () => {
     url: `/requestBorrow/api/${idRequest}`,
     type: "GET",
   });
-
   const Quality = $(".Quality").val().trim();
+
   //create quality
   await $.ajax({
-    url: "/quality",
+    url: "/quality/api",
     type: "POST",
-    data: { Quality: Quality, AssetId: res.AssetId },
+    data: { Quality: Quality, AssetId: res.AssetId._id },
   })
-    .then(() => {
-      window.location.reload();
+    .then(async (data) => {
+      if (data) {
+        //create assignment
+        await $.ajax({
+          url: "/assignments/api",
+          type: "POST",
+          data: {
+            AssignToId: res.RequestBy._id,
+            SignedBy: res.Approval,
+            AssetId: res.AssetId._id,
+          },
+        }).then(async (data) => {
+          // $(".assignmentbtn").prop("disabled", true);
+          console.log(data);
+          if (data) {
+            //create storage
+            await $.ajax({
+              url: "/storage/api",
+              type: "POST",
+              data: {
+                AssignmentId: data.newAssignment._id,
+                Type: "export",
+                StockerId: data.newAssignment.AssignById,
+              },
+            }).then(() => {
+              window.location.reload();
+            });
+          }
+        });
+      }
     })
-
     .catch((error) => {
       if (error.status === 400) {
         alert(error.responseJSON.message);
       }
     });
-
-  //create assignment
-  let asssignmentRes = await $.ajax({
-    url: "/assignment",
-    type: "POST",
-    data: {
-      AssignToId: res.RequestBy,
-      SignedBy: res.Approval,
-      AssetId: res.AssetId,
-    },
-  }).catch((error) => {
-    if (error.status === 400) {
-      alert(error.responseJSON.message);
-    }
-  });
-  //create storage
-  await $.ajax({
-    url: "/storage",
-    type: "POST",
-    data: {
-      AssignmentId: res.RequestBy,
-      Type: "export",
-      StockerId: asssignmentRes.AssignById,
-    },
-  }).catch((error) => {
-    if (error.status === 400) {
-      alert(error.responseJSON.message);
-    }
-  });
 };
 
 let idRequest;

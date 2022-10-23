@@ -42,6 +42,9 @@ router.use("/role", roleRoute);
 const storageRoute = require("./storageRoute");
 router.use("/storage", storageRoute);
 
+const qualityRoute = require("./qualityRoute");
+router.use("/quality", qualityRoute);
+
 const requestRepairRoute = require("./requestRepairRoute");
 router.use("/requestRepair", requestRepairRoute);
 
