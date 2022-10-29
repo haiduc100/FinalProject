@@ -3,19 +3,16 @@ const Assignment = require("../models/assignment.model");
 const User = require("../models/user.model");
 const Asset = require("../models/asset.model");
 const { Paginate } = require("../services/paginationServices");
+const assignmentModel = require("../models/assignment.model");
 
 module.exports.getAllRequestReturn = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    // const requestReturning = await RequestReturning.find()
-    //   .populate("RequestBy")
-    //   .populate("Handler");
-
     const paginateData = await Paginate(
       RequestReturning,
       {},
-      {},
+      { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["RequestBy", "Handler", "AssignmentId"]
@@ -42,7 +39,9 @@ module.exports.getRequestReturnById = async (req, res) => {
   try {
     const request = await RequestReturning.findOne({
       _id: req.params.id,
-    });
+    })
+      .populate("RequestBy")
+      .populate("AssignmentId");
 
     res.status(200).json(request);
   } catch (error) {
@@ -57,7 +56,6 @@ module.exports.createRequestReturning = async (req, res) => {
   try {
     const staff = await User.findOne({ StaffCode: req.staff });
     req.body.RequestBy = staff._id;
-    req.body.ProcessStep = 1;
     const newRequestReturning = await RequestReturning.create(req.body);
 
     res.status(200).json({
@@ -86,13 +84,12 @@ module.exports.updateRequestReturning = async (req, res) => {
       _id: req.params.id,
     });
     if (req.body.State === "declined") {
-      await Assignment.findByIdAndUpdate(
-        { _id: request.AssignmentId },
-        { IsReturning: false }
-      );
+      await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
+        IsReturning: false,
+      });
     } else {
-      await Assignment.findByIdAndRemove({ _id: request.AssignmentId });
-      const temp = await Assignment.findOne({ _id: request.AssignmentId });
+      // await Assignment.findByIdAndRemove({ _id: request.AssignmentId });
+      const temp = await assignmentModel.findById(request.AssignmentId);
       await Asset.findByIdAndUpdate(
         { _id: temp.AssetId },
         { State: "available" }

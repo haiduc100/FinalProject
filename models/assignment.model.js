@@ -21,7 +21,7 @@ const AssignmentSchema = mongoose.Schema(
       ref: "Asset",
       require: true,
     },
-    Note: { type: String, default: "Nothing yet" },
+    Note: { type: String, default: "" },
     IsReturning: { type: Boolean, default: false },
     TransferringId: {
       type: String,

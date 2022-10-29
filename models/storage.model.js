@@ -22,6 +22,10 @@ const StorageSchema = mongoose.Schema(
       type: String,
       ref: "User",
     },
+    QualityId: {
+      type: String,
+      ref: "Quality",
+    },
   },
   { collection: "Storage", timestamps: true }
 );

@@ -23,6 +23,7 @@ handleAddNew = async () => {
     .then(async (data) => {
       if (data) {
         //create assignment
+        let qltId = data.data._id;
         await $.ajax({
           url: "/assignments/api",
           type: "POST",
@@ -33,7 +34,6 @@ handleAddNew = async () => {
           },
         }).then(async (data) => {
           // $(".assignmentbtn").prop("disabled", true);
-          console.log(data);
           if (data) {
             //create storage
             await $.ajax({
@@ -43,6 +43,7 @@ handleAddNew = async () => {
                 AssignmentId: data.newAssignment._id,
                 Type: "export",
                 StockerId: data.newAssignment.AssignById,
+                QualityId: qltId,
               },
             }).then(() => {
               window.location.reload();

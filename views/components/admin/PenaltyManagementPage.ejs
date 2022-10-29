@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/img/icon/icon.jpg" type="image/icon type" />
-    <title>Request Returning</title>
-    <link rel="stylesheet" href="/public/css/admin-requestReturningManagementPage.css">
+    <title>Asset Management</title>
+    <link rel="stylesheet" href="/public/css/admin-PenaltyRuleManagementPage.css">
+
   </head>
   <body>
     <%- include("./sidebar.ejs") %>
@@ -25,9 +26,9 @@
       </ul>
 
       <!-- Right navbar links -->
-      <!-- <ul class="navbar-nav ml-auto"> -->
-      <!-- Navbar Search -->
-      <!-- <li class="nav-item">
+      <ul class="navbar-nav ml-auto">
+        <!-- Navbar Search -->
+        <li class="nav-item">
           <a
             class="nav-link"
             data-widget="navbar-search"
@@ -64,14 +65,23 @@
               </div>
             </form>
           </div>
-        </li> -->
-      <!-- </ul> -->
+        </li>
+      </ul>
     </nav>
-
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
+          <!-- <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            onclick="openAddModal()"
+          >
+            Add New Rule
+          </button> -->
+
           <!-- Modal -->
           <div
             class="modal fade"
@@ -99,36 +109,68 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="updateAsset ">
+                  <div class="createPenaltyRule">
                     <div class="form-group">
-                      <label for="">Asset Code</label>
-                      <input type="text" name="" id="" class="AssetCode form-control" readonly>
+
+                      <label>Percent</label>
+                      <input
+                        type="text"
+                        name="Percent"
+                        id=""
+                        placeholder="Percent"
+                        class="Percent form-control" required
+                      />
                     </div>
                     <div class="form-group">
-                      <label for="StateUpdate">State</label>
-                      <select name="StateUpdate" id="" class="StateUpdate form-control" required>
-                        <option value="">--Select--</option>
-                        <option value="completed">Completed</option>
-                        <option value="declined">Declined</option>
-                      </select>
+                      <label for="">Amount</label>
+                      <input
+                      type="text"
+                      name="Amount"
+                      id=""
+                      placeholder="Amount"
+                      class="Amount form-control" required
+                    />
+                    </div>
+                  </div>
+
+                  <div class="updatePenaltyRule">
+                    <div class="form-group">
+                      <label for="">Percent</label>
+                      <input
+                        type="text"
+                        name="PercentUpdate"
+                        id=""
+                        placeholder="Update Percent"
+                        class="PercentUpdate form-control" required
+                      />
                     </div>
                     <div class="form-group">
-                      <label for="">Request By</label>
-                      <input type="text" name="" id="" class="RequestBy form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="">New Quality</label>
-                      <input type="number" name="" id="" class="Quality form-control" >
+                      <label for="">Amount</label>
+
+                      <input
+                      type="text"
+                      name="AmountUpdate"
+                      id=""
+                      placeholder="Update Amount"
+                      class="AmountUpdate form-control" required
+                    />
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-secondary"
                     data-dismiss="modal"
                   >
                     Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary addbtn"
+                    onclick="handleAddNew()"
+                  >
+                    Add
                   </button>
                   <button
                     type="button"
@@ -143,9 +185,7 @@
               </div>
             </div>
           </div>
-          <button onclick="handleExport()" class="btn btn-primary">
-            Export
-          </button>
+
           <section class="content">
             <div class="container-fluid">
               <div class="row">
@@ -154,24 +194,21 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Request By</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Handler</th>
-                        <th scope="col">Asset Code</th>
+                        <th scope="col">Staff Code</th>
+                        <th scope="col">Old Quality</th>
+                        <th scope="col">New Quality</th>
+                        <th scope="col">Is Fines</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% listRequestReturning.map((value,index)=>{ %>
+                      <% listPenaltys.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
-                        <td><%= value.RequestBy.StaffCode %></td>
-                        <td><%= value.State %></td>
-                        <td>
-                          <%= value.Handler ? value.Handler.StaffCode : null
-                          %>
-                        </td>
-                        <td><%= value.AssignmentId ? value.AssignmentId.AssetId : null %></td>
+                        <td><%= value.UserId.StaffCode %></td>
+                        <td><%= value.OldQuality %></td>
+                        <td><%= value.NewQuality %></td>
+                        <td><%= value.IsFines %></td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -181,6 +218,12 @@
                           >
                             Update
                           </p>
+                          <p
+                            class="btn btn-danger"
+                            onclick="handleDelete('<%= value._id %>')"
+                          >
+                            Delete
+                          </p>
                         </td>
                       </tr>
                       <% }) %>
@@ -189,10 +232,10 @@
                 </div>
               </div>
             </div>
-            <div class="paginateBtn">
-              <% for(let i = 0; i <totalPages;i++){%>
-                <a href="/requestReturning?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
-                              <% }%>
+            <div class="paginateBtn" id="">
+              <% for(let i = 0; i <totalPages; i++) { %>
+                <a href="/PenaltyRule?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+              <% }%>
             </div>
           </section>
         </div>
@@ -204,6 +247,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestReturnPage.js"></script>
+    <script src="/public/js/admin-PenaltyRulePage.js"></script>
   </body>
 </html>

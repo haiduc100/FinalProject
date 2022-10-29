@@ -52,9 +52,10 @@ module.exports.createQuality = async (req, res) => {
   try {
     const staff = await userModel.findOne({ StaffCode: req.staff });
     req.body.EvaluatedBy = staff._id;
-    qualityModel.create(req.body);
+    const newQuality = await qualityModel.create(req.body);
     res.status(200).json({
       status: "Create Quality successfully",
+      data: newQuality,
     });
   } catch (error) {
     console.log(error);

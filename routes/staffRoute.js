@@ -6,7 +6,6 @@ router.get("/", checkController.checkLogin, controller.getAllAssetAvailable);
 router.get(
   "/assignment",
   checkController.checkLogin,
-  checkController.checkRole,
   controller.getAllAssignment
 );
 router.get(

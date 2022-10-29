@@ -92,7 +92,10 @@ module.exports.updatePenalty = async (req, res) => {
       });
     }
     await Penalty.updateOne({ _id: req.params.id }, req.body);
-    const newPenalty = await Penalty.findOne({ _id: req.params.id });
+    const newPenalty = await penaltyBillModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
     res.status(200).json({
       status: "success",
       data: newPenalty,

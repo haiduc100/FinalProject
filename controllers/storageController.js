@@ -12,7 +12,13 @@ module.exports.getAllStorage = async (req, res) => {
       { updatedAt: 1 },
       req.query.page,
       req.query.pageSize,
-      ["StockerId", "AssignmentId", "RequestReturnId", "RequestByNewId"]
+      [
+        "StockerId",
+        "AssignmentId",
+        "RequestReturnId",
+        "RequestByNewId",
+        "QualityId",
+      ]
     );
 
     res.render("components/admin/StorageManagementPage", {

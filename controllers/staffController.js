@@ -46,7 +46,7 @@ module.exports.getAllAssignment = async (req, res) => {
     const paginateData = await Paginate(
       Assignment,
       { AssignToId: staff._id },
-      {},
+      { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId"]

@@ -41,10 +41,12 @@ module.exports.getAllAssignments = async (req, res) => {
 
 module.exports.getAssignmentById = async (req, res) => {
   try {
-    const assignments = await Assginment.findOne({ _id: req.params.id });
-    if (assignments) {
+    const assignment = await Assginment.findOne({
+      _id: req.params.id,
+    }).populate("AssetId");
+    if (assignment) {
       res.status(200).json({
-        assignments,
+        assignment,
       });
     } else {
       res.status(404).json({

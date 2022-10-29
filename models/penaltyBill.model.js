@@ -8,6 +8,7 @@ const PenaltyBillSechema = mongoose.Schema(
     StorageId: { type: String, ref: "Storage" },
     OldQuality: { type: Number, ref: "Quality" },
     NewQuality: { type: Number, ref: "Quality" },
+    IsFines: { type: Boolean, default: false },
   },
   { collection: "PenaltyBill", timestamps: true }
 );

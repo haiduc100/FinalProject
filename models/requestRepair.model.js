@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const RequestRepairSchema = mongoose.Schema(
   {
     AssetId: { type: String, ref: "Asset" },
-    Amount: { type: Number },
+    // Amount: { type: Number },
     SotockerId: { type: String, ref: "User" },
     DirectorId: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },

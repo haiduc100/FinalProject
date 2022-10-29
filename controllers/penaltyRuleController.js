@@ -9,7 +9,7 @@ module.exports.getAllpenaltyRule = async (req, res) => {
     const paginateData = await Paginate(
       penaltyRuleModel,
       {},
-      { updatedAt: 1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       []
@@ -70,12 +70,16 @@ module.exports.updatepenaltyRule = async (req, res) => {
       });
     }
     await penaltyRule.updateOne({ _id: req.params.id }, req.body);
-    const newpenaltyRule = await penaltyRule.findOne({ _id: req.params.id });
+    const newpenaltyRule = await penaltyRuleModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
     res.status(200).json({
       status: "success",
       data: newpenaltyRule,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,

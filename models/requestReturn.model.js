@@ -21,7 +21,6 @@ const RequestReturnSchema = mongoose.Schema(
       ref: "User",
       require: true,
     },
-    ProcessStep: Number,
   },
   { collection: "RequestReturn", timestamps: true }
 );

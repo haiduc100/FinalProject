@@ -9,7 +9,7 @@ module.exports.getAllRequestRepair = async (req, res) => {
     const paginateData = await Paginate(
       requestRepairModel,
       {},
-      { updatedAt: 1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssetId", "SotockerId", "DirectorId", "Category"]
