@@ -5,7 +5,7 @@ openUpdate = async (id) => {
     idRequest = id;
     // console.log(idRequest);
     const res = await $.ajax({
-      url: `/requestByNew/api/${idRequest}`,
+      url: `/requestBuyNew/api/${idRequest}`,
       type: "GET",
     });
     // console.log(res.State);
@@ -27,7 +27,7 @@ handleUpdate = async () => {
     // const newSuggestionLink = $(".SuggestionLink").val();
     // const newAmount = $(".Amount").val();
     await $.ajax({
-      url: `/requestByNew/api/${idRequest}`,
+      url: `/requestBuyNew/api/${idRequest}`,
       type: "PUT",
       data: {
         State: newState,

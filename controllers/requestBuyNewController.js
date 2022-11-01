@@ -1,18 +1,14 @@
-const RequestByNew = require("../models/requestByNew.model");
-const User = require("../models/user.model");
 const Category = require("../models/category.model");
 const { Paginate } = require("../services/paginationServices");
+const requestBuyNewModel = require("../models/requestBuyNew.model");
+const userModel = require("../models/user.model");
 
-module.exports.getAllRequestByNew = async (req, res) => {
+module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    // const requests = await RequestByNew.find({})
-    //   .populate("Handler")
-    //   .populate("Category")
-    //   .populate("RequestBy");
     const paginateData = await Paginate(
-      RequestByNew,
+      requestBuyNewModel,
       {},
       {},
       req.query.page,
@@ -20,9 +16,9 @@ module.exports.getAllRequestByNew = async (req, res) => {
       ["Handler", "Category", "RequestBy"]
     );
     const categorys = await Category.find({});
-    const users = await User.find({});
+    const users = await userModel.find({});
 
-    res.render("components/admin/requestByNewPage", {
+    res.render("components/admin/requestBuyNewPage", {
       listRequest: paginateData.data,
       listUser: users,
       listCategory: categorys,
@@ -39,7 +35,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
 
 module.exports.getRequestById = async (req, res) => {
   try {
-    const requests = await RequestByNew.findOne({ _id: req.params.id });
+    const requests = await requestBuyNewModel.findOne({ _id: req.params.id });
 
     res.status(200).json(requests);
   } catch (error) {
@@ -50,19 +46,20 @@ module.exports.getRequestById = async (req, res) => {
   }
 };
 
-module.exports.createRequestByNew = async (req, res) => {
+module.exports.createRequestBuyNew = async (req, res) => {
   try {
-    const user = await User.findOne({ StaffCode: req.staff });
+    const user = await userModel.findOne({ StaffCode: req.staff });
     req.body.RequestBy = user._id;
     req.body.ProcessStep = 1;
     req.body.State = "waiting";
-    const request = await RequestByNew.create(req.body);
+    const request = await requestBuyNewModel.create(req.body);
 
     res.status(200).json({
       status: "Create Request By New successfully",
       data: request,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,
@@ -70,10 +67,10 @@ module.exports.createRequestByNew = async (req, res) => {
   }
 };
 
-module.exports.updateRequestByNew = async (req, res) => {
+module.exports.updateRequestBuyNew = async (req, res) => {
   try {
     req.body.Handler = req.userId;
-    const request = await RequestByNew.findByIdAndUpdate(
+    const request = await requestBuyNewModel.findByIdAndUpdate(
       { _id: req.params.id },
       req.body
     );

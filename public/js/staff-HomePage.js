@@ -24,12 +24,12 @@ handleAddNew = () => {
     return;
   }
   $.ajax({
-    url: "/requestByNew/api",
+    url: "/requestBuyNew/api",
     type: "POST",
     data: { AssetName, Category, Price, Amount, Description, SuggestionLink },
   })
     .then(() => {
-      window.location.reload();
+      // window.location.reload();
     })
     .catch((error) => {
       if (error.status === 400) {

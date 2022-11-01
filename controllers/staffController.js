@@ -2,10 +2,10 @@ const { Paginate } = require("../services/paginationServices");
 const Category = require("../models/category.model");
 const Asset = require("../models/asset.model");
 const User = require("../models/user.model");
-const RequestByNew = require("../models/requestByNew.model");
 const RequestBorrow = require("../models/requestBorrow.model");
 const Assignment = require("../models/assignment.model");
 const RequestReturn = require("../models/requestReturn.model");
+const requestBuyNewModel = require("../models/requestBuyNew.model");
 module.exports.getAllAssetAvailable = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
@@ -28,10 +28,10 @@ module.exports.getAllAssetAvailable = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 module.exports.getAllAssignment = async (req, res) => {
@@ -59,10 +59,10 @@ module.exports.getAllAssignment = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 
@@ -90,11 +90,11 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,
     });
-    console.log(error);
   }
 };
 module.exports.getAllRequestReturn = async (req, res) => {
@@ -121,20 +121,20 @@ module.exports.getAllRequestReturn = async (req, res) => {
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,
     });
-    console.log(error);
   }
 };
-module.exports.getAllRequestByNew = async (req, res) => {
+module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
     const staff = await User.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
-      RequestByNew,
+      requestBuyNewModel,
       { RequestBy: staff._id },
       {},
       req.query.page,
@@ -142,7 +142,7 @@ module.exports.getAllRequestByNew = async (req, res) => {
       ["Handler", "Category", "RequestBy"]
     );
     const listCategory = await Category.find({});
-    res.render("components/staff/staffRequestByNewPage", {
+    res.render("components/staff/staffRequestBuyNewPage", {
       listRequest: paginateData.data,
       staff: req.staff,
       listCategory: listCategory,
@@ -150,10 +150,10 @@ module.exports.getAllRequestByNew = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 module.exports.getAllAccountInformation = async (req, res) => {
@@ -178,9 +178,9 @@ module.exports.getAllAccountInformation = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
