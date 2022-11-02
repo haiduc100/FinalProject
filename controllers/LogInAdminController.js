@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const roleModel = require("../models/role.model");
+const userModel = require("../models/user.model");
 
 //View html Login
 module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
@@ -18,7 +19,7 @@ module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
 //LogIn admin
 module.exports.LogInAdmin = async (req, res) => {
   try {
-    const data = await User.findOne({
+    const data = await userModel.findOne({
       UserName: req.body.UserName,
     });
     const role = await roleModel.findById(data.Role);
@@ -44,7 +45,7 @@ module.exports.LogInAdmin = async (req, res) => {
             status: 200,
             err: false,
             userid: userID,
-            currentRole:role.Role
+            currentRole: role.Role,
           });
         } else {
           res.status(400).json({

@@ -5,6 +5,40 @@ openAddModal = () => {
   $(".addbtn").css("display", "inline-block");
 };
 
+handleRepair = async (id) => {
+  let processed = confirm("Do you want repair this asset?");
+  if (processed) {
+    let res = await $.ajax({
+      url: `/asset/api/${id}`,
+      type: "GET",
+    });
+    await $.ajax({
+      url: `/asset/api/${id}`,
+      type: "PUT",
+      data: {
+        State: "waitingRepair",
+      },
+    })
+      .then(async () => {
+        await $.ajax({
+          url: `/requestRepair/api/_stocker`,
+          type: "POST",
+          data: {
+            AssetId: id,
+            Category: res.data.Category,
+          },
+        }).then(async (data) => {
+          alert(data.status);
+          window.location.reload();
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    return;
+  }
+};
 handleAddNew = () => {
   const AssetName = $(".AssetName").val().trim().toUpperCase();
   const Category = $(".Category").val().trim();

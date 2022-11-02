@@ -14,6 +14,7 @@ router.get(
   checkController.checkRole,
   controller.getQualityById
 );
+router.get("/api/_latest/:id", controller.getLatestQuality);
 
 router.post(
   "/api",

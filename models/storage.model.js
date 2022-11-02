@@ -14,6 +14,10 @@ const StorageSchema = mongoose.Schema(
       type: String,
       ref: "RequestBuyNew",
     },
+    RequestRepairId: {
+      type: String,
+      ref: "RequestRepair",
+    },
     Type: {
       type: String,
       enum: ["export", "import"],

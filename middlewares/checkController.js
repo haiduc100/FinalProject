@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const roleModel = require("../models/role.model");
 const userModel = require("../models/user.model");
 
-module.exports.checkDuplicate = (req, res, next) => {
-  User.findOne({ Username: req.body.UserName })
+module.exports.checkDuplicate = async (req, res, next) => {
+  await userModel
+    .findOne({ Username: req.body.UserName })
     .then((user) => {
       if (user) {
         res.json({
@@ -41,7 +42,7 @@ module.exports.checkLogin = async (req, res, next) => {
     if (cookies) {
       const userid = await jwt.verify(cookies, process.env.ACCESS_TOKEN_SECRET)
         .id;
-      const data = await User.findOne({ _id: userid }).populate("Role");
+      const data = await userModel.findOne({ _id: userid }).populate("Role");
 
       if (data) {
         req.Role = data.Role;

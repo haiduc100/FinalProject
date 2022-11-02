@@ -62,10 +62,10 @@ module.exports.getAllAssignment = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 
@@ -145,7 +145,6 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
       ["Handler", "Category", "RequestBy"]
     );
     const listCategory = await categoryModel.find({});
-    console.log(paginateData.data);
     res.render("components/staff/staffRequestBuyNewPage", {
       listRequest: paginateData.data,
       staff: req.staff,
@@ -154,10 +153,10 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 module.exports.getAllAccountInformation = async (req, res) => {

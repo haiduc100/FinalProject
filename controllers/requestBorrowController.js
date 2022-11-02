@@ -82,7 +82,7 @@ module.exports.getRequestById = async (req, res) => {
 
 module.exports.createRequestBorrow = async (req, res) => {
   try {
-    const user = await User.findOne({ StaffCode: req.staff });
+    const user = await userModel.findOne({ StaffCode: req.staff });
     await Asset.findByIdAndUpdate(
       { _id: req.body.AssetId },
       { State: "waiting" }

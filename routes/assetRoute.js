@@ -21,6 +21,12 @@ router.post(
   checkController.checkRole,
   controller.createAsset
 );
+router.post(
+  "/api/_buynew",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.createAssetByRequestBuyNew
+);
 router.put(
   "/api/:id",
   checkController.checkLogin,

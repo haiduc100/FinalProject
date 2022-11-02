@@ -195,8 +195,11 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Asset Code</th>
                         <th scope="col">Stocker</th>
-                        <th scope="col">Quality</th>
+                        <th scope="col">Quality (%)</th>
+                        <th scope="col">Action</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -204,8 +207,9 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.Type %></td>
+                        <td><%= value.QualityId?value.QualityId.AssetId:null %></td>
                         <td><%= value.StockerId.StaffCode %></td>
-                        <td><%= value.QualityId.Quality %></td>
+                        <td><%= value.QualityId? value.QualityId.Quality:100 %> </td>
                         <td>
                           <p
                             data-toggle="modal"
@@ -231,7 +235,7 @@
             </div>
             <div class="paginateBtn" id="">
               <% for(let i = 0; i <totalPages; i++) { %>
-                <a href="/PenaltyRule?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                <a href="/storage?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
               <% }%>
             </div>
           </section>

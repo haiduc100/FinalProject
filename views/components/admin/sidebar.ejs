@@ -140,13 +140,13 @@
                 <p>Penalty Rule Management</p>
               </a>
             </li>
-            <li class="nav-item <%= role != 2 ? 'd-none' : '' %>">
+            <li class="nav-item <%= (role == 2|| role == 3) ? '' : 'd-none' %>">
               <a href="/requestRepair" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>Request Repair Management</p>
               </a>
             </li>
-            <li class="nav-item <%= role != 2 ? 'd-none' : '' %>">
+            <li class="nav-item <%=  role != 2 ? 'd-none' : '' %>">
               <a href="/storage" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>Storage Event Management</p>
@@ -155,7 +155,9 @@
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
-        <button class="btn btn-default">Logout</button>
+        <button class="btn btn-default "> 
+          <a href="/user/LogInAdmin">Logout</a>
+        </button>
       </div>
       <!-- /.sidebar -->
     </aside>

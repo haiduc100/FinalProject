@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Paginate } = require("../services/paginationServices");
 const roleModel = require("../models/role.model");
+const userModel = require("../models/user.model");
 
 module.exports.getAllUsers = async (req, res) => {
   try {
@@ -39,7 +40,7 @@ module.exports.getAllUsers = async (req, res) => {
 
 module.exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await userModel.findOne({ _id: req.params.id });
     if (user) {
       res.json(user);
     } else {
@@ -58,7 +59,7 @@ module.exports.getUserById = async (req, res) => {
 
 module.exports.createUser = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const user = await userModel.findOne({
       UserName: req.body.UserName,
       IsDelete: false,
     });
@@ -120,7 +121,7 @@ module.exports.updateUser = async (req, res) => {
       });
     }
 
-    const newUser = await User.findOneAndUpdate(
+    const newUser = await userModel.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
       {

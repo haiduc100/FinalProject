@@ -47,7 +47,22 @@ module.exports.getQualityById = async (req, res) => {
     });
   }
 };
-
+module.exports.getLatestQuality = async (req, res) => {
+  try {
+    let quality = await qualityModel
+      .find({ AssetId: req.params.id })
+      .sort({ updatedAt: -1 });
+    res.status(200).json({
+      data: quality[0],
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error: error,
+    });
+  }
+};
 module.exports.createQuality = async (req, res) => {
   try {
     const staff = await userModel.findOne({ StaffCode: req.staff });

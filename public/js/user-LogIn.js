@@ -19,3 +19,9 @@ function LoginUser() {
       console.log(20, err);
     });
 }
+
+$(document).on("keypress", function (e) {
+  if (e.which == 13) {
+    LoginUser();
+  }
+});

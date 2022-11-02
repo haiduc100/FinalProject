@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userModel = require("../models/user.model");
 
 //View html Login
 module.exports.getAllAssignmentsLogInUser = async (req, res) => {
@@ -17,7 +18,7 @@ module.exports.getAllAssignmentsLogInUser = async (req, res) => {
 //LogIn user
 module.exports.LogInUser = async (req, res) => {
   try {
-    const data = await User.findOne({
+    const data = await userModel.findOne({
       UserName: req.body.UserName,
     });
     if (data) {
@@ -48,7 +49,6 @@ module.exports.LogInUser = async (req, res) => {
       // res.render("components/LogIn/assetLogInPage");
     }
   } catch (error) {
-
     res.json({ message: "Error server", status: 500, err: error });
   }
 };

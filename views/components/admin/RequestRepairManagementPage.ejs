@@ -72,7 +72,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <button
+          <!-- <button
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
@@ -80,7 +80,7 @@
             onclick="openAddModal()"
           >
             Add New Request Repair
-          </button>
+          </button> -->
 
           <!-- Modal -->
           <div
@@ -109,29 +109,6 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createPenaltyRule">
-                    <div class="form-group">
-
-                      <label>Percent</label>
-                      <input
-                        type="text"
-                        name="Percent"
-                        id=""
-                        placeholder="Percent"
-                        class="Percent form-control" required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="">Amount</label>
-                      <input
-                      type="text"
-                      name="Amount"
-                      id=""
-                      placeholder="Amount"
-                      class="Amount form-control" required
-                    />
-                    </div>
-                  </div>
 
                   <div class="updatePenaltyRule">
                     <div class="form-group">
@@ -177,7 +154,8 @@
                     class="btn btn-primary updatebtn"
                     onclick="handleUpdate()"
                   >
-                    Update
+                  Update
+
                   </button>
                 </div>
               </form>
@@ -195,8 +173,8 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Asset Code</th>
-                        <th scope="col">SotockerId</th>
-                        <th scope="col">DirectorId</th>
+                        <th scope="col">Sotocker</th>
+                        <th scope="col">Director</th>
                         <th scope="col">Category</th>
                         <th scope="col">State</th>
                         <th scope="col">Action</th>
@@ -208,24 +186,31 @@
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.AssetId.AssetCode %></td>
                         <td><%= value.SotockerId.StaffCode %></td>
-                        <td><%= value.DirectorId.StaffCode %></td>
+                        <td><%= value.DirectorId?value.DirectorId.StaffCode:null %></td>
                         <td><%= value.Category.CategoryName %></td>
                         <td><%= value.State %></td>
                         <td>
                           <p
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                            class="btn btn-warning"
+                            class="btn btn-warning <%= role !=2 ? 'd-none' : ''%>"
                             onclick="openUpdate('<%= value._id %>')"
                           >
-                            Update
+                          Update
+
                           </p>
                           <p
+                           
+                            class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
+                            onclick="handleSign('<%= value._id %>')"
+                          >
+                          Sign
+
+                          </p>
+                          <!-- <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"
                           >
                             Delete
-                          </p>
+                          </p> -->
                         </td>
                       </tr>
                       <% }) %>
@@ -236,7 +221,7 @@
             </div>
             <div class="paginateBtn" id="">
               <% for(let i = 0; i <totalPages; i++) { %>
-                <a href="/PenaltyRule?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                <a href="/requestRepair?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
               <% }%>
             </div>
           </section>
@@ -249,6 +234,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-PenaltyRulePage.js"></script>
+    <script src="/public/js/admin-RequestRepairPage.js"></script>
   </body>
 </html>

@@ -97,7 +97,7 @@ module.exports.createAssignment = async (req, res) => {
 module.exports.updateAssignment = async (req, res) => {
   try {
     const assignment = await Assginment.findOne({ _id: req.params.id });
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     req.body.AssignById = staff._id;
 
     // req.body.AssignById = req.userId;

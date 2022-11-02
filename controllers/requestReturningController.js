@@ -4,6 +4,7 @@ const User = require("../models/user.model");
 const Asset = require("../models/asset.model");
 const { Paginate } = require("../services/paginationServices");
 const assignmentModel = require("../models/assignment.model");
+const userModel = require("../models/user.model");
 
 module.exports.getAllRequestReturn = async (req, res) => {
   try {
@@ -54,7 +55,7 @@ module.exports.getRequestReturnById = async (req, res) => {
 
 module.exports.createRequestReturning = async (req, res) => {
   try {
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     req.body.RequestBy = staff._id;
     const newRequestReturning = await RequestReturning.create(req.body);
 

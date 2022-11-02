@@ -15,10 +15,16 @@ router.get(
   controller.getRequestRepairById
 );
 router.post(
-  "/api",
+  "/api/_stocker",
   checkController.checkLogin,
   checkController.checkRole,
-  controller.createRequestRepair
+  controller.createRequestRepairByStocker
+);
+router.post(
+  "/api/_staff",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.createRequestRepairByStaff
 );
 router.put(
   "/api/:id",

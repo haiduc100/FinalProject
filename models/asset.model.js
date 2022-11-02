@@ -15,6 +15,7 @@ const AssetSchema = mongoose.Schema(
         "unavailable",
         "available",
         "waiting",
+        "waitingRepair",
         "repairing",
         "accepted",
         "assigned",
