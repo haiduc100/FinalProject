@@ -1,4 +1,6 @@
+const qualityModel = require("../models/quality.model");
 const storageModel = require("../models/storage.model");
+const userModel = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
 
 module.exports.getAllStorage = async (req, res) => {
@@ -16,7 +18,7 @@ module.exports.getAllStorage = async (req, res) => {
         "StockerId",
         "AssignmentId",
         "RequestReturnId",
-        "RequestByNewId",
+        "RequestBuyNewId",
         "QualityId",
       ]
     );
@@ -32,6 +34,22 @@ module.exports.getAllStorage = async (req, res) => {
     res.status(500).json({
       status: "Fail",
       error,
+    });
+  }
+};
+module.exports.getQualityByAssignmentId = async (req, res) => {
+  try {
+    const storage = await storageModel
+      .findOne({ $and: [{ AssignmentId: req.params.id }, { Type: "export" }] })
+      .populate("QualityId");
+
+    res.status(200).json({
+      data: storage.QualityId.Quality,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: error,
     });
   }
 };
@@ -53,11 +71,17 @@ module.exports.getStorageById = async (req, res) => {
 
 module.exports.createStorage = async (req, res) => {
   try {
-    storageModel.create(req.body);
+    const staff = await userModel.findOne({ StaffCode: req.staff });
+    req.body.StockerId = staff._id;
+
+    let data = storageModel.create(req.body);
+
     res.status(200).json({
       status: "Create Storage successfully",
+      data: data,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,

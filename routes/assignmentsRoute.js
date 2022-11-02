@@ -10,6 +10,12 @@ router.get(
 );
 router.post("/api", checkController.checkLogin, controller.createAssignment);
 router.put("/api/:id", checkController.checkLogin, controller.updateAssignment);
+router.put(
+  "/api/_returning/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.updateAssignment
+);
 router.delete(
   "/api/:id",
   checkController.checkLogin,

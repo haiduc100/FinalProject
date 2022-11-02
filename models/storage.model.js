@@ -10,9 +10,9 @@ const StorageSchema = mongoose.Schema(
       type: String,
       ref: "RequestReturn",
     },
-    RequestByNewId: {
+    RequestBuyNewId: {
       type: String,
-      ref: "RequestByNew",
+      ref: "RequestBuyNew",
     },
     Type: {
       type: String,

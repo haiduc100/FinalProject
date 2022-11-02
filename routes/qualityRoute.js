@@ -14,6 +14,7 @@ router.get(
   checkController.checkRole,
   controller.getQualityById
 );
+
 router.post(
   "/api",
   checkController.checkLogin,

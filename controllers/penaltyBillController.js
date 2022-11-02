@@ -1,5 +1,6 @@
 const { Paginate } = require("../services/paginationServices");
 const penaltyBillModel = require("../models/penaltyBill.model");
+const penaltyRuleModel = require("../models/penaltyRule.model");
 
 module.exports.getAllPenalty = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ module.exports.getAllPenalty = async (req, res) => {
       { updatedAt: 1 },
       req.query.page,
       req.query.pageSize,
-      ["StorageId", "UserId", "OldQuality", "NewQuality", "PenaltyRuleId"]
+      ["StorageId", "UserId", "PenaltyRuleId"]
     );
 
     res.render("components/admin/PenaltyManagementPage", {
@@ -53,10 +54,13 @@ module.exports.getAllPenalty = async (req, res) => {
 
 module.exports.getPenaltyById = async (req, res) => {
   try {
-    const Penalty = await penaltyBillModel.findOne({ _id: req.params.id });
+    const Penalty = await penaltyBillModel
+      .findOne({ _id: req.params.id })
+      .populate("StorageId")
+      .populate("UserId");
 
     res.status(200).json({
-      Penalty,
+      data: Penalty,
     });
   } catch (error) {
     res.status(500).json({
@@ -68,12 +72,29 @@ module.exports.getPenaltyById = async (req, res) => {
 
 module.exports.createPenalty = async (req, res) => {
   try {
-    penaltyBillModel.create(req.body);
+    let arr = await penaltyRuleModel.find({});
+    arr.sort((a, b) => {
+      return a.Percent - b.Percent;
+    });
+    let temp;
+    for (const key of arr) {
+      if (key.Percent < req.body.Percent) {
+        continue;
+      } else {
+        temp = key.Amount;
+        break;
+      }
+    }
+    let rule = await penaltyRuleModel.findOne({ Amount: temp });
+    req.body.Amount = rule.Amount;
+    req.body.PenaltyRuleId = rule._id;
+    let newPenalty = await penaltyBillModel.create(req.body);
     res.status(200).json({
-      status: "Create Penalty successfully",
-      // data: newPenalty,
+      status: "create Penalty successfully",
+      data: newPenalty,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,
@@ -115,13 +136,13 @@ module.exports.deletePenalty = async (req, res) => {
     if (!Penalty) {
       return res.status(404).json({
         status: "Fail",
-        message: "Can not find Penalty",
+        message: "Can not find Penalty bill",
       });
     }
-
+    await penaltyBillModel.findByIdAndDelete(req.params.id);
     res.status(400).json({
-      status: "Fail",
-      message: "Penalty must be unavailable",
+      status: "success",
+      message: "delete penalty bill successfully",
     });
   } catch (error) {
     res.status(500).json({

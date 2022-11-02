@@ -1,27 +1,47 @@
 const RequestBuyNew = require("../models/RequestBuyNew.model");
-const User = require("../models/user.model");
 const Category = require("../models/category.model");
 const { Paginate } = require("../services/paginationServices");
 const RequestBuyNewModel = require("../models/RequestBuyNew.model");
+const userModel = require("../models/user.model");
 
 module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    // const requests = await RequestBuyNew.find({})
-    //   .populate("Handler")
-    //   .populate("Category")
-    //   .populate("RequestBy");
-    const paginateData = await Paginate(
-      RequestBuyNewModel,
-      {},
-      {},
-      req.query.page,
-      req.query.pageSize,
-      ["Handler", "Category", "RequestBy"]
-    );
+    let currentStaff = await userModel.findOne({ StaffCode: req.staff });
+    let paginateData;
+    if (req.Role.Role == 3) {
+      paginateData = await Paginate(
+        RequestBuyNewModel,
+        {
+          $or: [{ State: "submitToApproval" }, { Approval: { $exists: true } }],
+        },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy"]
+      );
+    } else if (req.Role.Role == 0) {
+      paginateData = await Paginate(
+        RequestBuyNewModel,
+        { Department: currentStaff.Department },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy"]
+      );
+    } else {
+      paginateData = await Paginate(
+        RequestBuyNewModel,
+        { State: "signed" },
+        { updateAt: -1 },
+        req.query.page,
+        req.query.pageSize,
+        ["Handler", "Category", "RequestBy"]
+      );
+    }
     const categorys = await Category.find({});
-    const users = await User.find({});
+    const users = await userModel.find({});
 
     res.render("components/admin/RequestBuyNewPage", {
       listRequest: paginateData.data,
@@ -33,6 +53,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error: error,
@@ -55,7 +76,7 @@ module.exports.getRequestBuyNewById = async (req, res) => {
 
 module.exports.createRequestBuyNew = async (req, res) => {
   try {
-    const user = await User.findOne({ StaffCode: req.staff });
+    const user = await userModel.findOne({ StaffCode: req.staff });
     req.body.RequestBy = user._id;
     req.body.ProcessStep = RequestBuyNew;
     req.body.State = "waiting";
@@ -77,7 +98,7 @@ module.exports.updateRequestBuyNew = async (req, res) => {
   try {
     req.body.Handler = req.userId;
     const request = await RequestBuyNewModel.findByIdAndUpdate(
-      { _id: req.params.id },
+      req.params.id,
       req.body
     );
 

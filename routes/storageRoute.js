@@ -8,6 +8,8 @@ router.get(
   checkController.checkRole,
   controller.getAllStorage
 );
+router.get("/api/_quality/:id", controller.getQualityByAssignmentId);
+
 router.get(
   "/api/:id",
   checkController.checkLogin,

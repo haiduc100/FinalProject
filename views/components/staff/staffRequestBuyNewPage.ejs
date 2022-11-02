@@ -135,7 +135,7 @@
                         <th scope="col">Category</th>
                         <th scope="col">Asset Name</th>
                         <th scope="col">Reason</th>
-                        <th scope="col">Action</th>
+                        <!-- <th scope="col">Action</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -143,8 +143,7 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td>
-                          <%= value.RequestBy ? value.RequestBy.StaffCode : null
-                          %>
+                          <%= value.RequestBy.StaffCode %>
                         </td>
                         <td><%= value.State %></td>
                         <td>
@@ -152,12 +151,11 @@
                           null%>
                         </td>
                         <td>
-                          <%= value.Category ? value.Category.CategoryName :
-                          null %>
+                          <%= value.Category.CategoryName %>
                         </td>
                         <td><%= value.AssetName %></td>
                         <td><%= value.Reason %></td>
-                        <td>
+                        <!-- <td>
                           <p
                             data-toggle="modal"
                             data-target="#exampleModal"
@@ -167,7 +165,7 @@
                           >
                             Check
                           </p>
-                        </td>
+                        </td> -->
                       </tr>
                       <% }) %>
                     </tbody>

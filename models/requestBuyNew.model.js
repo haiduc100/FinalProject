@@ -11,7 +11,7 @@ const RequestBuyNewSchema = mongoose.Schema(
     },
     State: {
       type: String,
-      enum: ["accepted", "denied", "waiting"],
+      enum: ["submitToApproval", "denied", "waiting", "signed"],
       default: "waiting",
     },
     Amount: Number,

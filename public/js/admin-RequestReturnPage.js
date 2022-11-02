@@ -17,22 +17,31 @@ openUpdate = async (id) => {
     console.log(error);
   }
 };
-
+let assignmentId;
+let assignToId;
 handleUpdate = async () => {
   try {
+    let newQuality = $(".Quality").val().trim();
     const newState = $(".StateUpdate").val();
+    if (!newQuality || !newState) {
+      return;
+    }
+    if (newQuality > 100 || newState < 0) {
+      alert("new quality must be between 0 and 100!!!");
+      return;
+    }
     await $.ajax({
       url: `/requestReturning/api/${idRequest}`,
       type: "PUT",
       data: { State: newState },
     })
       .then(async (data) => {
-        console.log(data.data);
+        assignmentId = data.data.AssignmentId;
         let assmRes = await $.ajax({
-          url: `/assignments/api/${data.data.AssignmentId}`,
+          url: `/assignments/api/${assignmentId}`,
           type: "GET",
         });
-        console.log(assmRes.assignment.AssetId._id);
+        assignToId = assmRes.assignment.AssignToId;
         if (newState == "completed") {
           //create new quality for asset after return
           await $.ajax({
@@ -40,9 +49,48 @@ handleUpdate = async () => {
             type: "POST",
             data: {
               AssetId: assmRes.assignment.AssetId._id,
-              Quality: $(".Quality").val(),
+              Quality: newQuality,
             },
-          }).then(() => {});
+          }).then(async (data) => {
+            // crate storage event
+            await $.ajax({
+              url: `/storage/api`,
+              type: "POST",
+              data: {
+                AssignmentId: assignmentId,
+                RequestReturnId: idRequest,
+                Type: "import",
+                QualityId: data.data._id,
+              },
+            }).then(async (data) => {
+              let newStorageId = data.data._id;
+              await $.ajax({
+                url: `/storage/api/_quality/${assignmentId}`,
+                type: "GET",
+              }).then((data) => {
+                let checkPenalty = +data.data - +newQuality;
+                //create penaltyBill
+                if (checkPenalty > 10) {
+                  $.ajax({
+                    url: `/penaltyBill/api`,
+                    type: "POST",
+                    data: {
+                      Percent: checkPenalty,
+                      OldQuality: data.data,
+                      NewQuality: newQuality,
+                      StorageId: newStorageId,
+                      UserId: assignToId,
+                    },
+                  }).then((data) => {
+                    alert("Low quality " + data.status);
+                    // window.location.reload();
+                  });
+                } else {
+                  alert("Return asset done!!!");
+                }
+              });
+            });
+          });
         }
       })
       .catch((error) => {

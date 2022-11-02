@@ -1,19 +1,19 @@
 const { Paginate } = require("../services/paginationServices");
 const Category = require("../models/category.model");
-const Asset = require("../models/asset.model");
-const User = require("../models/user.model");
-const RequestBuyNew = require("../models/RequestBuyNew.model");
-const RequestBorrow = require("../models/requestBorrow.model");
-const Assignment = require("../models/assignment.model");
-const RequestReturn = require("../models/requestReturn.model");
 const RequestBuyNewModel = require("../models/RequestBuyNew.model");
+const userModel = require("../models/user.model");
+const assetModel = require("../models/asset.model");
+const assignmentModel = require("../models/assignment.model");
+const requestBorrowModel = require("../models/requestBorrow.model");
+const categoryModel = require("../models/category.model");
+const requestReturnModel = require("../models/requestReturn.model");
 module.exports.getAllAssetAvailable = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
 
     const paginateData = await Paginate(
-      Asset,
+      assetModel,
       { State: "available" },
       {},
       req.query.page,
@@ -42,17 +42,17 @@ module.exports.getAllAssignment = async (req, res) => {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
 
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
-      Assignment,
+      assignmentModel,
       { AssignToId: staff._id },
       { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId"]
     );
-    const assets = await Asset.find({ State: "available" });
-    const users = await User.find({});
+    const assets = await assetModel.find({ State: "available" });
+    const users = await userModel.find({});
     res.render("components/staff/staffAssignmentPage", {
       listAssignment: paginateData.data,
       listUser: users,
@@ -73,9 +73,9 @@ module.exports.getAllRequestBorrow = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
-      RequestBorrow,
+      requestBorrowModel,
       { RequestBy: staff._id },
       {},
       req.query.page,
@@ -83,7 +83,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       ["Handler", "Category", "RequestBy", "AssetId"]
     );
     const categorys = await Category.find({});
-    const users = await User.find({});
+    const users = await userModel.find({});
 
     res.render("components/staff/requestBorrowPage", {
       listRequest: paginateData.data,
@@ -104,17 +104,17 @@ module.exports.getAllRequestReturn = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
-      RequestReturn,
+      requestReturnModel,
       { RequestBy: staff._id },
       {},
       req.query.page,
       req.query.pageSize,
       ["RequestBy", "Handler", "AssignmentId"]
     );
-    const categorys = await Category.find({});
-    const users = await User.find({});
+    const categorys = await categoryModel.find({});
+    const users = await userModel.find({});
 
     res.render("components/staff/requestReturnPage", {
       listRequestReturning: paginateData.data,
@@ -135,16 +135,17 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    const staff = User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
       RequestBuyNewModel,
       { RequestBy: staff._id },
-      {},
+      { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Handler", "Category", "RequestBy"]
     );
-    const listCategory = await Category.find({});
+    const listCategory = await categoryModel.find({});
+    console.log(paginateData.data);
     res.render("components/staff/staffRequestBuyNewPage", {
       listRequest: paginateData.data,
       staff: req.staff,
@@ -163,18 +164,17 @@ module.exports.getAllAccountInformation = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    const staff = await User.findOne({ StaffCode: req.staff });
+    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
-      User,
+      userModel,
       { RequestBy: staff._id },
       {},
       req.query.page,
       req.query.pageSize,
       ["Handler", "Category", "RequestBy"]
     );
-    RequestBuyNew;
-    const listCategory = await Category.find({});
-    res.render("components/staff/staffRequestByNewPage", {
+    const listCategory = await categoryModel.find({});
+    res.render("components/staff/staffRequestBuyNewPage", {
       listRequest: paginateData.data,
       staff: req.staff,
       listCategory: listCategory,

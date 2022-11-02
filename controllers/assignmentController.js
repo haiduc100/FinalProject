@@ -6,6 +6,7 @@ const requestBorrowModel = require("../models/requestBorrow.model");
 const assetModel = require("../models/asset.model");
 const userModel = require("../models/user.model");
 const assignmentModel = require("../models/assignment.model");
+const { findByIdAndUpdate } = require("../models/assignment.model");
 
 module.exports.getAllAssignments = async (req, res) => {
   try {
@@ -123,17 +124,30 @@ module.exports.updateAssignment = async (req, res) => {
     });
   }
 };
-
+module.exports.updateAssignmentReturnState = async (req, res) => {
+  try {
+    assignmentModel.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
 module.exports.deleteAssignment = async (req, res) => {
   try {
-    const assignment = await Assginment.findOne({ _id: req.params.id });
+    const assignment = await assignmentModel.findOne({ _id: req.params.id });
     if (!assignment) {
       return res.status(404).json({
         status: "Fail",
         message: "Can not find assignment",
       });
     }
-    await Assginment.deleteOne({ _id: req.params.id });
+    await assignmentModel.findByIdAndDelete(req.params.id);
     res.status(200).json({
       status: "success",
       message: "Delete category successfully",

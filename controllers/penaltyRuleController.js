@@ -97,10 +97,10 @@ module.exports.deletepenaltyRule = async (req, res) => {
         message: "Can not find penaltyRule",
       });
     }
-
-    res.status(400).json({
-      status: "Fail",
-      message: "penaltyRule must be unavailable",
+    await penaltyRuleModel.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      status: "Successfully",
+      message: "penaltyRule delete successfully",
     });
   } catch (error) {
     res.status(500).json({

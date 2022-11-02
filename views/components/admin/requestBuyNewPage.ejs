@@ -64,7 +64,7 @@
                         <label for="StateUpdate">State</label>
                         <select name="StateUpdate" id="" class="StateUpdate form-control">
                           <option value="">--Select--</option>
-                          <option value="accepted">Accepted</option>
+                          <option value="<%= role == 0 ? 'submitToApproval' : 'signed' %>"><%= role==0? 'Submit To Approval' : 'Signed' %></option>
                           <option value="declined">Declined</option>
                         </select>
                       </div>

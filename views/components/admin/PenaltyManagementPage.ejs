@@ -109,7 +109,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createPenaltyRule">
+                  <!-- <div class="createPenaltyRule">
                     <div class="form-group">
 
                       <label>Percent</label>
@@ -131,29 +131,48 @@
                       class="Amount form-control" required
                     />
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="updatePenaltyRule">
                     <div class="form-group">
-                      <label for="">Percent</label>
+                      <label for="">Staff Code</label>
                       <input
                         type="text"
-                        name="PercentUpdate"
+                        name="StaffCodeUpdate"
                         id=""
-                        placeholder="Update Percent"
-                        class="PercentUpdate form-control" required
+                        placeholder="Staff Code"
+                        class="StaffCodeUpdate form-control" readonly
                       />
                     </div>
                     <div class="form-group">
-                      <label for="">Amount</label>
+                      <label for="">Old Quality</label>
 
                       <input
                       type="text"
-                      name="AmountUpdate"
+                      name="OldQualityUpdate"
                       id=""
-                      placeholder="Update Amount"
-                      class="AmountUpdate form-control" required
+                      placeholder="Old Quality"
+                      class="OldQualityUpdate form-control" readonly
                     />
+                    </div>
+                    <div class="form-group">
+                      <label for="">New Quality</label>
+
+                      <input
+                      type="text"
+                      name="NewQualityUpdate"
+                      id=""
+                      placeholder="New Quality"
+                      class="NewQualityUpdate form-control" readonly
+                    />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Is Fines</label>
+                    <select name="" id=""   class="IsFinesUpdate form-control" required>
+                      <option value="">--Select--</option>
+                      <option value=true>Yes</option>
+                      <option value=false>No</option>
+                    </select>
                     </div>
                   </div>
                 </div>
@@ -197,6 +216,8 @@
                         <th scope="col">Staff Code</th>
                         <th scope="col">Old Quality</th>
                         <th scope="col">New Quality</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Percent</th>
                         <th scope="col">Is Fines</th>
                         <th scope="col">Action</th>
                       </tr>
@@ -206,8 +227,10 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.UserId.StaffCode %></td>
-                        <td><%= value.OldQuality %></td>
-                        <td><%= value.NewQuality %></td>
+                        <td><%= value.OldQuality %> %</td>
+                        <td><%= value.NewQuality %> %</td>
+                        <td><%= value.Amount %></td>
+                        <td><%= value.Percent %> %</td>
                         <td><%= value.IsFines %></td>
                         <td>
                           <p
@@ -218,12 +241,12 @@
                           >
                             Update
                           </p>
-                          <p
+                          <!-- <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"
                           >
                             Delete
-                          </p>
+                          </p> -->
                         </td>
                       </tr>
                       <% }) %>
@@ -247,6 +270,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-PenaltyRulePage.js"></script>
+    <script src="/public/js/admin-PenaltyBillPage.js"></script>
   </body>
 </html>

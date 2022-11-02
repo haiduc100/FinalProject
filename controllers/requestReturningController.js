@@ -75,9 +75,7 @@ module.exports.updateRequestReturning = async (req, res) => {
   try {
     req.body.Handler = req.userId;
     const updateRequestReturning = await RequestReturning.findByIdAndUpdate(
-      {
-        _id: req.params.id,
-      },
+      req.params.id,
       req.body
     );
     const request = await RequestReturning.findOne({
@@ -89,6 +87,9 @@ module.exports.updateRequestReturning = async (req, res) => {
       });
     } else {
       // await Assignment.findByIdAndRemove({ _id: request.AssignmentId });
+      await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
+        IsReturning: true,
+      });
       const temp = await assignmentModel.findById(request.AssignmentId);
       await Asset.findByIdAndUpdate(
         { _id: temp.AssetId },
