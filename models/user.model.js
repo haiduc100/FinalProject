@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("../config/connectDB");
 
 const UserSchema = mongoose.Schema(
   {
@@ -18,7 +18,6 @@ const UserSchema = mongoose.Schema(
     UserName: String,
     StaffCode: String,
     Password: String,
-    Avatar: String,
     Department: {
       type: String,
       ref: "Department",

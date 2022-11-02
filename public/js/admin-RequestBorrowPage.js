@@ -46,6 +46,7 @@ handleAddNew = async () => {
                 QualityId: qltId,
               },
             }).then(() => {
+              alert("Create assignment successfully!");
               window.location.reload();
             });
           }

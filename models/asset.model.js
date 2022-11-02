@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
+const mongoose = require("../config/connectDB");
 const AssetSchema = mongoose.Schema(
   {
     AssetCode: { type: String },
@@ -37,5 +36,4 @@ const AssetSchema = mongoose.Schema(
   { collection: "Asset", timestamps: true }
 );
 
-AssetSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Asset", AssetSchema);

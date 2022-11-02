@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
+const mongoose = require("../config/connectDB");
 
 const AssignmentSchema = mongoose.Schema(
   {
@@ -32,5 +31,4 @@ const AssignmentSchema = mongoose.Schema(
   { collection: "Assignment", timestamps: true }
 );
 
-AssignmentSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Assignment", AssignmentSchema);

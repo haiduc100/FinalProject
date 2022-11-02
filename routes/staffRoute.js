@@ -27,6 +27,6 @@ router.get(
 router.get(
   "/account",
   checkController.checkLogin,
-  controller.getAllAccountInformation
+  controller.getAccountInformation
 );
 module.exports = router;

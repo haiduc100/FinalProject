@@ -235,7 +235,7 @@
                         <td><%= value.LastName %></td>
                         <td>
                           <%=value.DateOfBirth?
-                          value.DateOfBirth.toLocaleString('en-US'):null %>
+                          value.DateOfBirth.toLocaleDateString('en-GB'):null %>
                         </td>
                         <td><%= value.Gender %></td>
                         <td><%= value.Role.RoleName %></td>

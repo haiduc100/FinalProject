@@ -59,17 +59,17 @@ handleUpdate = async () => {
       url: `/asset/api/${idAsset}`,
       type: "GET",
     });
-
     await $.ajax({
       url: `/requestBorrow/api`,
       type: "POST",
       data: {
         AssetId: idAsset,
         Description: Description,
-        Category: res.asset.Category,
+        Category: res.data.Category,
       },
+    }).then(() => {
+      window.location.reload();
     });
-    window.location.reload();
 
     idAsset = 0;
   } catch (error) {

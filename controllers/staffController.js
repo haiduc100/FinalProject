@@ -159,31 +159,28 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
     });
   }
 };
-module.exports.getAllAccountInformation = async (req, res) => {
+module.exports.getAccountInformation = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
     req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
-    const staff = await userModel.findOne({ StaffCode: req.staff });
     const paginateData = await Paginate(
       userModel,
-      { RequestBy: staff._id },
+      { _id: req.userId },
       {},
       req.query.page,
       req.query.pageSize,
-      ["Handler", "Category", "RequestBy"]
+      ["Department"]
     );
-    const listCategory = await categoryModel.find({});
-    res.render("components/staff/staffRequestBuyNewPage", {
-      listRequest: paginateData.data,
+    res.render("components/staff/accountManagementPage", {
+      data: paginateData.data,
       staff: req.staff,
-      listCategory: listCategory,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };

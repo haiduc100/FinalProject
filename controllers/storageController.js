@@ -11,7 +11,7 @@ module.exports.getAllStorage = async (req, res) => {
     const paginateData = await Paginate(
       storageModel,
       {},
-      { updatedAt: 1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       [
@@ -19,7 +19,7 @@ module.exports.getAllStorage = async (req, res) => {
         "AssignmentId",
         "RequestReturnId",
         "RequestBuyNewId",
-        "QualityId",
+        { path: "QualityId", populate: { path: "AssetId" } },
       ]
     );
 

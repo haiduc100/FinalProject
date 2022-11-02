@@ -5,7 +5,7 @@ const roleModel = require("../models/role.model");
 const userModel = require("../models/user.model");
 
 //View html Login
-module.exports.getAllAssignmentsLogInAdmin = async (req, res) => {
+module.exports.getLoginPage = async (req, res) => {
   try {
     res.render("components/LogIn/assetLogInAdminPage.ejs");
   } catch (error) {
@@ -34,11 +34,11 @@ module.exports.LogInAdmin = async (req, res) => {
           const token = jwt.sign(
             { id: userID },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: 16000 }
+            { expiresIn: 900000 }
           );
           await User.updateOne({ _id: data._id }, { Token: token });
           res.cookie("user", token, {
-            expires: new Date(Date.now() + 6000000),
+            expires: new Date(Date.now() + 900000),
           });
           res.json({
             message: "login successfully!",
@@ -63,14 +63,6 @@ module.exports.LogInAdmin = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.json({ message: "Error server", status: 500, err: error });
-  }
-};
-
-module.exports.LogOutAdmin = async (req, res) => {
-  try {
-    res.cookie.remove("admin");
-  } catch (error) {
     res.json({ message: "Error server", status: 500, err: error });
   }
 };

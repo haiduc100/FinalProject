@@ -36,7 +36,7 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="/user/LogInAdmin" class="brand-link">
+        <a href="#" class="brand-link">
           <img
           src="/public/dist/img/AdminLTELogo.png"
           alt="AdminLTE Logo"
@@ -155,9 +155,11 @@
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
-        <button class="btn btn-default "> 
-          <a href="/user/LogInAdmin">Logout</a>
-        </button>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-default " onclick="handleLogout()">
+            Logout
+          </button>
+        </div>
       </div>
       <!-- /.sidebar -->
     </aside>
@@ -172,9 +174,24 @@
     <!-- Bootstrap slider -->
     <script src="/public/plugins/bootstrap-slider/bootstrap-slider.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="/public/dist/js/demo.js"></script>
+    <!-- <script src="/public/dist/js/demo.js"></script> -->
     <!-- Page specific script -->
     <script>
+        function delete_cookie(name) {
+        document.cookie =
+          name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        }
+        handleLogout = async () => {
+          delete_cookie("user");
+          await $.ajax({
+            url: "/user/api/_logout",
+            type: "POST",
+          }).then(()=>{
+            window.location.href="/user/loginadmin"
+          }).catch((e)=>{
+            console.log(e);
+          })
+    }
       $(function () {
         /* BOOTSTRAP SLIDER */
         $(".slider").bootstrapSlider();

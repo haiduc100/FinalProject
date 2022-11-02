@@ -56,7 +56,20 @@ module.exports.getUserById = async (req, res) => {
     });
   }
 };
-
+exports.logOut = async function (req, res) {
+  try {
+    await userModel.findByIdAndUpdate(req.userId, {
+      token: "",
+    });
+    res.status(200).json({ message: "logout success" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
 module.exports.createUser = async (req, res) => {
   try {
     const user = await userModel.findOne({

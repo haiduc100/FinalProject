@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 
 //View html Login
-module.exports.getAllAssignmentsLogInUser = async (req, res) => {
+module.exports.getLoginPage = async (req, res) => {
   try {
     res.render("components/LogIn/assetLogInPage.ejs");
   } catch (error) {
@@ -14,7 +14,6 @@ module.exports.getAllAssignmentsLogInUser = async (req, res) => {
     });
   }
 };
-
 //LogIn user
 module.exports.LogInUser = async (req, res) => {
   try {
@@ -31,22 +30,18 @@ module.exports.LogInUser = async (req, res) => {
         const token = jwt.sign(
           { id: userID },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: 16000 }
+          { expiresIn: 900000 }
         );
         await User.updateOne({ _id: data._id }, { Token: token });
         res.cookie("user", token, {
-          expires: new Date(Date.now() + 6000000),
+          expires: new Date(Date.now() + 900000),
         });
-        //ve trag home
-        // res.render("pages/home", { listAsset: userID });
         res.json({ status: 200, message: "success" });
       } else {
         res.json({ message: "Incorrect password!!!" });
       }
     } else {
       res.json({ message: "login failed", status: 400, err: false });
-
-      // res.render("components/LogIn/assetLogInPage");
     }
   } catch (error) {
     res.json({ message: "Error server", status: 500, err: error });

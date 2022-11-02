@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const controller = require("../controllers/userController");
-const LOGIN_USER_ = require("../controllers/LogInUserController");
-const LOGIN_ADMIN_ = require("../controllers/LogInAdminController");
+const loginUserController = require("../controllers/LogInUserController");
+const loginAdminController = require("../controllers/LogInAdminController");
 const checkController = require("../middlewares/checkController");
 
 router.get("/", checkController.checkLogin, controller.getAllUsers);
@@ -15,13 +15,15 @@ router.put("/api/:id", checkController.checkLogin, controller.updateUser);
 router.delete("/api/:id", checkController.checkLogin, controller.deleteUser);
 
 //LogInUser
-router.post("/LogIn", LOGIN_USER_.LogInUser);
+router.post("/LogIn", loginUserController.LogInUser);
 //html user
-router.get("/login", LOGIN_USER_.getAllAssignmentsLogInUser);
+router.get("/login", loginUserController.getLoginPage);
 
 //admin
-router.post("/LogInAdmin", LOGIN_ADMIN_.LogInAdmin);
+router.post("/LogInAdmin", loginAdminController.LogInAdmin);
 //html admin
-router.get("/loginAdmin", LOGIN_ADMIN_.getAllAssignmentsLogInAdmin);
+router.get("/loginAdmin", loginAdminController.getLoginPage);
+
+router.post("/api/_logout", controller.logOut);
 
 module.exports = router;

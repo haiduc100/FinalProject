@@ -29,7 +29,7 @@ module.exports.getAllCategories = async (req, res) => {
 
 module.exports.getCategorieById = async (req, res) => {
   try {
-    const category = await Category.findOne({ _id: req.params.id });
+    const category = await Category.findById(req.params.id);
 
     res.status(200).json(category);
   } catch (error) {

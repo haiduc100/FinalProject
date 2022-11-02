@@ -16,7 +16,7 @@ app.use(cors());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Connect to Database
-require("./config/connectDB");
+// require("./config/connectDB");
 
 const router = require("./routes/index");
 

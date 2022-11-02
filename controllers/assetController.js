@@ -88,7 +88,7 @@ module.exports.createAsset = async (req, res) => {
 
     for (let i = 0; i < Amount; i++) {
       let AssetCode = category.Prefix + Math.random().toString(36).substring(7);
-      await Asset.create({
+      let newAsset = await Asset.create({
         State: State,
         Category: newCategory,
         Amount: Amount,
@@ -99,8 +99,16 @@ module.exports.createAsset = async (req, res) => {
         AssetDate: AssetDate,
       });
 
+      // Create quality
+      await storageModel.create({
+        AssetId: newAsset._id,
+        Quality: 100,
+        EvaluatedBy: staff._id,
+      });
+      // Create storage
       // await storageModel.create({
       //   RequestBuyNewId: req.body.RequestBuyNewId,
+      //   StockerId: staff._id,
       //   Type: "import",
       // });
     }
@@ -130,7 +138,7 @@ module.exports.createAssetByRequestBuyNew = async (req, res) => {
 
     for (let i = 0; i < Amount; i++) {
       let AssetCode = category.Prefix + Math.random().toString(36).substring(7);
-      await Asset.create({
+      let newAsset = await Asset.create({
         State: State,
         Category: newCategory,
         Amount: Amount,
@@ -140,7 +148,13 @@ module.exports.createAssetByRequestBuyNew = async (req, res) => {
         AssetName: AssetName,
         AssetDate: AssetDate,
       });
-
+      // Create quality
+      await storageModel.create({
+        AssetId: newAsset._id,
+        Quality: 100,
+        EvaluatedBy: staff._id,
+      });
+      // Create storage
       await storageModel.create({
         RequestBuyNewId: req.body.RequestBuyNewId,
         StockerId: staff._id,

@@ -16,7 +16,11 @@ module.exports.getAllRequestReturn = async (req, res) => {
       { updateAt: -1 },
       req.query.page,
       req.query.pageSize,
-      ["RequestBy", "Handler", "AssignmentId"]
+      [
+        "RequestBy",
+        "Handler",
+        { path: "AssignmentId", populate: { path: "AssetId" } },
+      ]
     );
     const users = await User.find({});
     // res.status(200).json(requestReturning);

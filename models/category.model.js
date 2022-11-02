@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
+const mongoose = require("../config/connectDB");
 
 const CategorySchema = mongoose.Schema(
   {
@@ -9,5 +8,4 @@ const CategorySchema = mongoose.Schema(
   { collection: "Category", timestamps: true }
 );
 
-CategorySchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Category", CategorySchema);

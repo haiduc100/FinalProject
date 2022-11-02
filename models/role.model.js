@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("../config/connectDB");
 
 const RoleSchema = mongoose.Schema(
   {
