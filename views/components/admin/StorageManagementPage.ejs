@@ -208,8 +208,8 @@
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.Type %></td>
                         <td><%= value.QualityId ? value.QualityId.AssetId.AssetCode : null %></td>
-                        <td><%= value.StockerId.StaffCode %></td>
-                        <td><%= value.QualityId? value.QualityId.Quality:100 %> </td>
+                        <td><%= value.StockerId?value.StockerId.StaffCode : null%></td>
+                        <td><%= value.QualityId? value.QualityId.Quality:null%> </td>
                         <td>
                           <p
                             data-toggle="modal"

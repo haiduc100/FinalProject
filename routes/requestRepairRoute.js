@@ -9,6 +9,12 @@ router.get(
   controller.getAllRequestRepair
 );
 router.get(
+  "/staff",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.getAllRequestRepairByStaff
+);
+router.get(
   "/api/:id",
   checkController.checkLogin,
   checkController.checkRole,
@@ -23,14 +29,19 @@ router.post(
 router.post(
   "/api/_staff",
   checkController.checkLogin,
-  checkController.checkRole,
   controller.createRequestRepairByStaff
 );
 router.put(
-  "/api/:id",
+  "/api/_director/:id",
   checkController.checkLogin,
   checkController.checkRole,
-  controller.updateRequestRepair
+  controller.updateRequestRepairByDirector
+);
+router.put(
+  "/api/_stocker/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.updateRequestRepairByStocker
 );
 router.delete(
   "/api/:id",

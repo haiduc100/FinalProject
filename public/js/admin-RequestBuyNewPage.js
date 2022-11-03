@@ -11,9 +11,7 @@ handleAddNew = async () => {
   await $.ajax({
     url: `/requestBuyNew/api/${idRequest}`,
     type: "PUT",
-    data: {
-      State: "bought",
-    },
+    data: { State: "bought" },
   });
   // create Asset
   const AssetName = res.AssetName;
@@ -87,6 +85,7 @@ handleUpdate = async () => {
         State: newState,
         Category: newCategory,
         AssetName: newAssetName,
+        Reason: $(".Reason").val().trim(),
       },
     });
     $("#btnUpdate").prop("disabled", true);

@@ -28,29 +28,76 @@ handleAddNew = () => {
 
 let idRequest;
 let assetId;
-openUpdate = async (id) => {
-  let processed = confirm("Do you want to repair this asset?");
-  if (processed) {
-    idRequest = id;
-    // update asset State
-    await $.ajax({
-      url: `/requestRepair/api/${idRequest}`,
-      type: "GET",
-    })
-      .then(async (data) => {
-        assetId = data.data.AssetId;
+let checkPenalty;
+let qualityId;
+let olderQuality;
+let newStorageId;
+let staffId;
+handleUpdate = async () => {
+  let newQuality = $(".Quality").val().trim();
+  if (!newQuality) {
+    alert("You must enter quality");
+    return;
+  }
+  if (newQuality > 100 || newQuality < 0) {
+    alert("new quality must be between 0 and 100!!!");
+    return;
+  }
+  // update asset State
+  await $.ajax({
+    url: `/requestRepair/api/${idRequest}`,
+    type: "GET",
+  })
+    .then(async (data) => {
+      assetId = data.data.AssetId;
+      staffId = data.data.StaffId;
+      // update asset State
+      await $.ajax({
+        url: `/asset/api/${assetId}`,
+        type: "PUT",
+        data: {
+          State: "repairing",
+        },
+      }).then(async () => {
+        // create quality
         await $.ajax({
-          url: `/asset/api/${assetId}`,
-          type: "PUT",
+          url: `/quality/api/`,
+          type: "POST",
           data: {
-            State: "repairing",
+            Quality: newQuality,
+            AssetId: assetId,
           },
-        }).then(async () => {
-          //get latest quality
+        }).then(async (data) => {
+          // get quality before import
           await $.ajax({
             url: `/quality/api/_latest/${assetId}`,
             type: "GET",
           }).then(async (data) => {
+            checkPenalty = +data.data.Quality - +newQuality;
+            qualityId = data.data._id;
+            olderQuality = data.data.Quality;
+          });
+          // import asset
+          await $.ajax({
+            url: `/storage/api`,
+            type: "POST",
+            data: {
+              RequestRepairId: idRequest,
+              Type: "import",
+              QualityId: qualityId,
+            },
+          }).then(async (data) => {
+            await $.ajax({
+              url: `/penaltyBill/api`,
+              type: "POST",
+              data: {
+                Percent: checkPenalty,
+                OldQuality: olderQuality,
+                NewQuality: newQuality,
+                StorageId: data.data._id,
+                UserId: staffId,
+              },
+            });
             // update stockerId
             await $.ajax({
               url: `/requestRepair/api/_stocker/${idRequest}`,
@@ -66,18 +113,19 @@ openUpdate = async (id) => {
                 QualityId: data.data._id,
               },
             }).then(() => {
-              alert("Repair successfully!");
+              alert("Send to repair and create penalty bill  successfully!");
               window.location.reload();
             });
           });
         });
-      })
-      .catch((e) => {
-        console.log(e);
       });
-  } else {
-    return;
-  }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+openUpdate = async (id) => {
+  idRequest = id;
 };
 
 handleDelete = async (id) => {

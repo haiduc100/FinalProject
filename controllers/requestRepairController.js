@@ -9,7 +9,7 @@ module.exports.getAllRequestRepair = async (req, res) => {
 
     const paginateData = await Paginate(
       requestRepairModel,
-      {},
+      { StaffId: { $exists: false } },
       { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
@@ -17,6 +17,34 @@ module.exports.getAllRequestRepair = async (req, res) => {
     );
 
     res.render("components/admin/RequestRepairManagementPage", {
+      listRequestRepairs: paginateData.data,
+      totalPages: paginateData.totalPages,
+      staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.getAllRequestRepairByStaff = async (req, res) => {
+  try {
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+
+    const paginateData = await Paginate(
+      requestRepairModel,
+      { StaffId: { $exists: true } },
+      { updatedAt: -1 },
+      req.query.page,
+      req.query.pageSize,
+      ["AssetId", "SotockerId", "DirectorId", "Category", "StaffId"]
+    );
+
+    res.render("components/admin/RequestRepairManagementPageByStaff", {
       listRequestRepairs: paginateData.data,
       totalPages: paginateData.totalPages,
       staff: req.staff,
@@ -83,10 +111,38 @@ module.exports.createRequestRepairByStaff = async (req, res) => {
   }
 };
 
-module.exports.updateRequestRepair = async (req, res) => {
+module.exports.updateRequestRepairByDirector = async (req, res) => {
   try {
     const RequestRepair = await requestRepairModel.findById(req.params.id);
     req.body.DirectorId = req.userId;
+    if (!RequestRepair) {
+      return res.status(400).json({
+        status: "Fail",
+        message: "Can not find RequestRepair",
+      });
+    }
+
+    const newRequestRepair = await requestRepairModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: newRequestRepair,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.updateRequestRepairByStocker = async (req, res) => {
+  try {
+    const RequestRepair = await requestRepairModel.findById(req.params.id);
+    req.body.SotockerId = req.userId;
     if (!RequestRepair) {
       return res.status(400).json({
         status: "Fail",

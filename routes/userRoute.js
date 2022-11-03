@@ -24,6 +24,11 @@ router.post("/LogInAdmin", loginAdminController.LogInAdmin);
 //html admin
 router.get("/loginAdmin", loginAdminController.getLoginPage);
 
-router.post("/api/_logout", controller.logOut);
+router.post("/api/_logout", checkController.checkLogin, controller.logOut);
+router.post(
+  "/api/_changepass/:id",
+  checkController.checkLogin,
+  controller.changePassword
+);
 
 module.exports = router;

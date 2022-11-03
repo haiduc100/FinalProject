@@ -40,9 +40,11 @@ module.exports.getAllUsers = async (req, res) => {
 
 module.exports.getUserById = async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.params.id });
+    const user = await userModel
+      .findOne({ _id: req.params.id })
+      .populate("Department");
     if (user) {
-      res.json(user);
+      res.status(200).json(user);
     } else {
       res.status(404).json({
         status: "Fail",
@@ -56,7 +58,7 @@ module.exports.getUserById = async (req, res) => {
     });
   }
 };
-exports.logOut = async function (req, res) {
+module.exports.logOut = async function (req, res) {
   try {
     await userModel.findByIdAndUpdate(req.userId, {
       token: "",
@@ -101,14 +103,8 @@ module.exports.createUser = async (req, res) => {
       req.body.LastName.toLocaleLowerCase().trim() +
       firstName.join("").trim() +
       req.body.DateOfBirth.split("-").reverse().join("");
-    console.log(req.body.Password);
     req.body.Password = await bcrypt.hash(req.body.Password, 10);
-    const newUser = new User({
-      ...req.body,
-    });
-
-    await newUser.save();
-
+    let newUser = await userModel.create(req.body);
     const token = jwt.sign({ userId: newUser._id }, process.env.TOKEN_KEY);
 
     res.status(200).json({
@@ -117,10 +113,10 @@ module.exports.createUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 
@@ -134,16 +130,12 @@ module.exports.updateUser = async (req, res) => {
       });
     }
 
-    const newUser = await userModel.findOneAndUpdate(
-      { _id: req.params.id },
-      req.body,
-      {
-        new: true,
-      }
-    );
+    const newUser = await userModel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
     res.status(200).json({
-      status: "success",
+      status: "Update user information successfully",
       data: { newUser },
     });
   } catch (error) {
@@ -174,6 +166,51 @@ module.exports.deleteUser = async (req, res) => {
     res.status(500).json({
       status: "Fail",
       error,
+    });
+  }
+};
+// min 8 letter password, with at least a symbol, upper and lower case letters and a number
+regex = (str) => {
+  var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  return re.test(str);
+};
+module.exports.changePassword = async (req, res) => {
+  try {
+    let user = await userModel.findOne({
+      _id: req.params.id,
+    });
+    let oldPassword = user.Password;
+    let inputPassword = req.body.Password;
+    let newPassword = req.body.newPassword;
+    let checkPassword = await bcrypt.compare(inputPassword, oldPassword);
+    let newPasswordBase;
+    if (checkPassword == true) {
+      if (regex(newPassword)) {
+        newPasswordBase = bcrypt.hashSync(newPassword, 10);
+        await userModel.findByIdAndUpdate(user._id, {
+          Password: newPasswordBase,
+          token: "",
+        });
+        return res
+          .status(200)
+          .json({ message: "change password success", status: 200 });
+      } else {
+        return res.status(400).json({
+          message:
+            " min 8-letter password, with at least a symbol, upper and lower case letters, and a number",
+          status: 400,
+        });
+      }
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Incorrect password!", status: 400 });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({
+      status: 400,
+      error: error,
     });
   }
 };

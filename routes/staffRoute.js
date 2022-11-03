@@ -29,4 +29,10 @@ router.get(
   checkController.checkLogin,
   controller.getAccountInformation
 );
+router.get("/penalty", checkController.checkLogin, controller.getListPenalty);
+router.get(
+  "/requestrepair",
+  checkController.checkLogin,
+  controller.getAllRequestRepair
+);
 module.exports = router;

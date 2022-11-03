@@ -26,7 +26,7 @@ handleUpdate = async () => {
     if (!newQuality || !newState) {
       return;
     }
-    if (newQuality > 100 || newState < 0) {
+    if (newQuality > 100 || newQuality < 0) {
       alert("new quality must be between 0 and 100!!!");
       return;
     }

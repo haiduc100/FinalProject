@@ -1,8 +1,8 @@
-function LoginAdmin() {
+LoginAdmin = async () => {
   let userName = $("#UserName").val();
   let passWord = $("#PassWord").val();
   // alert( Role);
-  $.ajax({
+  await $.ajax({
     url: "/user/LogInAdmin",
     type: "POST",
     data: {
@@ -11,6 +11,9 @@ function LoginAdmin() {
     },
   })
     .then((data) => {
+      if (data.message == "Incorrect password!!!") {
+        alert(data.message);
+      }
       if (data.status === 200) {
         if (data.currentRole == 4) {
           //supper admin
@@ -36,7 +39,7 @@ function LoginAdmin() {
         console.log(27, err);
       }
     });
-}
+};
 
 $(document).on("keypress", function (e) {
   if (e.which == 13) {

@@ -110,27 +110,18 @@
                 </div>
                 <div class="modal-body">
 
-                  <div class="updatePenaltyRule">
+                  <div class="updateQuality">
                     <div class="form-group">
-                      <label for="">Percent</label>
+                      <label for="">New Quality</label>
                       <input
-                        type="text"
-                        name="PercentUpdate"
+                        type="number"
+                        name="Quality"
                         id=""
-                        placeholder="Update Percent"
-                        class="PercentUpdate form-control" required
+                        placeholder="Update Quality"
+                        class="Quality form-control" required
+                        max="100"
+                        min="0"
                       />
-                    </div>
-                    <div class="form-group">
-                      <label for="">Amount</label>
-
-                      <input
-                      type="text"
-                      name="AmountUpdate"
-                      id=""
-                      placeholder="Update Amount"
-                      class="AmountUpdate form-control" required
-                    />
                     </div>
                   </div>
                 </div>
@@ -142,13 +133,13 @@
                   >
                     Close
                   </button>
-                  <button
+                  <!-- <button
                     type="submit"
                     class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
                     Add
-                  </button>
+                  </button> -->
                   <button
                     type="button"
                     class="btn btn-primary updatebtn"
@@ -173,6 +164,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Asset Code</th>
+                        <th scope="col">Staff Code</th>
                         <th scope="col">Sotocker Code</th>
                         <th scope="col">Director Code</th>
                         <th scope="col">Category</th>
@@ -185,12 +177,15 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.AssetId.AssetCode %></td>
+                        <td><%= value.StaffId ? value.StaffId.StaffCode : null %></td>
                         <td><%= value.SotockerId ? value.SotockerId.StaffCode : null %></td>
                         <td><%= value.DirectorId ? value.DirectorId.StaffCode : null %></td>
                         <td><%= value.Category.CategoryName %></td>
                         <td><%= value.State %></td>
                         <td>
                           <p
+                            data-toggle="modal" 
+                            data-target="#exampleModal"
                             class="btn btn-warning <%= role !=2 ? 'd-none' : ''%>"
                             onclick="openUpdate('<%= value._id %>')"
                           >
@@ -234,6 +229,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestRepairPage.js"></script>
+    <script src="/public/js/admin-RequestRepairByStaffPage.js"></script>
   </body>
 </html>

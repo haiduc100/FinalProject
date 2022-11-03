@@ -78,7 +78,7 @@ module.exports.createRequestBuyNew = async (req, res) => {
   try {
     const user = await userModel.findOne({ StaffCode: req.staff });
     req.body.RequestBy = user._id;
-    req.body.ProcessStep = RequestBuyNew;
+    // req.body.ProcessStep = RequestBuyNew;
     req.body.State = "waiting";
     const request = await RequestBuyNewModel.create(req.body);
 
@@ -87,6 +87,7 @@ module.exports.createRequestBuyNew = async (req, res) => {
       data: request,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "Fail",
       error,

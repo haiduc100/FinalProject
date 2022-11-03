@@ -56,7 +56,59 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body">
+                  <div class="col update">
+                    <div class="form-group">
+                      <label for="StaffCode">Staff Code</label>
+                      <input
+                        type="text"
+                        class="StaffCode form-control"
+                        readonly
+                      />
+                      <div class="form-group">
+                        <label for="Department">Department</label>
+                        <input
+                          type="text"
+                          class="Department form-control"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Date of birth</label>
+                      <input
+                        type="date"
+                        name="DateOfBirth"
+                        placeholder="Date of birth"
+                        class="DateOfBirth form-control"
+                        required
+                      />
+                      <div id="warning_message" class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="FirstName">First Name</label>
+                      <input type="text" class="FirstName form-control" />
+                    </div>
+                    <div class="form-group">
+                      <label for="LastName">Last Name</label>
+                      <input type="text" class="LastName form-control" />
+                    </div>
+                    <div class="form-group">
+                      <label for="UserName">User Name</label>
+                      <input type="text" class="UserName form-control" />
+                    </div>
+                  </div>
+                  <div class="col changePass">
+                    <div class="form-group">
+                      <label for="oldPassword">Old Password</label>
+                      <input type="password" class="oldPassword form-control" />
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword">New Password</label>
+                      <input type="password" class="newPassword form-control" />
+                    </div>
+                  </div>
+                </div>
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -71,6 +123,13 @@
                     onclick="handleUpdate()"
                   >
                     Update
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary changebtn"
+                    onclick="handleChangePass()"
+                  >
+                    Change
                   </button>
                 </div>
               </div>
@@ -89,7 +148,7 @@
                         <th scope="col">Gender</th>
                         <th scope="col">Department</th>
                         <th scope="col">User Name</th>
-                        <!-- <th scope="col">Action</th> -->
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -103,17 +162,26 @@
                         <td><%= value.Gender%></td>
                         <td><%= value.Department.DepartmentName %></td>
                         <td><%= value.UserName %></td>
-                        <!-- <td>
+                        <td>
                           <p
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning"
-                            id='btnUpdate'
+                            id="btnUpdate"
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
                           </p>
-                        </td> -->
+                          <p
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            class="btn btn-success"
+                            id="btnUpdate"
+                            onclick="openChangePass('<%= value._id %>')"
+                          >
+                            Change password
+                          </p>
+                        </td>
                       </tr>
                       <% }) %>
                     </tbody>
@@ -136,6 +204,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <!-- <script src="/public/js/admin-RequestBuyNewPage.js"></script> -->
+    <script src="/public/js/admin-AccountPage.js"></script>
   </body>
 </html>

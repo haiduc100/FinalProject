@@ -12,7 +12,7 @@ function capitalize(str) {
   return arr.join(" ");
 }
 
-handleAddNew = () => {
+handleAddNew = async () => {
   let FirstName = $(".FirstName").val().trim().toLowerCase();
   let LastName = $(".LastName").val().trim().toLowerCase();
   const Role = $(".roleCreate").val().trim();
@@ -33,7 +33,7 @@ handleAddNew = () => {
   }
   FirstName = capitalize(FirstName);
   LastName = capitalize(LastName);
-  $.ajax({
+  await $.ajax({
     url: "/user/api",
     type: "POST",
     data: {
@@ -46,15 +46,19 @@ handleAddNew = () => {
       Department,
     },
   })
-    .then(() => {
-      $(".FirstName").val("");
-      $(".LastName").val("");
-      $(".roleCreate").val("");
-      $(".Gender").val("");
-      $(".UserName").val("");
-      $(".DateOfBirth").val("");
-      $(".Department").val("");
-      window.location.reload();
+    .then((data) => {
+      if (data) {
+        $(".FirstName").val("");
+        $(".LastName").val("");
+        $(".roleCreate").val("");
+        $(".Gender").val("");
+        $(".UserName").val("");
+        $(".DateOfBirth").val("");
+        $(".Department").val("");
+        window.location.reload();
+      } else {
+        return;
+      }
     })
     .catch((error) => {
       alert(error.responseJSON.message);

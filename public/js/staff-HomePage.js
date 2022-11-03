@@ -28,9 +28,7 @@ handleAddNew = () => {
     type: "POST",
     data: { AssetName, Category, Price, Amount, Description, SuggestionLink },
   })
-    .then(() => {
-      window.location.reload();
-    })
+    .then(() => {})
     .catch((error) => {
       if (error.status === 400) {
         alert(error.responseJSON.message);

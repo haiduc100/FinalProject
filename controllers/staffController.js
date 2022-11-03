@@ -6,7 +6,9 @@ const assetModel = require("../models/asset.model");
 const assignmentModel = require("../models/assignment.model");
 const requestBorrowModel = require("../models/requestBorrow.model");
 const categoryModel = require("../models/category.model");
+const penaltyBillModel = require("../models/penaltyBill.model");
 const requestReturnModel = require("../models/requestReturn.model");
+const requestRepairModel = require("../models/requestRepair.model");
 module.exports.getAllAssetAvailable = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
@@ -131,6 +133,37 @@ module.exports.getAllRequestReturn = async (req, res) => {
     console.log(error);
   }
 };
+module.exports.getAllRequestRepair = async (req, res) => {
+  try {
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    const staff = await userModel.findOne({ StaffCode: req.staff });
+    const paginateData = await Paginate(
+      requestRepairModel,
+      { StaffId: staff._id },
+      {},
+      req.query.page,
+      req.query.pageSize,
+      ["AssetId", "SotockerId", "DirectorId", "Category", "State", "StaffId"]
+    );
+    const categorys = await categoryModel.find({});
+    const users = await userModel.find({});
+
+    res.render("components/staff/requestRepairPage", {
+      listRequestRepairs: paginateData.data,
+      User: users,
+      listCategory: categorys,
+      staff: req.staff,
+      totalPages: paginateData.totalPages,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error: error,
+    });
+    console.log(error);
+  }
+};
 module.exports.getAllRequestBuyNew = async (req, res) => {
   try {
     req.query.page = req.query.page ? req.query.page : 1;
@@ -173,6 +206,31 @@ module.exports.getAccountInformation = async (req, res) => {
     );
     res.render("components/staff/accountManagementPage", {
       data: paginateData.data,
+      staff: req.staff,
+      totalPages: paginateData.totalPages,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.getListPenalty = async (req, res) => {
+  try {
+    req.query.page = req.query.page ? req.query.page : 1;
+    req.query.pageSize = req.query.pageSize ? req.query.pageSize : 5;
+    const paginateData = await Paginate(
+      penaltyBillModel,
+      { UserId: req.userId },
+      {},
+      req.query.page,
+      req.query.pageSize,
+      ["StorageId", "UserId"]
+    );
+    res.render("components/staff/penaltyPage", {
+      listPenaltys: paginateData.data,
       staff: req.staff,
       totalPages: paginateData.totalPages,
     });

@@ -54,7 +54,7 @@ module.exports.LogInAdmin = async (req, res) => {
           });
         }
       } else {
-        res.json({ message: "Incorrect password!!!" });
+        res.status(400).json({ message: "Incorrect password!!!" });
       }
     } else {
       console.log(error);
