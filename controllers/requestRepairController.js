@@ -82,7 +82,7 @@ module.exports.createRequestRepairByStocker = async (req, res) => {
     req.body.SotockerId = user._id;
     let request = await requestRepairModel.create(req.body);
     res.status(200).json({
-      status: "Create RequestRepair successfully",
+      status: "Create Request Repair successfully",
       data: request,
     });
   } catch (error) {
@@ -99,7 +99,7 @@ module.exports.createRequestRepairByStaff = async (req, res) => {
     req.body.StaffId = user._id;
     let request = await requestRepairModel.create(req.body);
     res.status(200).json({
-      status: "Create RequestRepair successfully",
+      status: "Create Request Repair successfully",
       data: request,
     });
   } catch (error) {

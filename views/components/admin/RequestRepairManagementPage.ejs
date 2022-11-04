@@ -191,14 +191,15 @@
                         <td><%= value.State %></td>
                         <td>
                           <p
-                            class="btn btn-warning <%= role !=2 ? 'd-none' : ''%>"
+                            class="btn btn-warning <%= (role !=2 || value.DirectorId == null) ? 'd-none' : ''%>"
                             onclick="openUpdate('<%= value._id %>')"
+                            id="updatebtn<%=value._id%>"
                           >
                           Update
 
                           </p>
                           <p
-                           
+                           id="signbtn<%=value._id%>"
                             class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
                             onclick="handleSign('<%= value._id %>')"
                           >

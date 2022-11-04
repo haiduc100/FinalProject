@@ -219,6 +219,7 @@
                         <th scope="col">Amount</th>
                         <th scope="col">Percent (%)</th>
                         <th scope="col">Is Fines</th>
+                        <th scope="col">Deadline</th>
                         <!-- <th scope="col">Action</th> -->
                       </tr>
                     </thead>
@@ -232,6 +233,7 @@
                         <td><%= value.Amount %></td>
                         <td><%= value.Percent %> </td>
                         <td><%= value.IsFines %></td>
+                        <td><%= value.Deadline.toLocaleDateString('en-GB') %></td>
                        
                       </tr>
                       <% }) %>
@@ -255,6 +257,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-PenaltyBillPage.js"></script>
+    <!-- <script src="/public/js/admin-PenaltyBillPage.js"></script> -->
   </body>
 </html>

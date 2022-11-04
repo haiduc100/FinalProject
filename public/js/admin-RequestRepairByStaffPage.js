@@ -43,14 +43,23 @@ handleUpdate = async () => {
     alert("new quality must be between 0 and 100!!!");
     return;
   }
+
   // update asset State
   await $.ajax({
     url: `/requestRepair/api/${idRequest}`,
     type: "GET",
   })
     .then(async (data) => {
+      // update assignment state
       assetId = data.data.AssetId;
       staffId = data.data.StaffId;
+      await $.ajax({
+        url: `/assignments/api/_repair/${assetId}`,
+        type: "PUT",
+        data: {
+          IsReturning: true,
+        },
+      });
       // update asset State
       await $.ajax({
         url: `/asset/api/${assetId}`,
@@ -69,12 +78,12 @@ handleUpdate = async () => {
           },
         }).then(async (data) => {
           // get quality before import
+          qualityId = data.data._id;
           await $.ajax({
-            url: `/quality/api/_latest/${assetId}`,
+            url: `/quality/api/_latestexport/${assetId}`,
             type: "GET",
           }).then(async (data) => {
             checkPenalty = +data.data.Quality - +newQuality;
-            qualityId = data.data._id;
             olderQuality = data.data.Quality;
           });
           // import asset
@@ -110,7 +119,7 @@ handleUpdate = async () => {
               data: {
                 RequestRepairId: idRequest,
                 Type: "export",
-                QualityId: data.data._id,
+                QualityId: qualityId,
               },
             }).then(() => {
               alert("Send to repair and create penalty bill  successfully!");

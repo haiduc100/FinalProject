@@ -10,6 +10,10 @@ const PenaltyBillSechema = mongoose.Schema(
     OldQuality: { type: Number },
     NewQuality: { type: Number },
     IsFines: { type: Boolean, default: false },
+    Deadline: {
+      type: Date,
+      default: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000),
+    },
   },
   { collection: "PenaltyBill", timestamps: true }
 );

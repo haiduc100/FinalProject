@@ -10,7 +10,7 @@ module.exports.getAllQuality = async (req, res) => {
     const paginateData = await Paginate(
       qualityModel,
       {},
-      { updatedAt: 1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["EvaluatedBy", "AssetId"]
@@ -54,6 +54,22 @@ module.exports.getLatestQuality = async (req, res) => {
       .sort({ updatedAt: -1 });
     res.status(200).json({
       data: quality[0],
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error: error,
+    });
+  }
+};
+module.exports.getLatestExportQuality = async (req, res) => {
+  try {
+    let quality = await qualityModel
+      .find({ AssetId: req.params.id })
+      .sort({ updatedAt: -1 });
+    res.status(200).json({
+      data: quality[1],
     });
   } catch (error) {
     console.log(error);

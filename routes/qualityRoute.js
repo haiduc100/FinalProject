@@ -15,6 +15,7 @@ router.get(
   controller.getQualityById
 );
 router.get("/api/_latest/:id", controller.getLatestQuality);
+router.get("/api/_latestexport/:id", controller.getLatestExportQuality);
 
 router.post(
   "/api",

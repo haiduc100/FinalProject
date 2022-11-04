@@ -2,6 +2,7 @@ const assetModel = require("../models/asset.model");
 const Asset = require("../models/asset.model");
 const Category = require("../models/category.model");
 const storageModel = require("../models/storage.model");
+const qualityModel = require("../models/quality.model");
 const userModel = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
 
@@ -138,7 +139,7 @@ module.exports.createAssetByRequestBuyNew = async (req, res) => {
 
     for (let i = 0; i < Amount; i++) {
       let AssetCode = category.Prefix + Math.random().toString(36).substring(7);
-      let newAsset = await Asset.create({
+      await Asset.create({
         State: State,
         Category: newCategory,
         Amount: Amount,
@@ -147,18 +148,23 @@ module.exports.createAssetByRequestBuyNew = async (req, res) => {
         Description: Description,
         AssetName: AssetName,
         AssetDate: AssetDate,
-      });
-      // Create quality
-      await storageModel.create({
-        AssetId: newAsset._id,
-        Quality: 100,
-        EvaluatedBy: staff._id,
-      });
-      // Create storage
-      await storageModel.create({
-        RequestBuyNewId: req.body.RequestBuyNewId,
-        StockerId: staff._id,
-        Type: "import",
+      }).then(async (data) => {
+        // Create quality
+        await qualityModel
+          .create({
+            AssetId: data._id,
+            Quality: 100,
+            EvaluatedBy: staff._id,
+          })
+          .then(async (data) => {
+            // Create storage
+            await storageModel.create({
+              QualityId: data._id,
+              RequestBuyNewId: req.body.RequestBuyNewId,
+              StockerId: staff._id,
+              Type: "import",
+            });
+          });
       });
     }
     res.status(200).json({

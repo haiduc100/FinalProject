@@ -79,7 +79,7 @@
             data-target="#exampleModal"
             onclick="openAddModal()"
           >
-            Add New Request Repair
+            Add New Rule
           </button> -->
 
           <!-- Modal -->
@@ -109,19 +109,51 @@
                   </button>
                 </div>
                 <div class="modal-body">
-
-                  <div class="updateQuality">
+                  <div class="createPenaltyRule">
                     <div class="form-group">
-                      <label for="">New Quality</label>
+
+                      <label>Percent</label>
                       <input
-                        type="number"
-                        name="Quality"
+                        type="text"
+                        name="Percent"
                         id=""
-                        placeholder="Update Quality"
-                        class="Quality form-control" required
-                        max="100"
-                        min="0"
+                        placeholder="Percent"
+                        class="Percent form-control" required
                       />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Amount</label>
+                      <input
+                      type="text"
+                      name="Amount"
+                      id=""
+                      placeholder="Amount"
+                      class="Amount form-control" required
+                    />
+                    </div>
+                  </div>
+
+                  <div class="updatePenaltyRule">
+                    <div class="form-group">
+                      <label for="">Percent</label>
+                      <input
+                        type="text"
+                        name="PercentUpdate"
+                        id=""
+                        placeholder="Update Percent"
+                        class="PercentUpdate form-control" required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="">Amount</label>
+
+                      <input
+                      type="text"
+                      name="AmountUpdate"
+                      id=""
+                      placeholder="Update Amount"
+                      class="AmountUpdate form-control" required
+                    />
                     </div>
                   </div>
                 </div>
@@ -133,20 +165,19 @@
                   >
                     Close
                   </button>
-                  <!-- <button
+                  <button
                     type="submit"
                     class="btn btn-primary addbtn"
                     onclick="handleAddNew()"
                   >
                     Add
-                  </button> -->
+                  </button>
                   <button
                     type="button"
                     class="btn btn-primary updatebtn"
                     onclick="handleUpdate()"
                   >
-                  Update
-
+                    Update
                   </button>
                 </div>
               </form>
@@ -164,49 +195,35 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Asset Code</th>
-                        <th scope="col">Staff Code</th>
-                        <th scope="col">Sotocker Code</th>
-                        <th scope="col">Director Code</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Stocker Code</th>
+                        <th scope="col">Quality(%)</th>
+                        <!-- <th scope="col">Action</th> -->
+
                       </tr>
                     </thead>
                     <tbody>
-                      <% listRequestRepairs.map((value,index)=>{ %>
+                      <% listQualitys.map((value,index)=>{ %>
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.AssetId.AssetCode %></td>
-                        <td><%= value.StaffId.StaffCode  %></td>
-                        <td><%= value.SotockerId ? value.SotockerId.StaffCode : null %></td>
-                        <td><%= value.DirectorId ? value.DirectorId.StaffCode : null %></td>
-                        <td><%= value.Category.CategoryName %></td>
-                        <td><%= value.State %></td>
-                        <td>
+                        <td><%= value.EvaluatedBy.StaffCode %></td>
+                        <td><%= value.Quality%> </td>
+                        <!-- <td>
                           <p
-                            data-toggle="modal" 
+                            data-toggle="modal"
                             data-target="#exampleModal"
-                            class="btn btn-warning <%= (role !=2 || value.DirectorId == null ) ? 'd-none' : ''%>"
+                            class="btn btn-warning"
                             onclick="openUpdate('<%= value._id %>')"
                           >
-                          Update
-
+                            Update
                           </p>
                           <p
-                           
-                            class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
-                            onclick="handleSign('<%= value._id %>')"
-                          >
-                          Sign
-
-                          </p>
-                          <!-- <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"
                           >
                             Delete
-                          </p> -->
-                        </td>
+                          </p>
+                        </td> -->
                       </tr>
                       <% }) %>
                     </tbody>
@@ -216,7 +233,7 @@
             </div>
             <div class="paginateBtn" id="">
               <% for(let i = 0; i <totalPages; i++) { %>
-                <a href="/requestRepair?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
+                <a href="/storage?page=<%= i+1 %>&pageSize=5" class="mr-2"><button> <%= i+1 %> </button></a>
               <% }%>
             </div>
           </section>
@@ -229,6 +246,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/public/js/admin-RequestRepairByStaffPage.js"></script>
+    <script src="/public/js/admin-PenaltyRulePage.js"></script>
   </body>
 </html>

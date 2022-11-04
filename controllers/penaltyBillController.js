@@ -112,13 +112,12 @@ module.exports.updatePenalty = async (req, res) => {
         message: "Can not find Penalty",
       });
     }
-    await Penalty.updateOne({ _id: req.params.id }, req.body);
     const newPenalty = await penaltyBillModel.findByIdAndUpdate(
       req.params.id,
       req.body
     );
     res.status(200).json({
-      status: "success",
+      status: "Update penalty bill successfully!",
       data: newPenalty,
     });
   } catch (error) {

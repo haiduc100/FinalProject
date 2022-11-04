@@ -21,7 +21,7 @@ const AssignmentSchema = mongoose.Schema(
       require: true,
     },
     Note: { type: String, default: "" },
-    IsReturning: { type: Boolean, default: false },
+    // IsReturning: { type: Boolean, default: false },
     TransferringId: {
       type: String,
       ref: "User",

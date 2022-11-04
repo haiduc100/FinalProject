@@ -14,7 +14,13 @@ router.put(
   "/api/_returning/:id",
   checkController.checkLogin,
   checkController.checkRole,
-  controller.updateAssignment
+  controller.updateAssignmentReturnState
+);
+router.put(
+  "/api/_repair/:id",
+  checkController.checkLogin,
+  checkController.checkRole,
+  controller.updateAssignmentByRequestRepair
 );
 router.delete(
   "/api/:id",

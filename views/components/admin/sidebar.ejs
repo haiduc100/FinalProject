@@ -137,7 +137,7 @@
             <li class="nav-item <%= (role == 2|| role == 3) ? '' : 'd-none' %>">
               <a href="/requestRepair" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
-                <p>Request Repair Management</p>
+                <p>Request Repair By Stocker Management</p>
               </a>
             </li>
             <li class="nav-item <%= (role == 2|| role == 3) ? '' : 'd-none' %>">
@@ -150,6 +150,12 @@
               <a href="/storage" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>Storage Event Management</p>
+              </a>
+            </li>
+            <li class="nav-item <%=  role != 2 ? 'd-none' : '' %>">
+              <a href="/quality" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>Quality Management</p>
               </a>
             </li>
           </ul>

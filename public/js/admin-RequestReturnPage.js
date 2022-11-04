@@ -83,10 +83,11 @@ handleUpdate = async () => {
                     },
                   }).then((data) => {
                     alert("Low quality " + data.status);
-                    // window.location.reload();
+                    window.location.reload();
                   });
                 } else {
                   alert("Return asset done!!!");
+                  window.location.reload();
                 }
               });
             });

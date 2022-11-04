@@ -17,7 +17,7 @@ module.exports.getAllAssetAvailable = async (req, res) => {
     const paginateData = await Paginate(
       assetModel,
       { State: "available" },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Category"]
@@ -79,7 +79,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
     const paginateData = await Paginate(
       requestBorrowModel,
       { RequestBy: staff._id },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Handler", "Category", "RequestBy", "AssetId"]
@@ -110,10 +110,14 @@ module.exports.getAllRequestReturn = async (req, res) => {
     const paginateData = await Paginate(
       requestReturnModel,
       { RequestBy: staff._id },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
-      ["RequestBy", "Handler", "AssignmentId"]
+      [
+        "RequestBy",
+        "Handler",
+        { path: "AssignmentId", populate: { path: "AssetId" } },
+      ]
     );
     const categorys = await categoryModel.find({});
     const users = await userModel.find({});
@@ -141,7 +145,7 @@ module.exports.getAllRequestRepair = async (req, res) => {
     const paginateData = await Paginate(
       requestRepairModel,
       { StaffId: staff._id },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssetId", "SotockerId", "DirectorId", "Category", "State", "StaffId"]
@@ -199,7 +203,7 @@ module.exports.getAccountInformation = async (req, res) => {
     const paginateData = await Paginate(
       userModel,
       { _id: req.userId },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["Department"]
@@ -224,7 +228,7 @@ module.exports.getListPenalty = async (req, res) => {
     const paginateData = await Paginate(
       penaltyBillModel,
       { UserId: req.userId },
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["StorageId", "UserId"]

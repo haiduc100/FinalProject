@@ -2,6 +2,19 @@ openAddModal = async (id) => {
   idRequest = id;
 };
 handleAddNew = async () => {
+  const AssetDate = $(".AssetDate").val().trim();
+  const Description = $(".Description").val().trim();
+
+  const check = new Date(AssetDate).getTime();
+  const Now = new Date().getTime();
+  if (check < Now) {
+    alert("Asset Date must be greater than today");
+    return;
+  }
+  if (!Description || !AssetDate) {
+    alert("You must fill the input");
+    return;
+  }
   let res = await $.ajax({
     url: `/requestBuyNew/api/${idRequest}`,
     type: "GET",
@@ -14,21 +27,10 @@ handleAddNew = async () => {
     data: { State: "bought" },
   });
   // create Asset
+  const Amount = res.Amount;
   const AssetName = res.AssetName;
   const Category = res.Category;
-  const AssetDate = $(".AssetDate").val().trim();
-  const Description = $(".Description").val().trim();
-  const Amount = res.Amount;
 
-  const check = new Date(AssetDate).getTime();
-  const Now = new Date().getTime();
-  if (check < Now) {
-    $("#warning_message").html(`<p>Asset Date must be greater than today</p>`);
-    return;
-  }
-  if (!Description || !AssetDate) {
-    return;
-  }
   await $.ajax({
     url: "/asset/api/_buynew",
     type: "POST",
@@ -41,7 +43,8 @@ handleAddNew = async () => {
       RequestBuyNewId: idRequest,
     },
   })
-    .then(() => {
+    .then(async () => {
+      await $(`.btnAdd${idRequest}`).prop("disabled", true);
       window.location.reload();
     })
     .catch((error) => {
@@ -66,6 +69,7 @@ openUpdate = async (id) => {
     $(".AssetName").val(res.AssetName);
     $(".SuggestionLink").val(res.SuggestionLink);
     $(".Amount").val(res.Amount);
+    $(".Reason").val(res.Reason);
   } catch (error) {
     console.log(error);
   }
@@ -76,8 +80,11 @@ handleUpdate = async () => {
     const newState = $(".StateUpdate").val();
     const newCategory = $(".CategoryUpdate").val();
     const newAssetName = $(".AssetName").val();
-    // const newSuggestionLink = $(".SuggestionLink").val();
-    // const newAmount = $(".Amount").val();
+    const newReason = $(".Reason").val().trim();
+    if (!newState || !newReason) {
+      alert("You must fill the input");
+      return;
+    }
     await $.ajax({
       url: `/RequestBuyNew/api/${idRequest}`,
       type: "PUT",
@@ -85,11 +92,16 @@ handleUpdate = async () => {
         State: newState,
         Category: newCategory,
         AssetName: newAssetName,
-        Reason: $(".Reason").val().trim(),
+        Reason: newReason,
       },
     });
-    $("#btnUpdate").prop("disabled", true);
-    window.location.reload();
+    if (newState == "signed" || newState == "deniedByDirector") {
+      await $(`#${idRequest}`).prop("disabled", true);
+      window.location.reload();
+    } else {
+      console.log("hi");
+      window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }

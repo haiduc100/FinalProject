@@ -9,19 +9,26 @@ let idPenalty;
 openUpdate = async (id) => {
   try {
     idPenalty = id;
-    const res = await $.ajax({
+    await $.ajax({
       url: `/penaltyBill/api/${idPenalty}`,
       type: "GET",
-    });
-    $(".OldQualityUpdate").val(res.data.OldQuality);
-    $(".NewQualityUpdate").val(res.data.NewQuality);
-    $(".IsFinesUpdate").val(res.data.IsFines);
-    $(".StaffCodeUpdate").val(res.data.UserId.StaffCode);
-
-    $(".createPenaltyRule").attr("style", "display: none !important");
-    $(".addbtn").attr("style", "display: none !important");
-    $(".updatePenaltyRule").css("display", "inline-block");
-    $(".updatebtn").css("display", "inline-block");
+    })
+      .then(async (data) => {
+        await $(".OldQualityUpdate").val(data.data.OldQuality);
+        await $(".NewQualityUpdate").val(data.data.NewQuality);
+        await $(".IsFinesUpdate").val(data.data.IsFines);
+        await $(".StaffCodeUpdate").val(data.data.UserId.StaffCode);
+        await $(".Deadline").val(
+          new Date(data.data.Deadline).toISOString().split("T")[0]
+        );
+        await $(".createPenaltyRule").attr("style", "display: none !important");
+        await $(".addbtn").attr("style", "display: none !important");
+        await $(".updatePenaltyRule").css("display", "inline-block");
+        await $(".updatebtn").css("display", "inline-block");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   } catch (error) {
     console.log(error);
   }
@@ -29,14 +36,20 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const Percent = $(".PercentUpdate").val().trim();
-    const Amount = $(".AmountUpdate").val().trim();
+    newIsFines = $(".IsFinesUpdate").val();
+    if (!newIsFines) {
+      alert("You must fill the input!");
+      return;
+    }
     await $.ajax({
-      url: `/penaltyRule/api/${idPenalty}`,
+      url: `/penaltyBill/api/${idPenalty}`,
       type: "PUT",
-      data: { Percent: Percent, Amount: Amount },
+      data: {
+        IsFines: newIsFines,
+      },
     })
-      .then(() => {
+      .then(async (data) => {
+        alert(data.status);
         window.location.reload();
       })
       .catch((error) => {

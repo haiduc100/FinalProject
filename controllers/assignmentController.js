@@ -126,7 +126,25 @@ module.exports.updateAssignment = async (req, res) => {
 };
 module.exports.updateAssignmentReturnState = async (req, res) => {
   try {
-    assignmentModel.findByIdAndUpdate(req.params.id, req.body);
+    await assignmentModel.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.updateAssignmentByRequestRepair = async (req, res) => {
+  try {
+    let assm = await assignmentModel
+      .find({ AssetId: req.params.id })
+      .sort({ updatedAt: -1 });
+
+    await assignmentModel.findByIdAndUpdate(assm[0]._id, req.body);
     res.status(200).json({
       status: "success",
     });

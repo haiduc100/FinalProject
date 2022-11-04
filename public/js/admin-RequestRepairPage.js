@@ -65,7 +65,8 @@ openUpdate = async (id) => {
                 Type: "export",
                 QualityId: data.data._id,
               },
-            }).then(() => {
+            }).then(async () => {
+              await $(`#updatebtn${id}`).prop("disabled", true);
               alert("Repair successfully!");
               window.location.reload();
             });
@@ -104,7 +105,8 @@ handleSign = async (id) => {
       data: {
         State: "accpeted",
       },
-    }).then(() => {
+    }).then(async () => {
+      await $(`#signbtn${id}`).prop("disabled", true);
       alert("Sign successfully!");
       window.location.reload();
     });

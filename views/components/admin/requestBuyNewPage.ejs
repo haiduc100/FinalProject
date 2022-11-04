@@ -89,7 +89,7 @@
                         <select name="StateUpdate" id="" class="StateUpdate form-control">
                           <option value="">--Select--</option>
                           <option value="<%= role == 0 ? 'submitToApproval' : 'signed' %>"><%= role==0? 'Submit To Approval' : 'Signed' %></option>
-                          <option value="declined">Declined</option>
+                          <option value="<%= role == 0 ? 'denied' : 'deniedByDirector' %>">Declined</option>
                         </select>
                       </div>
                       <div class="form-group">
@@ -183,8 +183,9 @@
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning   <%= role ==2 ? 'd-none' : ''%>"
-                            id='btnUpdate'
+                            id='<%= value._id %>'
                             onclick="openUpdate('<%= value._id %>')"
+                            
                           >
                           Update
                           </button>
@@ -192,8 +193,8 @@
                           type="button"
                           data-target="#exampleModal"
                           data-toggle="modal"
-
-                          class="btn btn-primary   <%= role !=2 ? 'd-none' : ''%> assetbtn"
+                          id="btnAdd<%= value._id %>"
+                          class="btn btn-primary   <%= role !=2 ? 'd-none' : ''%>"
                           onclick="openAddModal('<%= value._id %>')"
                         >
                         Add Asset

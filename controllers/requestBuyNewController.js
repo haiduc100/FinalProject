@@ -14,7 +14,9 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
       paginateData = await Paginate(
         RequestBuyNewModel,
         {
-          $or: [{ State: "submitToApproval" }, { Approval: { $exists: true } }],
+          State: {
+            $in: ["submitToApproval", "signed", "deniedByDirector", "bought"],
+          },
         },
         { updateAt: -1 },
         req.query.page,
@@ -24,7 +26,16 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
     } else if (req.Role.Role == 0) {
       paginateData = await Paginate(
         RequestBuyNewModel,
-        { Department: currentStaff.Department },
+        {
+          $and: [
+            { Department: currentStaff.Department },
+            {
+              State: {
+                $in: ["submitToApproval", "denied", "bought", "waiting"],
+              },
+            },
+          ],
+        },
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,
@@ -33,7 +44,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
     } else {
       paginateData = await Paginate(
         RequestBuyNewModel,
-        { State: "signed" },
+        { State: { $in: ["signed", "bought"] } },
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,

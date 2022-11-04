@@ -15,14 +15,17 @@ module.exports.getAllStorage = async (req, res) => {
       req.query.page,
       req.query.pageSize,
       [
-        "StockerId",
         "AssignmentId",
         "RequestReturnId",
         "RequestBuyNewId",
-        { path: "QualityId", populate: { path: "AssetId" } },
+        "RequestRepairId",
+        "StockerId",
+        {
+          path: "QualityId",
+          populate: { path: "AssetId" },
+        },
       ]
     );
-
     res.render("components/admin/StorageManagementPage", {
       listStorages: paginateData.data,
       totalPages: paginateData.totalPages,
