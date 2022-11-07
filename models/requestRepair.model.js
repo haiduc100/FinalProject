@@ -9,7 +9,7 @@ const RequestRepairSchema = mongoose.Schema(
     Category: { type: String, ref: "Category" },
     State: {
       type: String,
-      enum: ["waiting", "accpeted", "repairing", "denied"],
+      enum: ["waiting", "accpeted", "repairing", "denied", "fixed"],
       default: "waiting",
     },
   },

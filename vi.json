@@ -1,0 +1,17 @@
+{
+  "Account Management": "Quản lý tài khoản",
+  "Asset Management": "Quản lý tài sản",
+  "Assignment Management": "Quản lý tài sản đã cho mượn",
+  "Request Return Management": "Quản lý yêu cầu trả",
+  "Request Borrow Management": "Quản lý yêu cầu mượn",
+  "Request Buy New Management": "Quản lý yêu cầu mua mơi",
+  "Category Management": "Quản lý danh mục",
+  "Department Management": "Quản lý phòng ban",
+  "Role Management": "Quản lý quyền",
+  "Penalty Bill Management": "Quản lý phiếu phạt",
+  "Penalty Rule Management": "Quản lý luật phạt",
+  "Request Repair By Stocker Management": "Quản lý yêu cầu sửa chữa bởi thủ kho",
+  "Request Repair By Staff Management": "Quản lý yêu cầu sửa chữa bởi nhân viên",
+  "Storage Event Management": "Quản lý xuất/nhập",
+  "Quality Management": "Quản lý chất lượng tài sản"
+}

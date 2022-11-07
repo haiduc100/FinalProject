@@ -183,29 +183,35 @@
                         <td><%= value.Category.CategoryName %></td>
                         <td><%= value.State %></td>
                         <td>
-                          <p
+                          <button
                             data-toggle="modal" 
                             data-target="#exampleModal"
                             class="btn btn-warning <%= (role !=2 || value.DirectorId == null ) ? 'd-none' : ''%>"
                             onclick="openUpdate('<%= value._id %>')"
+                            <%= (role == 2 && value.State == "denied"
+                            || role == 2 && value.State == "repairing"
+                            || role == 2 && value.State == "fixed"
+                            ) ? 'disabled' : '' %>
+
                           >
                           Update
 
-                          </p>
-                          <p
+                          </button>
+                          <button
                            
                             class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
                             onclick="handleSign('<%= value._id %>')"
+                            <%= (role == 3 && value.State != "waiting") ? 'disabled' : '' %>
                           >
                           Sign
 
-                          </p>
-                          <!-- <p
-                            class="btn btn-danger"
-                            onclick="handleDelete('<%= value._id %>')"
+                          </button>
+                          <button
+                            class="btn btn-success <%= role !=3 ? '' : 'd-none'%>"
+                            onclick="handleFixed('<%= value._id %>')"
                           >
-                            Delete
-                          </p> -->
+                            Fixed
+                          </button>
                         </td>
                       </tr>
                       <% }) %>

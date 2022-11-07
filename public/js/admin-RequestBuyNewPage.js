@@ -44,7 +44,6 @@ handleAddNew = async () => {
     },
   })
     .then(async () => {
-      await $(`.btnAdd${idRequest}`).prop("disabled", true);
       window.location.reload();
     })
     .catch((error) => {
@@ -96,7 +95,6 @@ handleUpdate = async () => {
       },
     });
     if (newState == "signed" || newState == "deniedByDirector") {
-      await $(`#${idRequest}`).prop("disabled", true);
       window.location.reload();
     } else {
       console.log("hi");

@@ -33,7 +33,6 @@ handleAddNew = async () => {
             AssetId: res.AssetId._id,
           },
         }).then(async (data) => {
-          // $(".assignmentbtn").prop("disabled", true);
           if (data) {
             //create storage
             await $.ajax({
@@ -90,7 +89,6 @@ handleUpdate = async () => {
         State: newState,
       },
     });
-    // $("#btnUpdate").prop("disabled", true);
 
     window.location.reload();
   } catch (error) {

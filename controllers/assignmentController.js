@@ -1,12 +1,8 @@
 const Assginment = require("../models/assignment.model");
-const Asset = require("../models/asset.model");
-const User = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
-const requestBorrowModel = require("../models/requestBorrow.model");
 const assetModel = require("../models/asset.model");
 const userModel = require("../models/user.model");
 const assignmentModel = require("../models/assignment.model");
-const { findByIdAndUpdate } = require("../models/assignment.model");
 
 module.exports.getAllAssignments = async (req, res) => {
   try {
@@ -19,14 +15,10 @@ module.exports.getAllAssignments = async (req, res) => {
       {},
       req.query.page,
       req.query.pageSize,
-      ["AssignToId", "AssignById", "AssetId"]
+      ["AssignToId", "AssignById", "AssetId", "SignedBy"]
     );
-    const assets = await Asset.find({ State: "waiting" });
-    const users = await User.find({});
     res.render("components/admin/assignmentManagementPage", {
       listAssignment: paginateData.data,
-      listUser: users,
-      listAsset: assets,
       staff: req.staff,
       currentRole: req.RoleName,
       role: req.Role.Role,

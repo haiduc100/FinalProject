@@ -86,7 +86,7 @@ module.exports.updateRequestReturning = async (req, res) => {
     const request = await RequestReturning.findOne({
       _id: req.params.id,
     });
-    if (req.body.State === "declined") {
+    if (req.body.State === "denied") {
       await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
         IsReturning: false,
       });

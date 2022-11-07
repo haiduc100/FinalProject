@@ -21,12 +21,12 @@ const AssignmentSchema = mongoose.Schema(
       require: true,
     },
     Note: { type: String, default: "" },
-    // IsReturning: { type: Boolean, default: false },
-    TransferringId: {
-      type: String,
-      ref: "User",
-      default: "None",
-    },
+    IsReturning: { type: Boolean, default: false },
+    // TransferringId: {
+    //   type: String,
+    //   ref: "User",
+    //   default: "None",
+    // },
   },
   { collection: "Assignment", timestamps: true }
 );

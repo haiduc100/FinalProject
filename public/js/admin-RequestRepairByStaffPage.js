@@ -4,7 +4,64 @@ openAddModal = () => {
   $(".createPenaltyRule").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
 };
-
+handleFixed = async (id) => {
+  idRequest = id;
+  let processed = confirm("Do you want to fixed this request?");
+  if (processed) {
+    await $.ajax({
+      url: `/requestRepair/api/${idRequest}`,
+      type: "GET",
+    })
+      .then(async (data) => {
+        // update requestRepair
+        await $.ajax({
+          url: `/requestRepair/api/_stocker/${idRequest}`,
+          type: "PUT",
+          data: {
+            State: "fixed",
+          },
+        });
+        assetId = data.data.AssetId;
+        // update asset State
+        await $.ajax({
+          url: `/asset/api/${assetId}`,
+          type: "PUT",
+          data: {
+            State: "available",
+          },
+        });
+        // create quality
+        await $.ajax({
+          url: `/quality/api`,
+          type: "POST",
+          data: {
+            AssetId: assetId,
+            Quality: 100,
+          },
+        }).then(async (data) => {
+          // create storage
+          await $.ajax({
+            url: `/storage/api`,
+            type: "POST",
+            data: {
+              RequestRepairId: idRequest,
+              Type: "import",
+              QualityId: data.data._id,
+            },
+          }).then(() => {
+            alert("Fixed successfully!");
+            window.location.reload();
+          });
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
+  } else {
+    return;
+  }
+};
 handleAddNew = () => {
   const Percent = $(".Percent").val().trim();
   const Amount = $(".Amount").val().trim();
@@ -44,7 +101,6 @@ handleUpdate = async () => {
     return;
   }
 
-  // update asset State
   await $.ajax({
     url: `/requestRepair/api/${idRequest}`,
     type: "GET",
