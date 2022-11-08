@@ -18,6 +18,7 @@ const RequestBorrowSchema = mongoose.Schema(
         "waiting",
         "deniedByDirector",
         "signed",
+        "assigned",
       ],
       default: "waiting",
     },

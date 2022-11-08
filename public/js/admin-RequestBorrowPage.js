@@ -14,6 +14,15 @@ handleAddNew = async () => {
   });
   const Quality = $(".Quality").val().trim();
 
+  // update request borrow state
+  await $.ajax({
+    url: `/requestBorrow/api/_stocker/${idRequest}`,
+    type: "PUT",
+    data: {
+      State: "assigned",
+    },
+  });
+
   //create quality
   await $.ajax({
     url: "/quality/api",

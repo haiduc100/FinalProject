@@ -33,10 +33,10 @@ module.exports.getAllAssetAvailable = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // res.status(500).json({
-    //   status: "Fail",
-    //   error,
-    // });
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
   }
 };
 module.exports.getAllAssignment = async (req, res) => {

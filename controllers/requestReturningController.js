@@ -88,12 +88,12 @@ module.exports.updateRequestReturning = async (req, res) => {
     });
     if (req.body.State === "denied") {
       await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
-        IsReturning: false,
+        State: "borrowed",
       });
     } else {
       // await Assignment.findByIdAndRemove({ _id: request.AssignmentId });
       await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
-        IsReturning: true,
+        State: "borrowed",
       });
       const temp = await assignmentModel.findById(request.AssignmentId);
       await Asset.findByIdAndUpdate(

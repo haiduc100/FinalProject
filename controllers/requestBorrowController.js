@@ -16,7 +16,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       paginateData = await Paginate(
         RequestBorrow,
         {
-          $or: [{ State: "submitToApproval" }, { Approval: { $exists: true } }],
+          State: { $nin: ["waiting"] },
         },
         { updateAt: -1 },
         req.query.page,
@@ -35,7 +35,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
     } else {
       paginateData = await Paginate(
         RequestBorrow,
-        { State: "signed" },
+        { State: { $in: ["signed", "assigned"] } },
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,
@@ -112,7 +112,25 @@ module.exports.updateRequestBorrow = async (req, res) => {
       req.body.Approval = req.userId;
     }
     const request = await RequestBorrow.findByIdAndUpdate(
-      { _id: req.params.id },
+      req.params.id,
+      req.body
+    );
+
+    res.status(200).json({
+      status: "Update Request Borrow successfully",
+      data: request,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.updateRequestBorrowByStocker = async (req, res) => {
+  try {
+    const request = await RequestBorrow.findByIdAndUpdate(
+      req.params.id,
       req.body
     );
 

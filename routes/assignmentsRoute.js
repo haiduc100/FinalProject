@@ -13,7 +13,6 @@ router.put("/api/:id", checkController.checkLogin, controller.updateAssignment);
 router.put(
   "/api/_returning/:id",
   checkController.checkLogin,
-  checkController.checkRole,
   controller.updateAssignmentReturnState
 );
 router.put(

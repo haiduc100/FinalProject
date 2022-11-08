@@ -15,7 +15,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
         RequestBuyNewModel,
         {
           State: {
-            $in: ["submitToApproval", "signed", "deniedByDirector", "bought"],
+            $nin: ["waiting"],
           },
         },
         { updateAt: -1 },
@@ -27,14 +27,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
       paginateData = await Paginate(
         RequestBuyNewModel,
         {
-          $and: [
-            { Department: currentStaff.Department },
-            {
-              State: {
-                $in: ["submitToApproval", "denied", "bought", "waiting"],
-              },
-            },
-          ],
+          Department: currentStaff.Department,
         },
         { updateAt: -1 },
         req.query.page,

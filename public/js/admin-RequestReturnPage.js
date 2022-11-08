@@ -30,6 +30,7 @@ handleUpdate = async () => {
       alert("new quality must be between 0 and 100!!!");
       return;
     }
+
     await $.ajax({
       url: `/requestReturning/api/${idRequest}`,
       type: "PUT",
@@ -40,6 +41,11 @@ handleUpdate = async () => {
         let assmRes = await $.ajax({
           url: `/assignments/api/${assignmentId}`,
           type: "GET",
+        });
+        await $.ajax({
+          url: `/assignments/api/_returning/${assignmentId}`,
+          type: "PUT",
+          data: { State: "returned" },
         });
         assignToId = assmRes.assignment.AssignToId;
         if (newState == "completed") {

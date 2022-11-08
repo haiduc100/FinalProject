@@ -4,12 +4,21 @@ openUpdate = async (id) => {
     idAssigmnet = id;
     let processed = confirm("Do you want to return this asset?");
     if (processed) {
-      let res = await $.ajax({
+      // update assignment state
+      await $.ajax({
+        url: `/assignments/api/_returning/${idAssigmnet}`,
+        type: "PUT",
+        data: { State: "waitingToReturn" },
+      });
+
+      await $.ajax({
         url: `/requestReturning/api`,
         type: "POST",
         data: { AssignmentId: idAssigmnet },
+      }).then((data) => {
+        alert(data.status);
+        window.location.reload();
       });
-      alert(res.status);
       // console.log(res.status);
     } else {
       return;
@@ -23,6 +32,12 @@ openReport = async (id) => {
   idAssigmnet = id;
   let processed = confirm("Do you want to report this asset?");
   if (processed) {
+    await $.ajax({
+      url: `/assignments/api/_returning/${idAssigmnet}`,
+      type: "PUT",
+      data: { State: "reported" },
+    });
+
     await $.ajax({
       url: `/assignments/api/${idAssigmnet}`,
       type: "GET",

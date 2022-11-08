@@ -6,6 +6,11 @@ router.get("/", checkController.checkLogin, controller.getAllRequestBorrow);
 router.get("/api/:id", checkController.checkLogin, controller.getRequestById);
 router.post("/api", checkController.checkLogin, controller.createRequestBorrow);
 router.put(
+  "/api/_stocker/:id",
+  checkController.checkLogin,
+  controller.updateRequestBorrowByStocker
+);
+router.put(
   "/api/:id",
   checkController.checkLogin,
   controller.updateRequestBorrow

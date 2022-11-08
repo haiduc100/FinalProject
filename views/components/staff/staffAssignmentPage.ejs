@@ -96,25 +96,27 @@
                 </td>
                 <td><%= value.AssetId.AssetCode %></td>
                 <td><%= value.Note %></td>
-                <td><%= value.IsReturning %></td>
+                <td><%= value.State %></td>
                 <!-- <td><%= value.TransferringId %></td> -->
                 <td>
-                  <p
+                  <button
                     data-toggle="modal"
                     data-target="#exampleModal"
                     class="btn btn-warning"
                     onclick="openUpdate('<%= value._id %>')"
+                    <%= value.State != "borrowed" ? 'disabled': ''%>
                   >
                     Return
-                  </p>
-                  <p
+                  </button>
+                  <button
                     data-toggle="modal"
                     data-target="#exampleModal"
                     class="btn btn-danger"
                     onclick="openReport('<%= value._id %>')"
+                    <%= value.State != "borrowed" ? 'disabled': ''%>
                   >
                     Report
-                  </p>
+                  </button>
               
                 </td>
               </tr>

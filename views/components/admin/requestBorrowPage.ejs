@@ -163,14 +163,15 @@
                           <button
                             data-toggle="modal"
                             data-target="#exampleModal"
-                            class="btn btn-warning   <%= role ==2 ? 'd-none' : ''%>"
+                            class="btn btn-warning   <%= role == 2 ? 'd-none' : ''%>"
                             id='btnUpdate'
                             onclick="openUpdate('<%= value._id %>')"
-                            <%= (role == 0 && value.State == "waiting") ? '' : 'disabled' %>
+                            <%= (role == 0 && value.State != "waiting") ? 'disabled' : '' %>
                             
                             <%= (role == 3 && value.State == "signed"
                             || role == 3 && value.State == "deniedByDirector" 
-                            ||role == 3 && value.State == "bought") ? 'disabled' : '' %>
+                            || role == 3 && value.State == "bought"
+                            || role == 3 && value.State == "assigned") ? 'disabled' : ' ' %>
 
                           >
                           Update
@@ -181,8 +182,10 @@
                           data-toggle="modal"
                           data-target="#exampleModal"
                           onclick="openAddModal('<%= value._id %>')"
+                          <%= (role == 2 && value.State != "assigned") ? '' : 'disabled' %>
+
                         >
-                        Add Assignment
+                          Add Assignment
                         </button>
                         </td>
                       </tr>

@@ -12,7 +12,7 @@ module.exports.getAllAssignments = async (req, res) => {
     const paginateData = await Paginate(
       Assginment,
       {},
-      {},
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId", "SignedBy"]
@@ -99,8 +99,8 @@ module.exports.updateAssignment = async (req, res) => {
         message: "Can not assign for your self!!",
       });
     } else {
-      const newAssignment = await Assginment.updateOne(
-        { _id: req.params.id },
+      const newAssignment = await Assginment.findByIdAndUpdate(
+        req.params.id,
         req.body
       );
       res.status(200).json({

@@ -187,6 +187,9 @@
                             <%= (role == 3 && value.State == "signed"
                             || role == 3 && value.State == "deniedByDirector"
                             || role == 3 && value.State == "bought") ? 'disabled' : '' %>
+
+                            <%= (role == 0 && value.State != "waiting") ? 'disabled' : '' %>
+
                           >
                           Update
                           </button>
@@ -196,6 +199,8 @@
                           data-toggle="modal"
                           class="btn btn-primary   <%= role !=2 ? 'd-none' : ''%>"
                           onclick="openAddModal('<%= value._id %>')"
+                          <%= (role == 2 && value.State != "signed") ? 'disabled' : '' %>
+
                         >
                         Add Asset
                         </button>

@@ -113,7 +113,7 @@ handleUpdate = async () => {
         url: `/assignments/api/_repair/${assetId}`,
         type: "PUT",
         data: {
-          IsReturning: true,
+          State: "returned",
         },
       });
       // update asset State
