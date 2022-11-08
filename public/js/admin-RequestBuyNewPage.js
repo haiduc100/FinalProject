@@ -43,7 +43,8 @@ handleAddNew = async () => {
       RequestBuyNewId: idRequest,
     },
   })
-    .then(async () => {
+    .then(async (data) => {
+      alert(data.status);
       window.location.reload();
     })
     .catch((error) => {
@@ -57,13 +58,10 @@ let idRequest;
 openUpdate = async (id) => {
   try {
     idRequest = id;
-    // console.log(idRequest);
     const res = await $.ajax({
       url: `/RequestBuyNew/api/${idRequest}`,
       type: "GET",
     });
-    // console.log(res.State);
-    // $(".StateUpdate").val(res.State);
     $(".CategoryUpdate").val(res.Category);
     $(".AssetName").val(res.AssetName);
     $(".SuggestionLink").val(res.SuggestionLink);
@@ -93,13 +91,10 @@ handleUpdate = async () => {
         AssetName: newAssetName,
         Reason: newReason,
       },
+    }).then((data) => {
+      alert(data.status);
+      window.location.reload();
     });
-    if (newState == "signed" || newState == "deniedByDirector") {
-      window.location.reload();
-    } else {
-      console.log("hi");
-      window.location.reload();
-    }
   } catch (error) {
     console.log(error);
   }

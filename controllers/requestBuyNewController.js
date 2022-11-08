@@ -1,4 +1,3 @@
-const RequestBuyNew = require("../models/RequestBuyNew.model");
 const Category = require("../models/category.model");
 const { Paginate } = require("../services/paginationServices");
 const RequestBuyNewModel = require("../models/RequestBuyNew.model");
@@ -21,7 +20,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,
-        ["Handler", "Category", "RequestBy"]
+        ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
       );
     } else if (req.Role.Role == 0) {
       paginateData = await Paginate(
@@ -32,7 +31,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,
-        ["Handler", "Category", "RequestBy"]
+        ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
       );
     } else {
       paginateData = await Paginate(
@@ -41,7 +40,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
         { updateAt: -1 },
         req.query.page,
         req.query.pageSize,
-        ["Handler", "Category", "RequestBy"]
+        ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
       );
     }
     const categorys = await Category.find({});
@@ -101,7 +100,15 @@ module.exports.createRequestBuyNew = async (req, res) => {
 
 module.exports.updateRequestBuyNew = async (req, res) => {
   try {
-    req.body.Handler = req.userId;
+    if (req.Role.Role == 0) {
+      req.body.ManagerId = req.userId;
+    }
+    if (req.Role.Role == 3) {
+      req.body.DirectorId = req.userId;
+    }
+    if (req.Role.Role == 2) {
+      req.body.Handler = req.userId;
+    }
     const request = await RequestBuyNewModel.findByIdAndUpdate(
       req.params.id,
       req.body

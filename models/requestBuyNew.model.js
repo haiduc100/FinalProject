@@ -21,6 +21,8 @@ const RequestBuyNewSchema = mongoose.Schema(
       ],
       default: "waiting",
     },
+    DirectorId: { type: String, ref: "User" },
+    ManagerId: { type: String, ref: "User" },
     Amount: Number,
     AssetName: { type: String, require: true },
     RequestBy: { type: String, ref: "User" },

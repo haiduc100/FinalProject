@@ -5,30 +5,34 @@ openAddModal = () => {
   $(".addbtn").css("display", "inline-block");
 };
 
-handleAddNew = () => {
+handleAddNew = async () => {
   const AssetName = $(".AssetName").val().trim().toUpperCase();
   const Category = $(".Category").val().trim();
   const Price = $(".Price").val().trim();
-  const Description = $(".Description").val().trim();
+  const Reason = $(".Reason").val().trim();
   const Amount = $(".Amount").val().trim();
   const SuggestionLink = $(".SuggestionLink").val().trim();
 
   if (
     !AssetName ||
-    !Description ||
+    !Reason ||
     !Category ||
     !Price ||
     !Amount ||
     !SuggestionLink
   ) {
+    alert("You must fill the input");
     return;
   }
-  $.ajax({
+  await $.ajax({
     url: "/RequestBuyNew/api",
     type: "POST",
-    data: { AssetName, Category, Price, Amount, Description, SuggestionLink },
+    data: { AssetName, Category, Price, Amount, Reason, SuggestionLink },
   })
-    .then(() => {})
+    .then((data) => {
+      alert(data.status);
+      window.location.reload();
+    })
     .catch((error) => {
       if (error.status === 400) {
         alert(error.responseJSON.message);
@@ -52,7 +56,7 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const Description = $(".DescriptionBorrow").val().trim();
+    const Reason = $(".Reason").val().trim();
     const res = await $.ajax({
       url: `/asset/api/${idAsset}`,
       type: "GET",
@@ -62,7 +66,7 @@ handleUpdate = async () => {
       type: "POST",
       data: {
         AssetId: idAsset,
-        Description: Description,
+        Reason: Reason,
         Category: res.data.Category,
       },
     }).then(() => {

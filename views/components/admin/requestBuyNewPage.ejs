@@ -153,10 +153,13 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Request By</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Handler</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Manager Code</th>
+                        <th scope="col">Stocker Code</th>
+                        <th scope="col">Director Code</th>
                         <th scope="col">Asset Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Reason</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -168,16 +171,25 @@
                           <%= value.RequestBy ? value.RequestBy.StaffCode : null
                           %>
                         </td>
-                        <td><%= value.State %></td>
+                        <td>
+                          <%= value.ManagerId ? value.ManagerId.StaffCode : null
+                          %>
+                        </td>
                         <td>
                           <%= value.Handler ? value.Handler.StaffCode :
                           null%>
                         </td>
                         <td>
+                          <%= value.DirectorId ? value.DirectorId.StaffCode :
+                          null%>
+                        </td>
+                        <td><%= value.AssetName %></td>
+                        <td>
                           <%= value.Category ? value.Category.CategoryName :
                           null %>
                         </td>
-                        <td><%= value.AssetName %></td>
+                        <td><%= value.State %></td>
+                        <td><%= value.Reason %></td>
                         <td>
                           <button
                             data-toggle="modal"
