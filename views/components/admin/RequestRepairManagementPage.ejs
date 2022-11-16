@@ -190,22 +190,32 @@
                         <td><%= value.Category.CategoryName %></td>
                         <td><%= value.State %></td>
                         <td>
-                          <p
+                          <button
                             class="btn btn-warning <%= (role !=2 || value.DirectorId == null) ? 'd-none' : ''%>"
                             onclick="openUpdate('<%= value._id %>')"
-                            id="updatebtn<%=value._id%>"
+                            <%= (role == 2 && value.State == "denied"
+                            || role == 2 && value.State == "repairing"
+                            || role == 2 && value.State == "fixed"
+                            
+                            ) ? 'disabled' : '' %>
                           >
                           Update
 
-                          </p>
-                          <p
-                           id="signbtn<%=value._id%>"
-                            class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
-                            onclick="handleSign('<%= value._id %>')"
-                          >
-                          Sign
-
-                          </p>
+                          </button>
+                          <button
+                          class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
+                          onclick="handleSign('<%= value._id %>')"
+                          <%= (role == 3 && value.State != "waiting") ? 'disabled' : '' %>
+                        >
+                        Sign
+                        </button>
+                        <button
+                          class="btn btn-danger <%= role ==3 ? '' : 'd-none'%>"
+                          onclick="handleDenied('<%= value._id %>')"
+                          <%= (role == 3 && value.State != "waiting") ? 'disabled' : '' %>
+                        >
+                        Denied
+                        </button>
                           <!-- <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"

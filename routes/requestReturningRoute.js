@@ -18,4 +18,9 @@ router.put(
   checkController.checkLogin,
   controller.updateRequestReturning
 );
+router.put(
+  "/api/_denied/:id",
+  checkController.checkLogin,
+  controller.DeniedRequestReturning
+);
 module.exports = router;

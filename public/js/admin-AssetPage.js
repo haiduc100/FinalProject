@@ -79,16 +79,11 @@ openUpdate = async (id) => {
       type: "GET",
     });
 
-    $(".CategoryUpdate").val(res.asset.Category);
-    $(".AssetNameUpdate").val(res.asset.AssetName);
-    $(".State").val(res.asset.State);
-    $(".DescriptionUpdate").val(res.asset.Description);
-    $(".AssetCodeUpdate").val(res.asset.AssetCode);
-
-    $(".createAsset").attr("style", "display: none !important");
-    $(".addbtn").attr("style", "display: none !important");
-    $(".updateAsset").css("display", "inline-block");
-    $(".updatebtn").css("display", "inline-block");
+    $(".CategoryUpdate").val(res.data.Category);
+    $(".AssetNameUpdate").val(res.data.AssetName);
+    $(".State").val(res.data.State);
+    $(".DescriptionUpdate").val(res.data.Description);
+    $(".AssetCodeUpdate").val(res.data.AssetCode);
   } catch (error) {
     console.log(error);
   }
@@ -127,8 +122,10 @@ handleDelete = async (id) => {
       await $.ajax({
         url: `/asset/api/${id}`,
         type: "DELETE",
+      }).then((data) => {
+        alert(data.message);
+        window.location.reload();
       });
-      window.location.reload();
     }
   } catch (error) {
     alert(error.responseJSON.message);

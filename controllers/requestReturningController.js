@@ -5,6 +5,7 @@ const Asset = require("../models/asset.model");
 const { Paginate } = require("../services/paginationServices");
 const assignmentModel = require("../models/assignment.model");
 const userModel = require("../models/user.model");
+const requestReturnModel = require("../models/requestReturn.model");
 
 module.exports.getAllRequestReturn = async (req, res) => {
   try {
@@ -13,7 +14,7 @@ module.exports.getAllRequestReturn = async (req, res) => {
     const paginateData = await Paginate(
       RequestReturning,
       {},
-      { updateAt: -1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       [
@@ -86,25 +87,38 @@ module.exports.updateRequestReturning = async (req, res) => {
     const request = await RequestReturning.findOne({
       _id: req.params.id,
     });
-    if (req.body.State === "denied") {
-      await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
-        State: "borrowed",
-      });
-    } else {
-      // await Assignment.findByIdAndRemove({ _id: request.AssignmentId });
-      await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
-        State: "borrowed",
-      });
-      const temp = await assignmentModel.findById(request.AssignmentId);
-      await Asset.findByIdAndUpdate(
-        { _id: temp.AssetId },
-        { State: "available" }
-      );
-      res.status(200).json({
-        status: "success",
-        data: updateRequestReturning,
-      });
-    }
+
+    await assignmentModel.findByIdAndUpdate(request.AssignmentId, {
+      State: "borrowed",
+    });
+    const temp = await assignmentModel.findById(request.AssignmentId);
+    await Asset.findByIdAndUpdate(
+      { _id: temp.AssetId },
+      { State: "available" }
+    );
+    res.status(200).json({
+      status: "success",
+      data: updateRequestReturning,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
+module.exports.DeniedRequestReturning = async (req, res) => {
+  try {
+    req.body.Handler = req.userId;
+    let data = await requestReturnModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    res.status(200).json({
+      message: "Denied request returning successfully!",
+      data: data,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

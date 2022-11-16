@@ -191,24 +191,30 @@
                             <%= (role == 2 && value.State == "denied"
                             || role == 2 && value.State == "repairing"
                             || role == 2 && value.State == "fixed"
+                            
                             ) ? 'disabled' : '' %>
 
                           >
                           Update
-
                           </button>
                           <button
-                           
                             class="btn btn-warning <%= role ==3 ? '' : 'd-none'%>"
                             onclick="handleSign('<%= value._id %>')"
                             <%= (role == 3 && value.State != "waiting") ? 'disabled' : '' %>
                           >
                           Sign
-
                           </button>
                           <button
-                            class="btn btn-success <%= role !=3 ? '' : 'd-none'%>"
+                            class="btn btn-danger <%= role ==3 ? '' : 'd-none'%>"
+                            onclick="handleDenied('<%= value._id %>')"
+                            <%= (role == 3 && value.State != "waiting") ? 'disabled' : '' %>
+                          >
+                          Denied
+                          </button>
+                          <button
+                            class="btn btn-success <%= (value.State == 'repairing' ) ? '' : 'd-none'%>"
                             onclick="handleFixed('<%= value._id %>')"
+                            <%=  (role == 2 && value.DirectorId == null) ? 'disabled' : '' %>
                           >
                             Fixed
                           </button>

@@ -1,6 +1,7 @@
 let idAccount;
 openUpdate = async (id) => {
   try {
+    $("#exampleModalLabel").html("Update information");
     $(".changePass").addClass("d-none");
     $(".changebtn").addClass("d-none");
     $(".update").removeClass("d-none");
@@ -32,6 +33,8 @@ openUpdate = async (id) => {
 };
 
 openChangePass = async (id) => {
+  $("#exampleModalLabel").html("Change Password");
+
   idAccount = id;
   $(".update").addClass("d-none");
   $(".changePass").removeClass("d-none");

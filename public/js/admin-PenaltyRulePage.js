@@ -3,6 +3,7 @@ openAddModal = () => {
   $(".updatebtn").attr("style", "display: none !important");
   $(".createPenaltyRule").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
+  $("#exampleModalLabel").html("Add new penalty rule");
 };
 
 handleAddNew = () => {
@@ -10,6 +11,11 @@ handleAddNew = () => {
   const Amount = $(".Amount").val().trim();
 
   if (!Percent || !Amount) {
+    alert("Please fill the input!");
+    return;
+  }
+  if (Percent > 100 || Percent < 10) {
+    alert("Percent must be geater than 10 or equal 100!");
     return;
   }
   $.ajax({
@@ -29,6 +35,8 @@ handleAddNew = () => {
 let idPenalty;
 openUpdate = async (id) => {
   try {
+    $("#exampleModalLabel").html("Update penalty rule");
+
     idPenalty = id;
     const res = await $.ajax({
       url: `/penaltyRule/api/${idPenalty}`,
@@ -50,6 +58,14 @@ handleUpdate = async () => {
   try {
     const Percent = $(".PercentUpdate").val().trim();
     const Amount = $(".AmountUpdate").val().trim();
+    if (!Percent || !Amount) {
+      alert("Please fill the input!");
+      return;
+    }
+    if (Percent > 100 || Percent < 10) {
+      alert("Percent must be geater than 10 or equal 100!");
+      return;
+    }
     await $.ajax({
       url: `/penaltyRule/api/${idPenalty}`,
       type: "PUT",

@@ -167,6 +167,9 @@ handleUpdate = async () => {
             await $.ajax({
               url: `/requestRepair/api/_stocker/${idRequest}`,
               type: "PUT",
+              data: {
+                State: "repairing",
+              },
             });
             // create storage event
             await $.ajax({
@@ -219,6 +222,23 @@ handleSign = async (id) => {
       },
     }).then(() => {
       alert("Sign successfully!");
+      window.location.reload();
+    });
+  } else {
+    return;
+  }
+};
+handleDenied = async (id) => {
+  let processed = confirm("Do you want to denied this request?");
+  if (processed) {
+    await $.ajax({
+      url: `/requestRepair/api/_director/${id}`,
+      type: "PUT",
+      data: {
+        State: "denied",
+      },
+    }).then(() => {
+      alert("Denied successfully!");
       window.location.reload();
     });
   } else {

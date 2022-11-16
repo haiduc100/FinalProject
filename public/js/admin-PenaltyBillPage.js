@@ -3,10 +3,12 @@ openAddModal = () => {
   $(".updatebtn").attr("style", "display: none !important");
   $(".createPenaltyRule").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
+  // $("#exampleModalLabel").html("Create penalty rule");
 };
 
 let idPenalty;
 openUpdate = async (id) => {
+  $("#exampleModalLabel").html("Update penalty bill");
   try {
     idPenalty = id;
     await $.ajax({

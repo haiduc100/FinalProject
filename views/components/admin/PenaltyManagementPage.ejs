@@ -72,15 +72,6 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <!-- <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            onclick="openAddModal()"
-          >
-            Add New Rule
-          </button> -->
 
           <!-- Modal -->
           <div
@@ -97,7 +88,6 @@
 
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
-                    Modal title
                   </h5>
                   <button
                     type="button"
@@ -242,17 +232,18 @@
                         <td><%= value.NewQuality %> </td>
                         <td><%= value.Amount %></td>
                         <td><%= value.Percent %> </td>
-                        <td><%= value.IsFines %></td>
+                        <td><%= value.IsFines == true ? 'Yes' : 'No'  %></td>
                         <td><%= value.Deadline.toLocaleDateString('en-GB') %></td>
                         <td>
-                          <p
+                          <button
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning"
                             onclick="openUpdate('<%= value._id %>')"
+                            <%= value.IsFines == true ? 'disabled' : ''%>
                           >
                             Update
-                          </p>
+                          </button>
                           <!-- <p
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"

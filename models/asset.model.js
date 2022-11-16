@@ -32,6 +32,7 @@ const AssetSchema = mongoose.Schema(
     PurchaseDate: { type: Date, default: new Date() },
     Description: String,
     QualityId: { type: String, ref: "Quality" },
+    IsDeleted: { type: Boolean, default: false },
   },
   { collection: "Asset", timestamps: true }
 );

@@ -5,6 +5,7 @@ const storageModel = require("../models/storage.model");
 const qualityModel = require("../models/quality.model");
 const userModel = require("../models/user.model");
 const { Paginate } = require("../services/paginationServices");
+const categoryModel = require("../models/category.model");
 
 module.exports.getAllAsset = async (req, res) => {
   try {
@@ -13,8 +14,8 @@ module.exports.getAllAsset = async (req, res) => {
     const category = await Category.find({});
 
     const paginateData = await Paginate(
-      Asset,
-      {},
+      assetModel,
+      { IsDeleted: { $nin: ["true"] } },
       { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
@@ -39,9 +40,11 @@ module.exports.getAllAsset = async (req, res) => {
 
 module.exports.filterAsset = async (req, res) => {
   try {
-    const assets = await Asset.find({
-      AssetName: { $regex: req.query.search, $options: "i" },
-    }).populate("Category");
+    const assets = await assetModel
+      .find({
+        AssetName: { $regex: req.query.search, $options: "i" },
+      })
+      .populate("Category");
     const category = await Category.find({});
 
     res.status(200).render("components/admin/assetFilterPage", {
@@ -60,7 +63,7 @@ module.exports.filterAsset = async (req, res) => {
 
 module.exports.getAssetById = async (req, res) => {
   try {
-    const asset = await Asset.findOne({ _id: req.params.id });
+    const asset = await assetModel.findOne({ _id: req.params.id });
 
     res.status(200).json({
       data: asset,
@@ -76,7 +79,7 @@ module.exports.getAssetById = async (req, res) => {
 
 module.exports.createAsset = async (req, res) => {
   try {
-    const category = await Category.findOne({ _id: req.body.Category });
+    const category = await categoryModel.findOne({ _id: req.body.Category });
 
     // const newAsset = await Asset.create(req.body);
     let State = "available";
@@ -89,7 +92,7 @@ module.exports.createAsset = async (req, res) => {
 
     for (let i = 0; i < Amount; i++) {
       let AssetCode = category.Prefix + Math.random().toString(36).substring(7);
-      let newAsset = await Asset.create({
+      let newAsset = await assetModel.create({
         State: State,
         Category: newCategory,
         Amount: Amount,
@@ -126,7 +129,7 @@ module.exports.createAsset = async (req, res) => {
 };
 module.exports.createAssetByRequestBuyNew = async (req, res) => {
   try {
-    const category = await Category.findOne({ _id: req.body.Category });
+    const category = await categoryModel.findOne({ _id: req.body.Category });
     const staff = await userModel.findOne({ StaffCode: req.staff });
     // const newAsset = await Asset.create(req.body);
     let State = "available";
@@ -209,7 +212,7 @@ module.exports.updateAsset = async (req, res) => {
 
 module.exports.deleteAsset = async (req, res) => {
   try {
-    const asset = await Asset.findById(req.params.id);
+    const asset = await assetModel.findById(req.params.id);
 
     if (!asset) {
       return res.status(404).json({
@@ -217,18 +220,10 @@ module.exports.deleteAsset = async (req, res) => {
         message: "Can not find asset",
       });
     }
-    if (asset.State === "unavailable") {
-      const delAsset = await Asset.deleteOne({ _id: req.params.id });
-      res.status(200).json({
-        status: "success",
-        data: { delAsset },
-      });
-    } else {
-      res.status(400).json({
-        status: "Fail",
-        message: "Asset must be unavailable",
-      });
-    }
+    await assetModel.findByIdAndUpdate(req.params.id, { IsDeleted: true });
+    res.status(200).json({
+      message: "Delete asset successfully!",
+    });
   } catch (error) {
     res.status(500).json({
       status: "Fail",

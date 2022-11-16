@@ -16,9 +16,9 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       paginateData = await Paginate(
         RequestBorrow,
         {
-          State: { $nin: ["waiting"] },
+          State: { $nin: ["waiting", "denied"] },
         },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "AssetId", "Approval"]
@@ -27,7 +27,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       paginateData = await Paginate(
         RequestBorrow,
         { Department: currentStaff.Department },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "AssetId", "Approval"]
@@ -36,7 +36,7 @@ module.exports.getAllRequestBorrow = async (req, res) => {
       paginateData = await Paginate(
         RequestBorrow,
         { State: { $in: ["signed", "assigned"] } },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "AssetId", "Approval"]

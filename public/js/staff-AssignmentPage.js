@@ -19,7 +19,6 @@ openUpdate = async (id) => {
         alert(data.status);
         window.location.reload();
       });
-      // console.log(res.status);
     } else {
       return;
     }
@@ -45,7 +44,6 @@ openReport = async (id) => {
       .then(async (data) => {
         // create requestRepair
         assetId = data.assignment.AssetId._id;
-        console.log(data.assignment.AssetId);
         await $.ajax({
           url: `/requestRepair/api/_staff`,
           type: "POST",

@@ -17,7 +17,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
             $nin: ["waiting"],
           },
         },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
@@ -28,7 +28,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
         {
           Department: currentStaff.Department,
         },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
@@ -37,7 +37,7 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
       paginateData = await Paginate(
         RequestBuyNewModel,
         { State: { $in: ["signed", "bought"] } },
-        { updateAt: -1 },
+        { updatedAt: -1 },
         req.query.page,
         req.query.pageSize,
         ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]

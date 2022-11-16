@@ -48,7 +48,7 @@ module.exports.getAllAssignment = async (req, res) => {
     const paginateData = await Paginate(
       assignmentModel,
       { AssignToId: staff._id },
-      { updateAt: -1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
       ["AssignToId", "AssignById", "AssetId"]
@@ -176,16 +176,14 @@ module.exports.getAllRequestBuyNew = async (req, res) => {
     const paginateData = await Paginate(
       RequestBuyNewModel,
       { RequestBy: staff._id },
-      { updateAt: -1 },
+      { updatedAt: -1 },
       req.query.page,
       req.query.pageSize,
-      ["Handler", "Category", "RequestBy"]
+      ["Handler", "Category", "RequestBy", "DirectorId", "ManagerId"]
     );
-    const listCategory = await categoryModel.find({});
     res.render("components/staff/staffRequestBuyNewPage", {
       listRequest: paginateData.data,
       staff: req.staff,
-      listCategory: listCategory,
       totalPages: paginateData.totalPages,
     });
   } catch (error) {

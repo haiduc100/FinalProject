@@ -27,7 +27,6 @@ const RequestBuyNewSchema = mongoose.Schema(
     AssetName: { type: String, require: true },
     RequestBy: { type: String, ref: "User" },
     Category: { type: String, ref: "Category" },
-    ProcessStep: Number,
     Description: String,
   },
   { collection: "RequestBuyNew", timestamps: true }

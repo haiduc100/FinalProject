@@ -114,3 +114,20 @@ handleSign = async (id) => {
     return;
   }
 };
+handleDenied = async (id) => {
+  let processed = confirm("Do you want to denied this request?");
+  if (processed) {
+    await $.ajax({
+      url: `/requestRepair/api/_director/${id}`,
+      type: "PUT",
+      data: {
+        State: "denied",
+      },
+    }).then(() => {
+      alert("Denied successfully!");
+      window.location.reload();
+    });
+  } else {
+    return;
+  }
+};

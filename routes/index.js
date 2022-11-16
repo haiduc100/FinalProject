@@ -3,8 +3,6 @@ const router = require("express").Router();
 router.get("/", (req, res) => {
   res.redirect("/user/LogIn");
 });
-const indexRoute = require("./indexRoute");
-router.use("/home", indexRoute);
 
 const staffRoute = require("./staffRoute");
 router.use("/staff", staffRoute);
@@ -20,9 +18,6 @@ router.use("/assignments", assignmentsRoute);
 
 const categoryRoute = require("./categoryRoute");
 router.use("/category", categoryRoute);
-
-const reportRoute = require("./reportRoute");
-router.use("/report", reportRoute);
 
 const requestReturningRoute = require("./requestReturningRoute");
 router.use("/requestReturning", requestReturningRoute);

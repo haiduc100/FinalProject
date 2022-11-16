@@ -107,7 +107,7 @@
 
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
-                    Modal title
+                    Update asset
                   </h5>
                   <button
                     type="button"
@@ -119,67 +119,6 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="createAsset row d-flex">
-                    <div class="col">
-
-                      <div class="form-group">
-                        <label for="AssetName">Asset Name</label>
-                        <input
-                          type="text"
-                          name="AssetName"
-                          id=""
-                          placeholder="AssetName"
-                          class="AssetName form-control"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="">Category</label>
-                        <select name="Category" id="" class="Category form-control">
-                          <option value="">--Select--</option>
-                          <% listCategory.map((value)=>{%>
-                          <option value="<%= value._id %>">
-                            <%= value.CategoryName %> - <%= value.Prefix %> 
-                          </option>
-                          <% })%>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="Description">Description</label>
-                        <textarea
-                          placeholder="Description"
-                          class="Description form-control"
-                          name="Description"
-                        ></textarea>
-                      </div>
-                     
-                    </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="">Amount</label>
-                        <input
-                        type="number"
-                          placeholder="Amount"
-                          class="Amount form-control"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="">Asset Date</label>
-                        <input
-                          type="date"
-                          name="AssetDate"
-                          placeholder="AssetDate"
-                          class="AssetDate form-control"
-                          required
-                        />
-                        <div id="warning_message" class="invalid-feedback">
-
-                        </div>
-                      </div>
-                     
-                    </div>
-                  </div>
 
                   <div class="updateAsset bg-light d-flex row ">
                     <div class="col">
@@ -192,7 +131,7 @@
                           id=""
                           placeholder="AssetName"
                           class="AssetNameUpdate form-control"
-                          readonly
+                          
                         />
                       </div>
                       <div class="form-group">
@@ -206,6 +145,8 @@
                           <option value="available">Available</option>
                           <option value="waiting">Waiting</option>
                           <option value="recycled">Recycled</option>
+                          <option value="sold">Sold</option>
+                          <option value="auction">Auction</option>
                         </select>
                       </div>
                     </div>
@@ -237,13 +178,6 @@
                     data-dismiss="modal"
                   >
                     Close
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary addbtn"
-                    onclick="handleAddNew()"
-                  >
-                    Add
                   </button>
                   <button
                     type="submit"
@@ -289,25 +223,25 @@
                         <td><%= value.PurchaseDate.toLocaleDateString() %></td>
                         <td><%= value.State %></td>
                         <td>
-                          <p  class="btn btn-success"
+                          <button  class="btn btn-success <%= value.State == 'waitingRepair' ? 'd-none' : ''%>"
                           onclick="handleRepair('<%= value._id %>')"
                           >
                             Repair
-                          </p>
-                          <p
+                          </button>
+                          <button
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning"
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
-                          </p>
-                          <p
+                          </button>
+                          <button
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"
                           >
                             Delete
-                          </p>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>

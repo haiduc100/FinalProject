@@ -1,4 +1,5 @@
 openAddModal = () => {
+  $("#exampleModalLabel").html("Add request buy new");
   $(".updateAsset").attr("style", "display: none !important");
   $(".updatebtn").attr("style", "display: none !important");
   $(".createAsset").css("display", "inline-block");
@@ -42,6 +43,8 @@ handleAddNew = async () => {
 
 let idAsset;
 openUpdate = async (id) => {
+  $("#exampleModalLabel").html("Add request borrow");
+
   try {
     idAsset = id;
 
@@ -56,7 +59,7 @@ openUpdate = async (id) => {
 
 handleUpdate = async () => {
   try {
-    const Reason = $(".Reason").val().trim();
+    const Description = $(".DescriptionBorrow").val().trim();
     const res = await $.ajax({
       url: `/asset/api/${idAsset}`,
       type: "GET",
@@ -66,7 +69,7 @@ handleUpdate = async () => {
       type: "POST",
       data: {
         AssetId: idAsset,
-        Reason: Reason,
+        Description: Description,
         Category: res.data.Category,
       },
     }).then(() => {

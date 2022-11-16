@@ -1,10 +1,12 @@
 openAddModal = (id) => {
   idRequest = id;
+  $("#exampleModalLabel").html("Add new quality");
 
   // $(".updateAsset").attr("style", "display: none !important");
   // $(".updatebtn").attr("style", "display: none !important");
   // $(".createAsset").css("display", "inline-block");
   // $(".addbtn").css("display", "inline-block");
+  // $("#exampleModalLabel").html("Add ass");
 };
 
 handleAddNew = async () => {
@@ -13,7 +15,14 @@ handleAddNew = async () => {
     type: "GET",
   });
   const Quality = $(".Quality").val().trim();
-
+  if (!Quality) {
+    alert("Please fill the input!");
+    return;
+  }
+  if (Quality > 100 || Quality < 0) {
+    alert("Quality must be between 0 and 100");
+    return;
+  }
   // update request borrow state
   await $.ajax({
     url: `/requestBorrow/api/_stocker/${idRequest}`,
@@ -72,12 +81,12 @@ let idRequest;
 
 openUpdate = async (id) => {
   try {
+    $("#exampleModalLabel").html("Update request borrow");
     idRequest = id;
     const res = await $.ajax({
       url: `/requestBorrow/api/${idRequest}`,
       type: "GET",
     });
-    // console.log(res.State);
     // $(".StateUpdate").val(res.State);
     $(".AssetCode").val(res.AssetId.AssetCode);
     $(".CategoryUpdate").val(res.Category);
@@ -97,6 +106,19 @@ handleUpdate = async () => {
       data: {
         State: newState,
       },
+    }).then(async (data) => {
+      if (newState == "deniedByDirector" || newState == "denied") {
+        await $.ajax({
+          url: `/asset/api/${data.data.AssetId}`,
+          type: "PUT",
+          data: {
+            State: "available",
+          },
+        }).then(() => {
+          alert("Denied successfully!");
+          window.location.reload();
+        });
+      }
     });
 
     window.location.reload();

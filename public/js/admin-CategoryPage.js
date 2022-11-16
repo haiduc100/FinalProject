@@ -3,12 +3,14 @@ openAddModal = () => {
   $(".updatebtn").attr("style", "display: none !important");
   $(".createCategory").css("display", "inline-block");
   $(".addbtn").css("display", "inline-block");
+  $("#exampleModalLabel").html("Add new category");
 };
 
 handleAddNew = () => {
   const CategoryName = $(".CategoryName").val().trim();
   const Prefix = $(".Prefix").val().trim().toUpperCase();
   if (!CategoryName || !Prefix) {
+    alert("Please fill the input!");
     return;
   }
   $.ajax({
@@ -28,6 +30,8 @@ handleAddNew = () => {
 let idCategory;
 openUpdate = async (id) => {
   try {
+    $("#exampleModalLabel").html("Update category");
+
     idCategory = id;
     const res = await $.ajax({
       url: `/category/api/${idCategory}`,
@@ -50,7 +54,10 @@ handleUpdate = async () => {
   try {
     const CategoryName = $(".CategoryNameUpdate").val().trim();
     const Prefix = $(".PrefixUpdate").val().trim().toUpperCase();
-
+    if (!CategoryName || !Prefix) {
+      alert("Please fill the input!");
+      return;
+    }
     await $.ajax({
       url: `/category/api/${idCategory}`,
       type: "PUT",
