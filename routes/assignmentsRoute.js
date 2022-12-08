@@ -8,6 +8,11 @@ router.get(
   checkController.checkLogin,
   controller.getAssignmentById
 );
+router.get(
+  "/api/_asset/:id",
+
+  controller.getAssignmentByAssetId
+);
 router.post("/api", checkController.checkLogin, controller.createAssignment);
 router.put("/api/:id", checkController.checkLogin, controller.updateAssignment);
 router.put(

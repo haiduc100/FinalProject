@@ -54,6 +54,33 @@ module.exports.getAssignmentById = async (req, res) => {
     });
   }
 };
+module.exports.getAssignmentByAssetId = async (req, res) => {
+  try {
+    const assignment = await Assginment.findOne({
+      $and: [
+        { AssetId: req.params.id },
+        {
+          State: "reported",
+        },
+      ],
+    });
+    if (assignment) {
+      res.status(200).json({
+        assignment,
+      });
+    } else {
+      res.status(404).json({
+        status: "Fail",
+        message: "404 Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      error,
+    });
+  }
+};
 module.exports.createAssignment = async (req, res) => {
   try {
     await assetModel.findByIdAndUpdate(

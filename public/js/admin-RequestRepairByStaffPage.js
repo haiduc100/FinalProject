@@ -237,9 +237,26 @@ handleDenied = async (id) => {
       data: {
         State: "denied",
       },
-    }).then(() => {
-      alert("Denied successfully!");
-      window.location.reload();
+    }).then(async () => {
+      await $.ajax({
+        url: `/requestRepair/api/${id}`,
+        type: "GET",
+      }).then(async (data) => {
+        await $.ajax({
+          url: `/assignments/api/_asset/${data.data.AssetId}`,
+          type: "GET",
+        }).then(async (data) => {
+          await $.ajax({
+            url: `/assignments/api/_returning/${data.assignment._id}`,
+            type: "PUT",
+            data: {
+              State: "borrowed",
+            },
+          });
+          alert("Denied successfully!");
+          window.location.reload();
+        });
+      });
     });
   } else {
     return;
