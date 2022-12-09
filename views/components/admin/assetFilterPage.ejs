@@ -193,9 +193,11 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Asset Name</th>
+                        <th scope="col">Asset Code</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Asset Date</th>
-                        <th scope="col">Created Date</th>
+                        <th scope="col">Purchase Date</th>
                         <th scope="col">State</th>
                         <th scope="col">Action</th>
                       </tr>
@@ -205,25 +207,33 @@
                       <tr>
                         <td scope="row"><%= index + 1 %></td>
                         <td><%= value.AssetName %></td>
+                        <td><%= value.AssetCode %></td>
                         <td><%= value.Category.CategoryName %></td>
-                        <td><%= value.AssetDate %></td>
-                        <td><%= value.CreatedDate.toLocaleDateString() %></td>
+                        <td><%= value.Description %></td>
+                        <td><%= value.AssetDate.toLocaleDateString() %></td>
+                        <td><%= value.PurchaseDate.toLocaleDateString() %></td>
                         <td><%= value.State %></td>
                         <td>
-                          <p
+                          <button
+                            class="btn btn-success <%= value.State == 'waitingRepair' ? 'd-none' : ''%>"
+                            onclick="handleRepair('<%= value._id %>')"
+                          >
+                            Repair
+                          </button>
+                          <button
                             data-toggle="modal"
                             data-target="#exampleModal"
                             class="btn btn-warning"
                             onclick="openUpdate('<%= value._id %>')"
                           >
                             Update
-                          </p>
-                          <p
+                          </button>
+                          <button
                             class="btn btn-danger"
                             onclick="handleDelete('<%= value._id %>')"
                           >
                             Delete
-                          </p>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>
@@ -244,8 +254,5 @@
     ></script>
     <<<<<<< HEAD
     <script src="/public/js/admin-AssetPage.js"></script>
-    =======
-    <script src="/public/js/admin-FilterAssetPage.js"></script>
-    >>>>>>> 023bbe2e50fff7430dc1ce0554d6c01b109a6525
   </body>
 </html>

@@ -51,6 +51,8 @@ module.exports.filterAsset = async (req, res) => {
       listAssets: assets,
       listCategory: category,
       staff: req.staff,
+      currentRole: req.RoleName,
+      role: req.Role.Role,
     });
   } catch (error) {
     console.log(error);
